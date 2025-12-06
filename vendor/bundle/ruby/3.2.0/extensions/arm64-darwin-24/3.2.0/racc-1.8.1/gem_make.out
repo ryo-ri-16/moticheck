@@ -1,0 +1,19 @@
+current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20251206-18884-pm61jb sitelibdir\=./.gem.20251206-18884-pm61jb clean
+
+current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20251206-18884-pm61jb sitelibdir\=./.gem.20251206-18884-pm61jb
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+ld: warning: ignoring duplicate libraries: '-lruby.3.2'
+
+current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20251206-18884-pm61jb sitelibdir\=./.gem.20251206-18884-pm61jb install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20251206-18884-pm61jb/racc
+
+current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20251206-18884-pm61jb sitelibdir\=./.gem.20251206-18884-pm61jb clean

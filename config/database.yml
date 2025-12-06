@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password: password
+  pool: 5
+
+development:
+  <<: *default
+  database: moticheck_development
+
+test:
+  <<: *default
+  database: moticheck_test
+
+production:
+  <<: *default
+  database: moticheck_production
+  # 必要に応じて変更

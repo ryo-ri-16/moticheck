@@ -1,34 +1,34 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  username: postgres
-  password: password
   pool: 5
 
 development:
   <<: *default
   database: moticheck_development
+  host: db
+  username: postgres
+  password: password
 
 test:
   <<: *default
   database: moticheck_test
+  host: localhost
   username: postgres
   password: postgres
-  host: localhost
 
 production:
   <<: *default
-  # Render が提供する DATABASE_URL を使用
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV["DATABASE_URL"] %>
 
 queue:
-  <<: *production
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
 
 cache:
-  <<: *production
-  database: <%= ENV['DB_CACHE_NAME'] || "#{ENV['DB_NAME']}_cache" %>
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
 
 cable:
   <<: *default
-  database: moticheck_production
+  url: <%= ENV["DATABASE_URL"] %>

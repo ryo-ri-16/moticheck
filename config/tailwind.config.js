@@ -1,22 +1,9 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
+// tailwind.config.js (v4)
 module.exports = {
   content: [
-    './public/*.html',
+    './app/views/**/*.{html,erb}',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
-  ],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-      },
-    },
-  },
-  plugins: [
-    // require('@tailwindcss/forms'),
-    // require('@tailwindcss/typography'),
-    // require('@tailwindcss/container-queries'),
+    './app/assets/stylesheets/**/*.css',
+    './app/javascript/**/*.js'
   ]
 }

@@ -18,5 +18,11 @@ test:
 
 production:
   <<: *default
+  database: <%= ENV['DB_NAME'] %>
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
+cable:
+  <<: *default
   database: moticheck_production
-  # 必要に応じて変更

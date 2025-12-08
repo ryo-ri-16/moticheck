@@ -23,6 +23,9 @@ production:
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
 
+queue:
+  <<: *production
+
 cable:
   <<: *default
   database: moticheck_production

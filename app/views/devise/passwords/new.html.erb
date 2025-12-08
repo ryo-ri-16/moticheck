@@ -1,0 +1,42 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md space-y-8">
+
+    <!-- ロゴ・タイトル部分 -->
+    <div class="text-center space-y-4">
+      <div class="flex justify-center">
+        <div class="h-14 w-16 rounded-2xl bg-blue-600 flex items-center justify-center">
+          <span class="text-white text-3xl">🔑</span>
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold">パスワード再設定</h1>
+    </div>
+
+    <!-- カード -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-2xl font-bold text-center mb-1">メールアドレス確認</h2>
+      <p class="text-center text-gray-500 mb-6">
+        再設定リンクを送信します
+      </p>
+
+      <%= form_with scope: :user, url: password_path(:user), class: "space-y-4" do |f| %>
+        <div class="space-y-2 text-center">
+          <%= f.label :email, "登録メールアドレス", class: "block font-medium" %>
+          <%= f.email_field :email, autofocus: true, required: true,
+                class: "border p-2 w-full rounded" %>
+        </div>
+
+        <div class="space-y-2 text-center">
+          <%= f.submit "メール送信",
+              class: "w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold" %>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-4">
+        <%= link_to "ログインに戻る",
+              new_user_session_path,
+              class: "text-sm text-gray-500 hover:text-blue-600" %>
+      </div>
+    </div>
+
+  </div>
+</div>

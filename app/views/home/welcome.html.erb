@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-2xl space-y-8">
+    <div class="text-center space-y-4">
+      <div class="flex justify-center">
+        <div class="h-16 w-16 rounded-2xl bg-blue-600 flex items-center justify-center shadow-md">
+          <span class="text-white text-3xl">✔</span>
+        </div>
+      </div>
+      <h1 class="text-4xl font-bold">持ちチェク</h1>
+      <p class="text-gray-600 text-lg">持ち物を簡単にチェックできるアプリ</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+      <h2 class="text-2xl font-bold text-center">主な機能</h2>
+      <ul class="space-y-2 text-gray-700">
+        <li>✅ 持ち物リストの作成</li>
+        <li>✅ チェック機能</li>
+        <li>✅ テンプレートの保存</li>
+      </ul>
+    </div>
+
+    <div class="space-y-4">
+      <%= link_to new_user_registration_path do %>
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
+          新規登録
+        </button>
+      <% end %>
+
+      <%= link_to new_user_session_path do %>
+        <button class="w-full bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 py-3 rounded-lg text-lg font-semibold transition-colors">
+          ログイン
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>

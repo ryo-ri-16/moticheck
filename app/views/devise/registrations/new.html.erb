@@ -1,0 +1,64 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-sm space-y-8"> <!-- ← ここだけ変更 -->
+
+    <div class="text-center space-y-4">
+      <div class="flex justify-center">
+        <div class="h-14 w-16 rounded-2xl bg-blue-600 flex items-center justify-center">
+          <span class="text-white text-3xl">✔</span>
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold">持ちチェク</h1>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6">
+      <h2 class="text-2xl font-bold text-center mb-1">新規登録</h2>
+      <p class="text-center text-gray-500 mb-6">アカウントを作成してください</p>
+
+      <%= form_with scope: :user, url: session_path(:user), local: true, class: "space-y-4" do |f| %>
+
+        <div class="space-y-2 text-center">
+          <%= f.label :email, "メールアドレス", class: "block font-medium" %>
+          <%= f.email_field :email, autofocus: true, required: true,
+            class: "border border-gray-300 p-2 w-full rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" %>
+        </div>
+
+        <div class="space-y-2 text-center">
+          <%= f.label :password, "パスワード（6文字以上）", class: "block font-medium" %>
+          <%= f.password_field :password, required: true,
+                class: "border p-2 w-full rounded-lg" %>
+        </div>
+
+        <div class="space-y-2 text-center">
+          <%= f.label :password_confirmation, "パスワード確認", class: "block font-medium" %>
+          <%= f.password_field :password_confirmation, required: true,
+                class: "border p-2 w-full rounded-lg" %>
+        </div>
+
+        <div class="space-y-2 text-center">
+          <%= f.submit "アカウントを作成する",
+            class: "w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 mt-4 text-white py-3 rounded-lg text-lg font-semibold transition-colors cursor-pointer" %>
+        </div>
+
+      <% end %>
+
+      <div class="my-6 border-t"></div>
+
+      <div class="text-center">
+        <p class="text-sm text-gray-500">
+          すでにアカウントをお持ちですか？
+          <%= link_to "ログイン",
+                new_user_session_path,
+                class: "text-blue-600 hover:underline ml-1" %>
+        </p>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <%= link_to root_path do %>
+        <button class="w-full py-3 rounded-lg border text-gray-600 hover:text-black">
+          ログインせずに使ってみる
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>

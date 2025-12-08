@@ -9,10 +9,12 @@ default: &default
 development:
   <<: *default
   database: moticheck_development
-
 test:
   <<: *default
   database: moticheck_test
+  username: postgres
+  password: postgres
+  host: localhost
 
 production:
   <<: *default

@@ -9,6 +9,7 @@ default: &default
 development:
   <<: *default
   database: moticheck_development
+
 test:
   <<: *default
   database: moticheck_test
@@ -18,19 +19,15 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  host: <%= ENV['DB_HOST'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  # Render が提供する DATABASE_URL を使用
+  url: <%= ENV['DATABASE_URL'] %>
 
 queue:
-  adapter: postgresql
-  encoding: unicode
-  database: <%= ENV['DB_NAME'] %>
-  host: <%= ENV['DB_HOST'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  pool: 5
+  <<: *production
+
+cache:
+  <<: *production
+  database: <%= ENV['DB_CACHE_NAME'] || "#{ENV['DB_NAME']}_cache" %>
 
 cable:
   <<: *default

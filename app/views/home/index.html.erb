@@ -1,0 +1,10 @@
+<% content_for :title, "持ちチェク" %>
+
+<h1>ログイン済み</h1>
+<p><%= current_user.email %> でログイン中です。</p>
+
+<div class="mt-4 mb-4 text-right">
+  <%= button_to "ログアウト", destroy_user_session_path,
+              method: :delete,
+              class: "text-red-600 font-semibold" %>
+</div>

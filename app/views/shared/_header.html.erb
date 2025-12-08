@@ -1,0 +1,17 @@
+<header class="w-full h-14 flex items-center border-b bg-white px-4 shadow-sm">
+  <% if content_for?(:back_path) %>
+    <%= link_to content_for(:back_path), class: "mr-3 text-xl flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors" do %>
+      ←
+    <% end %>
+  <% else %>
+    <div class="w-8"></div>
+  <% end %>
+
+  <h1 class="text-lg font-bold flex-1 text-center truncate px-2">
+    <%= content_for?(:title) ? yield(:title) : "" %>
+  </h1>
+
+  <div class="ml-3 min-w-[24px] text-right flex items-center justify-end">
+    <%= yield(:header_right) if content_for?(:header_right) %>
+  </div>
+</header>

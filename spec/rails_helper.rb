@@ -4,7 +4,6 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 
-# テストデータベースのマイグレーション状態を確認
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -12,14 +11,23 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  # FactoryBotのメソッドを使いやすくする
   config.include FactoryBot::Syntax::Methods
-  # トランザクションを使ってテスト後にデータをクリーンアップ
   config.use_transactional_fixtures = true
-  # テストの実行順序をランダムにする
   config.order = :random
-  # 型推論を有効にする
   config.infer_spec_type_from_file_location!
-  # Railsのヘルパーをフィルタリング
   config.filter_rails_from_backtrace!
+
+  # System specs 用
+  config.include Warden::Test::Helpers, type: :system
+  config.before(:suite) { Warden.test_mode! }
+  config.after(:each) { Warden.test_reset! }
+
+  # Request specs 用
+  # sign_in / sign_out が使えるようにする
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
+  # System specs ドライバー設定
+  config.before(:each, type: :system) do
+    driven_by(:selenium, using: :chrome_headless)
+  end
 end

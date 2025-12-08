@@ -1,0 +1,92 @@
+<!-- BEGIN app/views/layouts/application.html.erb --><!DOCTYPE html>
+<html>
+  <head>
+    <title>持ちチェク</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="zlVUUPO6w89SuES1awV72S-OK-AzSclzlm4mtPAtA1j5yyW2XmhcBqdkBwkJ1oecexx1AxpURwt5LzbNqfnRCQ" />
+    
+
+    
+
+
+    <link rel="stylesheet" href="/assets/tailwind-92f4fe87.css" data-turbo-track="reload" />
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-bfcdf840.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-ad2c7b86.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/hello_controller": "/assets/controllers/hello_controller-708796bd.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-bfcdf840.js">
+<link rel="modulepreload" href="/assets/turbo.min-ad2c7b86.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/hello_controller-708796bd.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- BEGIN app/views/shared/_header.html.erb --><header class="w-full h-14 flex items-center border-b bg-white px-4 shadow-sm">
+    <div class="w-8"></div>
+
+  <h1 class="text-lg font-bold flex-1 text-center truncate px-2">
+    持ちチェク
+  </h1>
+
+  <div class="ml-3 min-w-[24px] text-right flex items-center justify-end">
+    
+  </div>
+</header><!-- END app/views/shared/_header.html.erb -->
+
+    <main class="pb-20 max-w-md mx-auto">  <!-- max-w-md = 448px -->
+      <!-- BEGIN app/views/home/index.html.erb -->
+<h1>ログイン済み</h1>
+<p>test3@example.com でログイン中です。</p>
+
+<div class="mt-4 mb-4 text-right">
+  <form class="button_to" method="post" action="/users/logout"><input type="hidden" name="_method" value="delete" autocomplete="off" /><button class="text-red-600 font-semibold" type="submit">ログアウト</button><input type="hidden" name="authenticity_token" value="2EmsA8_6cnpHo3hlFiOAJqPxpsZXSbz5g1qw4J3KUnkz5Xbswxm7AAQ4rLAz2h989xzPjFeGHwtuOi2NpS8bdA" autocomplete="off" /></form>
+</div>
+<!-- END app/views/home/index.html.erb -->
+    </main>
+
+    <!-- BEGIN app/views/shared/_bottom_nav.html.erb --><footer class="fixed bottom-0 left-0 right-0 w-full bg-white border-t shadow-md z-50">
+  <div class="w-full">
+    <nav class="max-w-md w-full mx-auto px-2">
+      <ul class="flex justify-around items-center">
+        <li class="flex-1">
+          <a class="flex flex-col items-center justify-center py-3 text-gray-700 hover:text-blue-500 active:bg-gray-100 transition-colors" href="#">
+            <span class="text-xl mb-1">🏠</span>
+            <span class="text-xs">ホーム</span>
+</a>        </li>
+        <li class="flex-1">
+          <a class="flex flex-col items-center justify-center py-3 text-gray-700 hover:text-blue-500 active:bg-gray-100 transition-colors" href="#">
+            <span class="text-xl mb-1">📋</span>
+            <span class="text-xs">リスト一覧</span>
+</a>        </li>
+        <li class="flex-1">
+          <a class="flex flex-col items-center justify-center py-3 text-gray-700 hover:text-blue-500 active:bg-gray-100 transition-colors" href="#">
+            <span class="text-xl mb-1">📃</span>
+            <span class="text-xs">テンプレート</span>
+</a>        </li>
+        <li class="flex-1">
+          <a class="flex flex-col items-center justify-center py-3 text-gray-700 hover:text-blue-500 active:bg-gray-100 transition-colors" href="#">
+            <span class="text-xl mb-1">👤</span>
+            <span class="text-xs">マイページ</span>
+</a>        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+<!-- END app/views/shared/_bottom_nav.html.erb -->
+  </body>
+</html>
+<!-- END app/views/layouts/application.html.erb -->

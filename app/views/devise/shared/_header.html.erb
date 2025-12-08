@@ -1,0 +1,23 @@
+<!-- app/views/shared/_header.html.erb -->
+
+<header class="sticky top-0 z-30 bg-white shadow-sm">
+  <div class="max-w-md mx-auto h-14 px-4 flex items-center justify-between">
+
+    <!-- 左側：戻る or タイトル -->
+    <div class="flex items-center space-x-2">
+      <% if defined?(back_path) && back_path.present? %>
+        <%= link_to back_path, class: "text-gray-700" do %>
+          <span class="text-2xl">&larr;</span>
+        <% end %>
+      <% else %>
+        <h1 class="text-xl font-bold">持ちチェク!</h1>
+      <% end %>
+    </div>
+
+    <!-- 右側（ページごとに差し替える領域） -->
+    <div class="flex items-center space-x-4">
+      <%= yield :header_right %>
+    </div>
+
+  </div>
+</header>

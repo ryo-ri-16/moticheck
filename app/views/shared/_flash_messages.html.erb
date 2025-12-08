@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <% flash.each do |key, message| %>
+    <%
+      alert_class = case key.to_s
+                    when "notice", "success"
+                      "bg-green-50 border border-green-300 text-green-700"
+                    when "alert", "danger"
+                      "bg-red-50 border border-red-300 text-red-700"
+                    else
+                      "bg-gray-50 border border-gray-300 text-gray-700"
+                    end
+    %>
+
+    <div data-controller="flash"
+      class="px-4 py-3 rounded mb-4 shadow-md <%= alert_class %>"
+      role="alert">
+      <span><%= message %></span>
+    </div>
+  <% end %>
+</div>

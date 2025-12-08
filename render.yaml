@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: your-app-name
+    name: moticheck
     env: docker
     dockerfilePath: ./Dockerfile
     envVars:
@@ -12,7 +12,7 @@ services:
         fromDatabase:
           name: your-db-name
           property: connectionString
-    buildCommand: bundle exec rails assets:precompile
+    buildCommand: ./bin/rails assets:precompile
     startCommand: bundle exec rails server -b 0.0.0.0 -p $PORT
 
 databases:

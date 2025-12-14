@@ -43,4 +43,4 @@ USER 1000:1000
 
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 EXPOSE 80
-CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+CMD ["bash", "-c", "bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p ${PORT:-3000}"]

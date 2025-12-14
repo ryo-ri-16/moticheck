@@ -1,0 +1,9 @@
+<% content_for(:back_path) { list_path } %>
+<% content_for(:title, "リストを編集") %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <%= render 'form', list: @list %>
+    </div>
+  </div>
+</div>

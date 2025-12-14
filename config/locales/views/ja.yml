@@ -1,0 +1,6 @@
+ja:
+  lists:
+    status:
+      waiting: "待機中"
+      checking: "チェック中"
+      completed: "完了"

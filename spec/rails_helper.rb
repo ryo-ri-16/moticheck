@@ -17,17 +17,13 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  # System specs 用
   config.include Warden::Test::Helpers, type: :system
   config.before(:suite) { Warden.test_mode! }
   config.after(:each) { Warden.test_reset! }
 
-  # Request specs 用
-  # sign_in / sign_out が使えるようにする
   config.include Devise::Test::IntegrationHelpers, type: :request
 
-  # System specs ドライバー設定
   config.before(:each, type: :system) do
-    driven_by(:selenium, using: :chrome_headless)
+    driven_by(:rack_test)
   end
 end

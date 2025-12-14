@@ -1,6 +1,7 @@
 <% content_for :title, "持ちチェク" %>
 
 <h1>ログイン済み</h1>
+<p>ようこそ<%= current_user.name %>さん。</p>
 <p><%= current_user.email %> でログイン中です。</p>
 
 <div class="mt-4 mb-4 text-right">
@@ -8,3 +9,5 @@
               method: :delete,
               class: "text-red-600 font-semibold" %>
 </div>
+
+<%= render "shared/fab" %>

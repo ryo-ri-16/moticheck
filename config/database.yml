@@ -1,21 +1,18 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  host: db
+  username: postgres
+  password: postgres
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: moticheck_development
-  host: db
-  username: postgres
-  password: password
 
 test:
   <<: *default
   database: moticheck_test
-  host: localhost
-  username: postgres
-  password: postgres
 
 production:
   <<: *default

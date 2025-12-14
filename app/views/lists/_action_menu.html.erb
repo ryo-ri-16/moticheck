@@ -1,0 +1,37 @@
+<div data-controller="menu" class="relative">
+  <button
+    data-action="click->menu#toggle"
+    class="absolute right-2 top-2 p-1 hover:bg-gray-100 rounded transition-colors z-20"
+    aria-label="メニューを開く"
+  >
+    <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+    </svg>
+  </button>
+
+  <div
+    data-menu-target="menu"
+    class="menu absolute right-2 top-8 bg-white shadow rounded p-2 text-sm hidden z-30 w-28"
+  >
+    <a class="block px-2 py-1 hover:bg-gray-100 text-left" href="/lists/<%= list.id %>/edit">編集</a>
+
+    <form class="button_to" method="post" action="/lists/<%= list.id %>/reuse">
+      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" type="submit">コピー</button>
+      <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
+    </form>
+
+    <div class="border-t border-gray-200 my-1"></div>
+
+    <form class="button_to" method="post" action="/lists/<%= list.id %>">
+      <input type="hidden" name="_method" value="delete" autocomplete="off">
+      <button
+        class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-red-600"
+        type="submit"
+        data-turbo-confirm="本当に削除しますか?"
+      >
+        削除
+      </button>
+      <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
+    </form>
+  </div>
+</div>

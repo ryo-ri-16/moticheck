@@ -1,0 +1,152 @@
+<% content_for(:back_path) { lists_path } %>
+<% content_for :title do %>
+  <div class="flex-1 px-2">
+    <div class="flex flex-col items-center gap-1">
+      <h1 class="text-base font-semibold text-gray-900 truncate"><%= @list.title %></h1>
+      <div class="flex gap-2">
+        <% if @list.checking? %>
+          <span class="text-xs px-2 py-1 rounded text-white <%= status_color(@list.status) %>">チェック中</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="bg-white rounded-lg shadow-sm p-4 space-y-3">
+  <div class="flex items-center gap-2">
+    <span class="text-sm font-medium text-gray-600 min-w-[60px]">状態</span>
+    <span class="px-2 py-1 rounded text-sm text-white <%= status_color(@list.status) %>">
+      <%= translated_status(@list) %>
+    </span>
+  </div>
+
+  <div class="text-gray-600">
+    <% if @list.scheduled_on && @list.scheduled_time %>
+      <% datetime = Time.zone.local(
+        @list.scheduled_on.year,
+        @list.scheduled_on.month,
+        @list.scheduled_on.day,
+        @list.scheduled_time.hour,
+        @list.scheduled_time.min
+      )%>
+      <%= l datetime, format: :short %> 利用
+    <% elsif @list.scheduled_on.present? %>
+      <%= l @list.scheduled_on, format: :long %> 利用
+    <% else %>
+      利用日未定
+    <% end %>
+  </div>
+
+  <% if @list.priority? %>
+    <div class="flex items-center gap-2">
+      <span class="text-sm font-medium text-gray-600 min-w-[60px]">優先度</span>
+      <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-700">
+        高
+      </span>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-4 mb-4">
+  <div class="flex items-center justify-between mb-2">
+    <h2 class="text-lg font-bold text-gray-800">チェック項目</h2>
+    <div class="text-sm">
+      <span class="font-medium text-gray-700"><%= @checked_count %></span>
+      <span class="text-gray-500"> / </span>
+      <span class="text-gray-700"><%= @list_items.count %>完了</span>
+    </div>
+  </div>
+</div>
+<% if @list_items.any? %>
+  <div class="space-y-2">
+    <% @list_items.reject(&:checked).each do |li| %>
+      <%= form_with model: li, url: list_list_item_path(@list, li), method: :patch, local: true do |f| %>
+        <div class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all">
+          <%= f.check_box :checked,
+            class: "mr-3 h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500",
+            onchange: "this.form.submit()",
+            disabled: !@list.checking? %>
+
+          <label class="flex-1 cursor-pointer select-none">
+            <%= li.item.name %>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if @list_items.any?(&:checked) %>
+      <div class="flex items-center gap-2 my-4">
+        <div class="flex-1 h-px bg-gray-300"></div>
+        <span class="text-xs text-gray-500">完了済み</span>
+        <div class="flex-1 h-px bg-gray-300"></div>
+      </div>
+
+      <% @list_items.select(&:checked).each do |li| %>
+        <%= form_with model: li, url: list_list_item_path(@list, li), method: :patch, local: true do |f| %>
+          <div class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-60">
+            <%= f.check_box :checked,
+              class: "mr-3 h-5 w-5 text-green-500 rounded",
+              onchange: "this.form.submit()",
+              disabled: !@list.checking? %>
+
+            <label class="flex-1 cursor-pointer select-none line-through text-gray-400">
+              <%= li.item.name %>
+            </label>
+
+            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-12 bg-gray-50 rounded-lg">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    <p class="mt-2 text-sm text-gray-500">チェック項目がありません</p>
+  </div>
+<% end %>
+
+<% if @list.note.present? %>
+  <div class="mt-6">
+    <h3 class="text-base font-semibold text-gray-800 mb-3">メモ</h3>
+    <div class="bg-white rounded-lg border border-gray-200 px-4 py-3">
+      <div class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+        <%= @list.note %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="mt-6 space-y-3">
+  <div class="flex flex-wrap gap-2 mt-6">
+    <% if @list.waiting? %>
+      <%= button_to "チェック開始", start_checking_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
+    <% elsif @list.checking? && @checked_count == @list_items.count %>
+      <%= button_to "チェック完了", finish_checking_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
+    <% end %>
+
+    <% if @list.checking? %>
+      <%= button_to "チェックキャンセル", back_waiting_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium transition-colors" %>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2 mt-4 opacity-90">
+    <% unless @list.checking? %>
+      <%= link_to "編集", edit_list_path(@list),
+        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md text-center font-medium transition-colors" %>
+      <%= button_to "再利用", reuse_list_path(@list),
+        method: :post,
+        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md font-medium transition-colors" %>
+      <%= button_to "削除", list_path(@list),
+        method: :delete,
+        data: { turbo_confirm: "本当に削除しますか?" },
+        class: "flex-1 min-w-[140px] px-4 py-2 text-red-600 border border-red-300 hover:bg-red-50 rounded-md font-medium transition-colors" %>
+    <% end %>
+  </div>
+</div>

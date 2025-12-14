@@ -10,9 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_125654) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_14_023124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "items", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_items_on_name", unique: true
+  end
+
+  create_table "list_items", force: :cascade do |t|
+    t.bigint "list_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity"
+    t.integer "position"
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_list_items_on_item_id"
+    t.index ["list_id", "item_id"], name: "index_list_items_on_list_id_and_item_id", unique: true
+    t.index ["list_id"], name: "index_list_items_on_list_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.integer "status", default: 0, null: false
+    t.boolean "priority", default: false, null: false
+    t.datetime "last_used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "note"
+    t.date "scheduled_on"
+    t.time "scheduled_time"
+    t.index ["last_used_at"], name: "index_lists_on_last_used_at"
+    t.index ["status"], name: "index_lists_on_status"
+    t.index ["user_id", "priority"], name: "index_lists_on_user_id_and_priority"
+    t.index ["user_id"], name: "index_lists_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +63,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_125654) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "list_items", "items"
+  add_foreign_key "list_items", "lists"
+  add_foreign_key "lists", "users"
 end

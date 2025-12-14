@@ -1,0 +1,42 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      list: リスト
+      item: アイテム
+      list_item: チェック項目
+
+    attributes:
+      created_at: 作成日時
+      updated_at: 更新日時
+
+      list:
+        title: タイトル
+        status: 状態
+        priority: 優先度
+        last_used_at: 最終利用日時
+        note: メモ
+        scheduled_on: 利用日
+        scheduled_time: 利用時刻
+        user: ユーザー
+
+      user:
+        email: メールアドレス
+        name: 名前
+        password: パスワード
+        password_confirmation: パスワード(確認)
+
+      item:
+        name: アイテム名
+
+      list_item:
+        list: リスト
+        item: アイテム
+        checked: チェック済み
+
+  enums:
+    list:
+      status:
+        waiting: 待機中
+        checking: チェック中
+        completed: 完了

@@ -104,6 +104,8 @@ GEM
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    deep_cloneable (3.2.1)
+      activerecord (>= 3.1.0, < 9)
     devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -414,6 +416,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  deep_cloneable
   devise
   dotenv-rails
   factory_bot_rails

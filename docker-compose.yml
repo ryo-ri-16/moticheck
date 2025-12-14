@@ -18,7 +18,8 @@ services:
     image: postgres:15
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: moticheck_development
     volumes:
       - db_data:/var/lib/postgresql/data
 

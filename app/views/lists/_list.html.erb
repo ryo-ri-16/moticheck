@@ -1,0 +1,40 @@
+<div class="list-card relative p-4 bg-white rounded-lg shadow hover:bg-gray-50">
+  <div class="flex justify-between items-start">
+    <div class="flex items-center space-x-2">
+      <h4 class="font-semibold text-lg line-clamp-2 break-words">
+        <%= link_to list.title, list_path(list) %>
+      </h4>
+    </div>
+
+    <div class="absolute right-2 top-2">
+      <%= list_action_menu(list) %>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-4 text-sm text-white flex-wrap">
+    <div class="text-xs px-2 py-1 rounded <%= status_color(list.status) %>">
+      <%= translated_status(list) %>
+    </div>
+
+    <div class="text-gray-600">
+      <%= list.list_items.count %> 個のアイテム
+    </div>
+  </div>
+
+  <div class="text-gray-600">
+    <% if list.scheduled_on && list.scheduled_time %>
+      <% datetime = Time.zone.local(
+        list.scheduled_on.year,
+        list.scheduled_on.month,
+        list.scheduled_on.day,
+        list.scheduled_time.hour,
+        list.scheduled_time.min
+      )%>
+      <%= l datetime, format: :short %> 利用
+    <% elsif list.scheduled_on.present? %>
+      <%= l list.scheduled_on, format: :long %> 利用
+    <% else %>
+      利用日未定
+    <% end %>
+  </div>
+</div>

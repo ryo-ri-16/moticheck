@@ -1,6 +1,5 @@
-// app/javascript/controllers/index.js
 import { Application } from "@hotwired/stimulus"
-import FlashController from "./flash_controller"
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 
 const application = Application.start()
-application.register("flash", FlashController)
+eagerLoadControllersFrom("controllers", application)

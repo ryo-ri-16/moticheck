@@ -12,7 +12,7 @@ services:
         fromDatabase:
           name: your-db-name
           property: connectionString
-    buildCommand: ./bin/rails assets:precompile
+    buildCommand: bundle install && bundle exec rails db:migrate && bundle exec rails assets:precompile
     startCommand: bundle exec rails server -b 0.0.0.0 -p $PORT
 
 databases:

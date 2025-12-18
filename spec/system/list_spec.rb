@@ -78,12 +78,12 @@ RSpec.describe 'Lists', type: :system do
     end
   end
 
-  describe '再利用' do
-    it '再利用できる' do
+  describe '複製' do
+    it '複製できる' do
       list = create(:list, user: user)
 
       visit list_path(list)
-      expect { click_button '再利用' }.to change { List.count }.by(1)
+      expect { click_button '複製' }.to change { List.count }.by(1)
     end
   end
 
@@ -95,6 +95,47 @@ RSpec.describe 'Lists', type: :system do
       click_button '削除'
 
       expect(page).not_to have_content(list.title)
+    end
+  end
+
+  describe 'アイテム操作' do
+    context '待機中' do
+      it 'アイテムを追加できる' do
+        list = create(:list, user: user)
+
+        visit list_path(list)
+        fill_in 'アイテム名', with: '鍵'
+
+        expect { click_button '追加' }.to change { ListItem.count }.by(1)
+      end
+
+      it '数量付きで追加できる' do
+        list = create(:list, user: user)
+
+        visit list_path(list)
+        fill_in 'アイテム名', with: '鍵'
+        fill_in '数量:', with: 3
+
+        expect { click_button '追加' }.to change { ListItem.count }.by(1)
+
+        list_item = list.list_items.order(:created_at).last
+        expect(list_item.quantity).to eq(3)
+      end
+
+      it 'アイテムを削除できる' do
+        list = create(:list, user: user)
+        item = create(:item, name: 'りんご')
+        li = create(:list_item, list: list, item: item)
+
+        visit list_path(list)
+
+        within "tr#list_item_row_#{li.id}" do
+          find('summary').click
+          click_button '削除'
+        end
+
+        expect(ListItem.exists?(li.id)).to be false
+      end
     end
   end
 end

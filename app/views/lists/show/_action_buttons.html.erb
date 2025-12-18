@@ -1,0 +1,30 @@
+<div class="mt-6 space-y-3">
+  <div class="flex flex-wrap gap-2 mt-6">
+    <% if @list.waiting? %>
+      <%= button_to "チェック開始", start_checking_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
+    <% elsif @list.checking? && list.checked_count == @list_items.count %>
+      <%= button_to "チェック完了", finish_checking_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
+    <% end %>
+
+    <% if @list.checking? %>
+      <%= button_to "チェックキャンセル", back_waiting_list_path(@list),
+        method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium transition-colors" %>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2 mt-4 opacity-90">
+    <% unless @list.checking? %>
+      <%= link_to "編集", edit_list_path(@list),
+        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md text-center font-medium transition-colors" %>
+      <%= button_to "複製", reuse_list_path(@list),
+        method: :post,
+        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md font-medium transition-colors" %>
+      <%= button_to "削除", list_path(@list),
+        method: :delete,
+        data: { turbo_confirm: "本当に削除しますか?" },
+        class: "flex-1 min-w-[140px] px-4 py-2 text-red-600 border border-red-300 hover:bg-red-50 rounded-md font-medium transition-colors" %>
+    <% end %>
+  </div>
+</div>

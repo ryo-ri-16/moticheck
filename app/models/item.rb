@@ -3,6 +3,7 @@ class Item < ApplicationRecord
   has_many :lists, through: :list_items
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, length: { maximum: 100 }
 
   before_validation :normalize_name
 

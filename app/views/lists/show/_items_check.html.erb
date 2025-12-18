@@ -1,0 +1,100 @@
+<div class="mt-4 mb-4">
+  <div class="flex items-center justify-between mb-2">
+    <h2 class="text-lg font-bold text-gray-800">チェック項目</h2>
+    <div class="text-sm">
+      <span class="font-medium text-gray-700"><%= list.checked_count %></span>
+      <span class="text-gray-500"> / </span>
+      <span class="text-gray-700"><%= @list_items.count %>完了</span>
+    </div>
+  </div>
+</div>
+<% if @list_items.any? %>
+  <div class="space-y-2">
+    <% @list_items.reject(&:checked).each do |li| %>
+      <div class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all relative">
+        <%= form_with model: li,
+                      url: check_switching_list_list_item_path(@list, li),
+                      method: :patch,
+                      local: true,
+                      class: "flex items-center flex-1" do |f| %>
+          <%= f.check_box :checked,
+            id: "check_list_item_#{li.id}",
+            class: "mr-3 h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500",
+            onchange: "this.form.submit()",
+            disabled: !@list.checking? %>
+
+          <label class="flex-1 cursor-pointer select-none">
+            <%= li.item.name %>
+            <% if li.quantity.present? && li.quantity > 1 %>
+              <span class="ml-2 text-sm text-gray-500">
+                ×<%= li.quantity %>
+              </span>
+            <% end %>
+          </label>
+        <% end %>
+
+        <tr id="list_item_row_<%= li.id %>">
+          <td>
+            <% if @list.waiting? %>
+              <details class="relative ml-2">
+                <summary class="cursor-pointer px-2 py-1 hover:bg-gray-100 rounded transition-colors">⋮</summary>
+                <div class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[120px]">
+                  <div id="list_item_<%= li.id %>">
+                    <%= button_to "削除",
+                      list_list_item_path(@list, li),
+                      method: :delete,
+                      data: { turbo_confirm: "削除しますか?" },
+                      class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
+                  </div>
+                </div>
+              </details>
+            <% end %>
+          </td>
+        </tr>
+      </div>
+    <% end %>
+
+    <% if @list_items.any?(&:checked) %>
+      <div class="flex items-center gap-2 my-4">
+        <div class="flex-1 h-px bg-gray-300"></div>
+        <span class="text-xs text-gray-500">完了済み</span>
+        <div class="flex-1 h-px bg-gray-300"></div>
+      </div>
+
+      <% @list_items.select(&:checked).each do |li| %>
+        <%= form_with model: li,
+                      url: check_switching_list_list_item_path(@list, li),
+                      method: :patch,
+                      local: true do |f| %>
+          <div class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-60">
+            <%= f.check_box :checked,
+              class: "mr-3 h-5 w-5 text-green-500 rounded",
+              onchange: "this.form.submit()",
+              disabled: !@list.checking? %>
+
+            <label class="flex-1 cursor-pointer select-none line-through text-gray-400">
+              <%= li.item.name %>
+              <% if li.quantity.present? && li.quantity > 1 %>
+                <span class="ml-2 text-sm">
+                  ×<%= li.quantity %>
+                </span>
+              <% end %>
+            </label>
+
+            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-12 bg-gray-50 rounded-lg">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    <p class="mt-2 text-sm text-gray-500">チェック項目がありません</p>
+  </div>
+<% end %>

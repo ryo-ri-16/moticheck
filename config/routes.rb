@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     sign_up: "register"
   }
   resources :lists do
-    resources :list_items, only: [ :create, :update, :destroy ]
+    resources :list_items do
+      member do
+        patch :check_switching
+      end
+    end
     member do
       patch :start_checking
       patch :finish_checking

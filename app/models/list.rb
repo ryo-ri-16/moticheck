@@ -37,10 +37,21 @@ class List < ApplicationRecord
   end
 
   def back_to_waiting!
-    update(status: :waiting)
+    transaction do
+      update!(status: :waiting)
+      list_items.update_all(checked: false)
+    end
   end
 
   def items_count
     list_items.count
+  end
+
+  def checked_items
+    list_items.checked
+  end
+
+  def checked_count
+    checked_items.count
   end
 end

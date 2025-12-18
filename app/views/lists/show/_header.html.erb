@@ -1,0 +1,13 @@
+<% content_for(:back_path) { lists_path } %>
+<% content_for :title do %>
+  <div class="flex-1 px-2">
+    <div class="flex flex-col items-center gap-1">
+      <h1 class="text-base font-semibold text-gray-900 truncate"><%= @list.title %></h1>
+      <div class="flex gap-2">
+        <% if @list.checking? %>
+          <span class="text-xs px-2 py-1 rounded text-white <%= status_color(@list.status) %>">チェック中</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

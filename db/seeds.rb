@@ -1,6 +1,3 @@
 ApplicationRecord.transaction do
-  ListItem.delete_all
-  List.delete_all
-  Item.delete_all
-  User.delete_all
+  Category.find_or_create_by!(name: "未分類")
 end

@@ -1,15 +1,22 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list, only: [ :show, :edit, :update, :destroy, :complete, :start_checking, :finish_checking, :back_waiting, :reuse ]
+  before_action :set_categories, only: [ :new, :edit, :create, :update ]
 
   def index
     @checking_lists = current_user.lists.checking
     @today_lists    = current_user.lists.scheduled_today
-    @all_lists      = current_user.lists.order(scheduled_on: :asc, scheduled_time: :asc, updated_at: :desc)
+    @all_lists      = current_user.lists.includes(:category).order(scheduled_on: :asc, scheduled_time: :asc, updated_at: :desc)
 
     if params[:status].present?
       @all_lists = @all_lists.with_status(params[:status])
     end
+
+    if params[:category_id].present?
+      @all_lists = @all_lists.where(category_id: params[:category_id])
+    end
+
+    @categories = current_user.categories.ordered
   end
 
   def show
@@ -23,6 +30,7 @@ class ListsController < ApplicationController
 
   def create
     @list = current_user.lists.build(list_params)
+    assign_category
 
     if @list.save
       redirect_to @list, notice: "リストを作成しました"
@@ -35,6 +43,8 @@ class ListsController < ApplicationController
   end
 
   def update
+    assign_category
+
     if @list.update(list_params)
       redirect_to @list, notice: "リストを更新しました"
     else
@@ -109,7 +119,31 @@ class ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(
-      :title, :status, :priority, :note, :scheduled_on, :scheduled_time
+      :title, :status, :priority, :note, :scheduled_on, :scheduled_time, :category_id
     )
+  end
+
+  def set_categories
+    @categories = current_user.categories.ordered
+  end
+
+  def assign_category
+    return unless params[:new_category_name].present?
+
+    category_name = params[:new_category_name].strip
+
+    if category_name.blank?
+      @list.errors.add(:base, "カテゴリー名を入力してください")
+      return
+    end
+
+    category = Category.find_or_create_by(
+      user: current_user, name: category_name)
+
+    if category.persisted?
+      @list.category = category
+    else
+      @list.errors.add(:base, "カテゴリーの作成に失敗しました: #{category.errors.full_messages.join(', ')}")
+    end
   end
 end

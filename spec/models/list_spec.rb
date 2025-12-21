@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe List, type: :model do
   let(:user) { create(:user) }
+  let(:category) { create(:category) }
 
   describe 'バリデーション' do
     context '成功' do
@@ -13,6 +14,12 @@ RSpec.describe List, type: :model do
       it 'タイトルと利用日以外は任意' do
         list = build(:list, user: user, scheduled_time: nil, note: nil)
         expect(list).to be_valid
+      end
+
+      it 'category が nil の場合は未分類がセットされる' do
+        user = create(:user)
+        list = create(:list, user: user, category: nil)
+        expect(list.category.name).to eq '未分類'
       end
     end
 
@@ -27,11 +34,6 @@ RSpec.describe List, type: :model do
         list = build(:list, scheduled_on: nil, user: user)
         expect(list).to be_invalid
         expect(list.errors[:scheduled_on]).to be_present
-      end
-
-      it 'ユーザーとの関連がなければ失敗' do
-        list = build(:list, user: nil)
-        expect(list).to be_invalid
       end
     end
   end

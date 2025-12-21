@@ -20,7 +20,7 @@ RSpec.describe 'Lists', type: :system do
       end
 
       it 'ステータスが表示される' do
-        list = create(:list, user: user, status: :waiting)
+        create(:list, user: user, status: :waiting)
 
         visit lists_path
 
@@ -135,6 +135,72 @@ RSpec.describe 'Lists', type: :system do
         end
 
         expect(ListItem.exists?(li.id)).to be false
+      end
+    end
+  end
+
+  describe 'カテゴリ' do
+    context '作成' do
+      it 'カテゴリを選ばず作成すると未分類になる' do
+        visit new_list_path
+
+        fill_in 'タイトル', with: 'テストリスト'
+        click_button '作成'
+
+        expect(page).to have_content('未分類')
+      end
+
+      it '新しいカテゴリを作成' do
+        category = create(:category, user: user, name: '野菜')
+        create(:list, user: user, category: category)
+        visit lists_path
+
+        expect(page).to have_content('野菜')
+      end
+
+      it '空のカテゴリの場合は未分類' do
+        visit new_list_path
+
+        fill_in 'タイトル', with: 'テストリスト'
+        fill_in 'new_category_name', with: '   ' # 空白のみ
+        click_button '作成'
+
+        expect(page).to have_content('未分類')
+      end
+    end
+
+    context 'ビュー' do
+      it '絞り込みができる' do
+        category1 = create(:category, user: user, name: '果物')
+        category2 = create(:category, user: user, name: '野菜')
+
+        create(:list, user: user, category: category1, title: 'A', scheduled_on: Date.yesterday)
+        create(:list, user: user, category: category2, title: 'B')
+
+        visit lists_path
+
+        select '野菜', from: 'カテゴリー'
+        click_button '絞り込む'
+
+        expect(page).not_to have_link('A')
+        expect(page).to have_link('B')
+      end
+    end
+
+    context '削除' do
+      it 'カテゴリを削除してもリストは残る' do
+        category1 = create(:category, user: user, name: '果物')
+        list_with_category = create(:list, user: user, category: category1, title: '削除テスト')
+        visit lists_path
+
+        expect(page).to have_content('果物')
+
+        category1.destroy
+
+        visit list_path(list_with_category)
+
+        expect(page).to have_content('削除テスト')
+        expect(page).not_to have_content('果物')
       end
     end
   end

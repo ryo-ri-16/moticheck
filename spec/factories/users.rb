@@ -1,6 +1,12 @@
 FactoryBot.define do
   factory :user do
-    sequence(:email) { |n| "test#{n}@example.com" }
-    password { "password123" }
+    email { Faker::Internet.email }
+    password { "password" }
+
+    trait :without_default_category do
+      after(:create) do |user|
+        user.categories.destroy_all
+      end
+    end
   end
 end

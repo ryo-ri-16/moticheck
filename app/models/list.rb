@@ -1,7 +1,10 @@
 class List < ApplicationRecord
   belongs_to :user
+  belongs_to :category, optional: true
   has_many :list_items, dependent: :destroy
   has_many :items, through: :list_items
+
+  before_validation :set_default_category
 
   validates :title, presence: true, length: { maximum: 100 }
   validates :status, presence: true
@@ -53,5 +56,12 @@ class List < ApplicationRecord
 
   def checked_count
     checked_items.count
+  end
+
+  private
+
+  def set_default_category
+    self.category ||= Category.find_or_create_by!(
+      user: user, name: "未分類")
   end
 end

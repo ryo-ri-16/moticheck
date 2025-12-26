@@ -19,6 +19,11 @@
       <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" type="submit">コピー</button>
       <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
     </form>
+    <%= button_to "テンプレ化",
+          to_templates_list_path(list),
+          method: :post,
+          data: { turbo: false },
+          class: "block w-full text-left px-2 py-1 hover:bg-gray-100" %>
 
     <div class="border-t border-gray-200 my-1"></div>
 

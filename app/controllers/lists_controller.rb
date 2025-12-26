@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_list, only: [ :show, :edit, :update, :destroy, :complete, :start_checking, :finish_checking, :back_waiting, :reuse ]
+  before_action :set_list, only: [ :show, :edit, :update, :destroy, :complete, :start_checking, :finish_checking, :back_waiting, :reuse, :to_templates ]
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
 
   def index
@@ -13,10 +13,14 @@ class ListsController < ApplicationController
     end
 
     if params[:category_id].present?
+      @current_category = current_user.categories.find_by(id: params[:category_id])
       @all_lists = @all_lists.where(category_id: params[:category_id])
     end
 
-    @categories = current_user.categories.ordered
+    @categories = Category
+                .for_user(current_user)
+                .select("DISTINCT ON (LOWER(name)) *")
+                .order("LOWER(name), user_id NULLS FIRST")
   end
 
   def show
@@ -111,6 +115,36 @@ class ListsController < ApplicationController
     end
   end
 
+  def to_templates
+    list_template = nil
+
+    if current_user.list_templates.exists?(title: @list.title)
+      redirect_to list_path(@list),
+        alert: "同じタイトルのテンプレートが既にあります"
+      return
+    end
+
+    ActiveRecord::Base.transaction do
+      list_template = current_user.list_templates.create!(
+        title: @list.title,
+        category: @list.category
+      )
+
+      @list.list_items.order(:position).each do |item|
+        list_template.list_template_items.create!(name: item.item.name)
+      end
+    end
+
+    redirect_to list_template_path(list_template),
+                notice: "リストからテンプレートを作成しました"
+
+  rescue ActiveRecord::RecordInvalid => e
+    error_messages = e.record.errors.full_messages.join(", ")
+
+    redirect_to list_path(@list),
+                alert: "テンプレート作成に失敗しました: #{error_messages}"
+  end
+
   private
 
   def set_list
@@ -124,7 +158,7 @@ class ListsController < ApplicationController
   end
 
   def set_categories
-    @categories = current_user.categories.ordered
+    @categories = Category.for_user(current_user).ordered
   end
 
   def assign_category

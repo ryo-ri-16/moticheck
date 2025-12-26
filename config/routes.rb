@@ -15,6 +15,12 @@ Rails.application.routes.draw do
       patch :finish_checking
       patch :back_waiting
       post :reuse
+      post :to_templates
+    end
+  end
+  resources :list_templates do
+    member do
+      post :to_lists
     end
   end
   get "home", to: "home#index"

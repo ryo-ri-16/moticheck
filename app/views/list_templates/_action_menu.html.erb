@@ -1,0 +1,28 @@
+<div data-controller="menu" class="relative">
+  <button
+    data-action="click->menu#toggle"
+    class="p-1 hover:bg-gray-100 rounded"
+    aria-label="メニューを開く">
+    ⋯
+  </button>
+
+  <div data-menu-target="menu"
+        class="absolute right-0 mt-2 bg-white shadow rounded text-sm hidden min-w-40 whitespace-nowrap z-10">
+
+    <%= button_to "リストへコピー",
+          to_lists_list_template_path(list_template),
+          method: :post,
+          data: { turbo: false },
+          class: "flex w-full items-center px-4 py-2 hover:bg-gray-100 text-left" %>
+
+    <% if deletable %>
+      <div class="border-t my-1"></div>
+
+      <%= button_to "削除",
+            list_template_path(list_template),
+            method: :delete,
+            data: { turbo_confirm: "本当に削除しますか?" },
+            class: "flex w-full items-center px-4 py-2 hover:bg-gray-100 text-red-600 text-left" %>
+    <% end %>
+  </div>
+</div>

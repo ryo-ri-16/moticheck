@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Lists', type: :system do
   let(:user) { create(:user) }
+  let(:category) { create(:category) }
 
   before do
     login_as(user)
@@ -201,6 +202,52 @@ RSpec.describe 'Lists', type: :system do
 
         expect(page).to have_content('削除テスト')
         expect(page).not_to have_content('果物')
+      end
+    end
+  end
+
+  describe 'テンプレートへのコピー' do
+    let!(:list) { create(:list, user: user, title: 'テンプレート', category: category) }
+    let!(:item1) { create(:item, name: 'アイテム1') }
+    let!(:item2) { create(:item, name: 'アイテム2') }
+    let!(:list_item1) do
+      create(:list_item, list: list, item: item1, position: 1)
+    end
+
+    let!(:list_item2) do
+      create(:list_item, list: list, item: item2, position: 2)
+    end
+
+    context '成功' do
+      it 'リストをテンプレートにできている' do
+        visit list_path(list)
+
+        click_button 'テンプレートとして保存'
+
+        copied_template = ListTemplate.find_by!(user: user, title: 'テンプレート')
+
+        expect(page).to have_current_path(list_template_path(copied_template))
+
+        expect(page).to have_content('テンプレート')
+        expect(page).to have_content(category.name)
+        expect(page).to have_content('アイテム1')
+        expect(page).to have_content('アイテム2')
+
+        expect(copied_template.title).to eq('テンプレート')
+        expect(copied_template.category).to eq(category)
+        expect(copied_template.list_template_items.count).to eq(2)
+      end
+    end
+
+    context '失敗' do
+      it '同じタイトルのものがテンプレートにあるとコピーできない' do
+        create(:list_template, user: user, title: 'テンプレート', category: category)
+
+        visit list_path(list)
+        click_button 'テンプレートとして保存'
+
+        expect(page).to have_current_path(list_path(list))
+        expect(page).to have_content('同じタイトルのテンプレート')
       end
     end
   end

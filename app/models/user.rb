@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :lists, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :list_templates, dependent: :destroy
   devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :validatable
 

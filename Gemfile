@@ -27,6 +27,8 @@ gem "dotenv-rails", groups: %w[development test]
 
 gem "deep_cloneable"
 
+gem "acts_as_list"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

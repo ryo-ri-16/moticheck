@@ -1,0 +1,25 @@
+<% content_for :title, "テンプレート" %>
+
+<div class="container py-4 pb-24">
+  <section class="mb-6">
+    <h2 class="text-xl font-bold mb-4">お気に入りテンプレート</h2>
+    <% if @user_templates.any? %>
+      <div class="space-y-4">
+        <%= render partial: 'list_template', collection: @user_templates, locals: { deletable: true } %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", message: "テンプレートはありません" %>
+    <% end %>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xl font-bold mb-4">初期テンプレート</h2>
+    <% if @global_templates.any? %>
+      <div class="space-y-4">
+        <%= render partial: 'list_template', collection: @global_templates, locals: { deletable: false } %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", message: "テンプレートはありません" %>
+    <% end %>
+  </section>
+</div>

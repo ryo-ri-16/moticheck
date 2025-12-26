@@ -3,7 +3,7 @@
     <% if @list.waiting? %>
       <%= button_to "チェック開始", start_checking_list_path(@list),
         method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
-    <% elsif @list.checking? && list.checked_count == @list_items.count %>
+    <% elsif @list.checking? && @list.checked_count == @list_items.count %>
       <%= button_to "チェック完了", finish_checking_list_path(@list),
         method: :patch, class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
     <% end %>
@@ -25,6 +25,15 @@
         method: :delete,
         data: { turbo_confirm: "本当に削除しますか?" },
         class: "flex-1 min-w-[140px] px-4 py-2 text-red-600 border border-red-300 hover:bg-red-50 rounded-md font-medium transition-colors" %>
+    <% end %>
+  </div>
+  <div class="mt-4 text-sm text-gray-500">
+    <% unless @list.checking? %>
+      <%= button_to "テンプレートとして保存",
+            to_templates_list_path(@list),
+            method: :post,
+            class: "inline-flex items-center gap-1 hover:text-gray-700",
+            data: { turbo_confirm: "このリストをテンプレートとして保存しますか？" } %>
     <% end %>
   </div>
 </div>

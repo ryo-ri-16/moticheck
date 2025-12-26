@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_21_022203) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_22_115250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_21_022203) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["user_id", "name"], name: "index_categories_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
@@ -41,6 +41,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_21_022203) do
     t.index ["item_id"], name: "index_list_items_on_item_id"
     t.index ["list_id", "item_id"], name: "index_list_items_on_list_id_and_item_id", unique: true
     t.index ["list_id"], name: "index_list_items_on_list_id"
+  end
+
+  create_table "list_template_items", force: :cascade do |t|
+    t.string "name"
+    t.bigint "list_template_id", null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_template_id"], name: "index_list_template_items_on_list_template_id"
+  end
+
+  create_table "list_templates", force: :cascade do |t|
+    t.string "title", null: false
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.boolean "is_initial", default: false, null: false
+    t.index ["category_id"], name: "index_list_templates_on_category_id"
+    t.index ["is_initial"], name: "index_list_templates_on_is_initial"
+    t.index ["user_id", "title"], name: "index_list_templates_on_user_id_and_title"
+    t.index ["user_id"], name: "index_list_templates_on_user_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -78,6 +101,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_21_022203) do
   add_foreign_key "categories", "users"
   add_foreign_key "list_items", "items"
   add_foreign_key "list_items", "lists"
+  add_foreign_key "list_template_items", "list_templates"
+  add_foreign_key "list_templates", "categories"
+  add_foreign_key "list_templates", "users"
   add_foreign_key "lists", "categories"
   add_foreign_key "lists", "users"
 end

@@ -19,7 +19,7 @@ gem "jbuilder"
 
 gem "devise"
 
-gem "tailwindcss-rails", "~> 3.0"
+gem "tailwindcss-rails", "~> 4.4"
 
 gem "rails-i18n"
 

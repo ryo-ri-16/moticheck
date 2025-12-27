@@ -15,6 +15,17 @@ class List < ApplicationRecord
   scope :high_priority, -> { where(priority: true) }
   # 一覧表示用
   scope :scheduled_today, -> { where(scheduled_on: Date.current) }
+  scope :near_future, -> { where(scheduled_on: Date.current + 1..Date.current + 3) }
+  scope :past_not_complete, -> { where("scheduled_on < ?", Date.current).where.not(status: :completed) }
+  scope :ordered_for_home, -> {
+    order(
+      Arel.sql("CASE WHEN status = #{statuses[:completed]} THEN 1 ELSE 0 END"),
+      Arel.sql("CASE WHEN scheduled_on < CURRENT_DATE THEN 1 ELSE 0 END"),
+      scheduled_on: :asc,
+      scheduled_time: :asc,
+      updated_at: :desc
+    )
+  }
   scope :incomplete, -> { where.not(status: :completed) }
   scope :checking, -> { where(status: :checking) }
   scope :complete, -> { where(status: :completed) }

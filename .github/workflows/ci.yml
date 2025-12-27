@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Run RSpec
+        run: bin/rspec
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/moticheck_test
       - name: Checkout code
         uses: actions/checkout@v4
 

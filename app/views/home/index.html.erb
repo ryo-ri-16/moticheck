@@ -1,13 +1,58 @@
 <% content_for :title, "持ちチェク" %>
-
-<h1>ログイン済み</h1>
-<p>ようこそ<%= current_user.name %>さん。</p>
-<p><%= current_user.email %> でログイン中です。</p>
-
-<div class="mt-4 mb-4 text-right">
-  <%= button_to "ログアウト", destroy_user_session_path,
+<% content_for(:header_right) { button_to "ログアウト", destroy_user_session_path,
               method: :delete,
-              class: "text-red-600 font-semibold" %>
+              class: "text-red-600 font-semibold" } %>
+
+<div class="container py-4 pb-24">
+  <% if @today_lists.empty? && @near_lists.empty? && @past_lists.empty? %>
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-center">
+      <h3 class="text-lg font-bold text-gray-800 mb-2">
+        持ちチェクへようこそ!
+      </h3>
+      <p class="text-gray-600 text-sm mb-4">
+        まだリストがありません。<br>
+      </p>
+      <div class="flex items-center justify-center gap-2 text-sm text-gray-500">
+        <span>右下の<span class="font-bold text-blue-600">＋ボタン</span>から作成できます</span>
+      </div>
+    </div>
+  <% end %>
+
+  <section class="mb-6">
+    <h2 class="text-xl font-bold mb-1">今日のリスト(<%= @today_lists.size %>)</h2>
+    <p class="text-sm text-gray-500 mb-4">今日使う持ち物リストをチェックしましょう</p>
+    <% if @today_lists.any? %>
+      <div class="space-y-4">
+        <%= render @today_lists %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", message: "今日のリストはありません" %>
+    <% end %>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xl font-bold mb-1">近日中のリスト(<%= @near_lists.size %>)</h2>
+    <p class="text-sm text-gray-500 mb-4">3日以内に予定されている持ち物リスト</p>
+    <% if @near_lists.any? %>
+      <div class="space-y-4">
+        <%= render @near_lists %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", message: "近日中のリストはありません" %>
+    <% end %>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xl font-bold mb-1">過去の未完了リスト(<%= @past_lists.size %>)</h2>
+    <p class="text-sm text-gray-500 mb-4">利用日を過ぎたが完了していないリスト</p>
+    <% if @past_lists.any? %>
+      <div class="space-y-4">
+        <%= render @past_lists %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", message: "全てのリストをチェック済みです!" %>
+    <% end %>
+  </section>
 </div>
 
 <%= render "shared/fab" %>

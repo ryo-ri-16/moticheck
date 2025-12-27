@@ -1,5 +1,6 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 checking for unistd.h... yes
 checking for rb_io_descriptor()... yes
 checking for linux/aio_abi.h... no
@@ -13,11 +14,11 @@ checking for port_event_t in port.h... no
 checking for sys/resource.h... yes
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-4xbu5z sitelibdir\=./.gem.20251206-18884-4xbu5z clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-c9u838 sitelibdir\=./.gem.20251227-9902-c9u838 clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-4xbu5z sitelibdir\=./.gem.20251206-18884-4xbu5z
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-c9u838 sitelibdir\=./.gem.20251227-9902-c9u838
 compiling bytebuffer.c
 compiling monitor.c
 compiling nio4r_ext.c
@@ -360,9 +361,9 @@ compiling selector.c
 linking shared-object nio4r_ext.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-4xbu5z sitelibdir\=./.gem.20251206-18884-4xbu5z install
-/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20251206-18884-4xbu5z
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-c9u838 sitelibdir\=./.gem.20251227-9902-c9u838 install
+/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20251227-9902-c9u838
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-4xbu5z sitelibdir\=./.gem.20251206-18884-4xbu5z clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-c9u838 sitelibdir\=./.gem.20251227-9902-c9u838 clean

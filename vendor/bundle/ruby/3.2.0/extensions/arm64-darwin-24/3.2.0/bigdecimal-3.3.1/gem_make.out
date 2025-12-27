@@ -1,5 +1,6 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 checking for __builtin_clz()... yes
 checking for __builtin_clzl()... yes
 checking for __builtin_clzll()... yes
@@ -19,19 +20,19 @@ checking for rb_category_warn() in ruby.h... yes
 checking for RB_WARN_CATEGORY_DEPRECATED in ruby.h... yes
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-34hf2e sitelibdir\=./.gem.20251206-18884-34hf2e clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-3ay72w sitelibdir\=./.gem.20251227-9902-3ay72w clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-34hf2e sitelibdir\=./.gem.20251206-18884-34hf2e
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-3ay72w sitelibdir\=./.gem.20251227-9902-3ay72w
 compiling bigdecimal.c
 compiling missing.c
 linking shared-object bigdecimal.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-34hf2e sitelibdir\=./.gem.20251206-18884-34hf2e install
-/usr/bin/install -c -m 0755 bigdecimal.bundle ./.gem.20251206-18884-34hf2e
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-3ay72w sitelibdir\=./.gem.20251227-9902-3ay72w install
+/usr/bin/install -c -m 0755 bigdecimal.bundle ./.gem.20251227-9902-3ay72w
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-34hf2e sitelibdir\=./.gem.20251206-18884-34hf2e clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bigdecimal-3.3.1/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-3ay72w sitelibdir\=./.gem.20251227-9902-3ay72w clean

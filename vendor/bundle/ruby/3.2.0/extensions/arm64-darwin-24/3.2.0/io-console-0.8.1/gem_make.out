@@ -1,5 +1,6 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 checking for rb_syserr_fail_str(0, Qnil)... yes
 checking for rb_interned_str_cstr()... yes
 checking for rb_io_path() in ruby/io.h... no
@@ -15,18 +16,18 @@ checking for HAVE_RUBY_FIBER_SCHEDULER_H... yes
 checking for ttyname_r()... yes
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-qe2c4u sitelibdir\=./.gem.20251206-18884-qe2c4u clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-yjxzmm sitelibdir\=./.gem.20251227-9902-yjxzmm clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-qe2c4u sitelibdir\=./.gem.20251206-18884-qe2c4u
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-yjxzmm sitelibdir\=./.gem.20251227-9902-yjxzmm
 compiling console.c
 linking shared-object io/console.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-qe2c4u sitelibdir\=./.gem.20251206-18884-qe2c4u install
-/usr/bin/install -c -m 0755 console.bundle ./.gem.20251206-18884-qe2c4u/io
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-yjxzmm sitelibdir\=./.gem.20251227-9902-yjxzmm install
+/usr/bin/install -c -m 0755 console.bundle ./.gem.20251227-9902-yjxzmm/io
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-qe2c4u sitelibdir\=./.gem.20251206-18884-qe2c4u clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/io-console-0.8.1/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-yjxzmm sitelibdir\=./.gem.20251227-9902-yjxzmm clean

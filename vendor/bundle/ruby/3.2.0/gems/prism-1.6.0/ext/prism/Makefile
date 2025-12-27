@@ -86,7 +86,7 @@ warnflags = -Wall -Wextra -Wextra-tokens -Wdeprecated-declarations -Wdivision-by
 cppflags = 
 CCDLFLAGS = -fno-common
 CFLAGS   = $(CCDLFLAGS) $(cflags)  -fno-common -pipe -fvisibility=hidden $(ARCH_FLAG)
-INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir) -I/Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/prism-1.6.0/include -I/Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/prism-1.6.0/ext
+INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir) -I/Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/prism-1.6.0/include -I/Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/prism-1.6.0/ext
 DEFS     = 
 CPPFLAGS =  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT $(DEFS) $(cppflags)
 CXXFLAGS = $(CCDLFLAGS) -fdeclspec $(ARCH_FLAG)

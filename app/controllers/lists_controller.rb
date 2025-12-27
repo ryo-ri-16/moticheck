@@ -4,9 +4,10 @@ class ListsController < ApplicationController
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
 
   def index
-    @checking_lists = current_user.lists.checking
-    @today_lists    = current_user.lists.scheduled_today
-    @all_lists      = current_user.lists.includes(:category).order(scheduled_on: :asc, scheduled_time: :asc, updated_at: :desc)
+    lists = current_user.lists.includes(:category, :list_items)
+    @checking_lists = lists.checking
+    @today_lists    = lists.scheduled_today
+    @all_lists      = lists.ordered_for_home
 
     if params[:status].present?
       @all_lists = @all_lists.with_status(params[:status])

@@ -1,23 +1,24 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 checking for fdatasync() in unistd.h... yes
 checking for whether -D_GNU_SOURCE is accepted as CPPFLAGS... yes
 checking for whether -O3 is accepted as CFLAGS... yes
 checking for whether -std=c99 is accepted as CFLAGS... yes
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-z1scjb sitelibdir\=./.gem.20251206-18884-z1scjb clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-imylqp sitelibdir\=./.gem.20251227-9902-imylqp clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-z1scjb sitelibdir\=./.gem.20251206-18884-z1scjb
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-imylqp sitelibdir\=./.gem.20251227-9902-imylqp
 compiling bootsnap.c
 linking shared-object bootsnap/bootsnap.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-z1scjb sitelibdir\=./.gem.20251206-18884-z1scjb install
-/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20251206-18884-z1scjb/bootsnap
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-imylqp sitelibdir\=./.gem.20251227-9902-imylqp install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20251227-9902-imylqp/bootsnap
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-z1scjb sitelibdir\=./.gem.20251206-18884-z1scjb clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.19.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-imylqp sitelibdir\=./.gem.20251227-9902-imylqp clean

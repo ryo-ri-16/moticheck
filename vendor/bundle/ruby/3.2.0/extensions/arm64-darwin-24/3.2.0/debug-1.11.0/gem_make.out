@@ -1,20 +1,21 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-gzprcs sitelibdir\=./.gem.20251206-18884-gzprcs clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-m4ctm4 sitelibdir\=./.gem.20251227-9902-m4ctm4 clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-gzprcs sitelibdir\=./.gem.20251206-18884-gzprcs
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-m4ctm4 sitelibdir\=./.gem.20251227-9902-m4ctm4
 compiling debug.c
 compiling iseq_collector.c
 linking shared-object debug/debug.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-gzprcs sitelibdir\=./.gem.20251206-18884-gzprcs install
-/usr/bin/install -c -m 0755 debug.bundle ./.gem.20251206-18884-gzprcs/debug
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-m4ctm4 sitelibdir\=./.gem.20251227-9902-m4ctm4 install
+/usr/bin/install -c -m 0755 debug.bundle ./.gem.20251227-9902-m4ctm4/debug
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-gzprcs sitelibdir\=./.gem.20251206-18884-gzprcs clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-m4ctm4 sitelibdir\=./.gem.20251227-9902-m4ctm4 clean

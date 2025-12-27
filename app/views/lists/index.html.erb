@@ -54,7 +54,7 @@
     </div>
   <% end %>
   <section class="mb-6">
-    <h2 class="text-xl font-bold mb-4">チェック中</h2>
+    <h2 class="text-xl font-bold mb-4">チェック中(<%= @checking_lists.size %>)</h2>
     <% if @checking_lists.any? %>
       <div class="space-y-4">
         <%= render @checking_lists %>
@@ -65,7 +65,7 @@
   </section>
 
   <section class="mb-6">
-    <h2 class="text-xl font-bold mb-4">今日のリスト</h2>
+    <h2 class="text-xl font-bold mb-4">今日のリスト(<%= @today_lists.size %>)</h2>
     <% if @today_lists.any? %>
       <div class="space-y-4">
         <%= render @today_lists %>

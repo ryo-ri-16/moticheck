@@ -1,19 +1,20 @@
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
+/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 creating Makefile
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-e41rw1 sitelibdir\=./.gem.20251206-18884-e41rw1 clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-vrsyie sitelibdir\=./.gem.20251227-9902-vrsyie clean
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-e41rw1 sitelibdir\=./.gem.20251206-18884-e41rw1
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-vrsyie sitelibdir\=./.gem.20251227-9902-vrsyie
 compiling cruby.c
 linking shared-object skiptrace/internal/cruby.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-e41rw1 sitelibdir\=./.gem.20251206-18884-e41rw1 install
-/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20251206-18884-e41rw1/skiptrace/internal
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-vrsyie sitelibdir\=./.gem.20251227-9902-vrsyie install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20251227-9902-vrsyie/skiptrace/internal
 
-current directory: /Users/141421356u/Data/items_check_app/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
-make DESTDIR\= sitearchdir\=./.gem.20251206-18884-e41rw1 sitelibdir\=./.gem.20251206-18884-e41rw1 clean
+current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20251227-9902-vrsyie sitelibdir\=./.gem.20251227-9902-vrsyie clean

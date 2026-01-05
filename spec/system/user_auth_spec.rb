@@ -24,7 +24,8 @@ RSpec.describe "User authentication", type: :system do
       fill_in "パスワード", with: user.password
       click_button "ログインする"
 
-      # ログアウト実行
+      visit mypage_path
+
       click_button "ログアウト"
 
       expect(page).to have_current_path(root_path)

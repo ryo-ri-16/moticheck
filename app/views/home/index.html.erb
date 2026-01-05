@@ -1,7 +1,4 @@
 <% content_for :title, "持ちチェク" %>
-<% content_for(:header_right) { button_to "ログアウト", destroy_user_session_path,
-              method: :delete,
-              class: "text-red-600 font-semibold" } %>
 
 <div class="container py-4 pb-24">
   <% if @today_lists.empty? && @near_lists.empty? && @past_lists.empty? %>

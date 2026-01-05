@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         patch :check_switching
       end
     end
+
     member do
       patch :start_checking
       patch :finish_checking
@@ -18,11 +19,19 @@ Rails.application.routes.draw do
       post :to_templates
     end
   end
+
   resources :list_templates do
     member do
       post :to_lists
     end
   end
+
   get "home", to: "home#index"
+  resource :mypage, only: [ :show ] do
+    get :term
+    get :privacy
+  end
+
+  resources :categories, only: [ :index, :destroy ]
   root "home#welcome"
 end

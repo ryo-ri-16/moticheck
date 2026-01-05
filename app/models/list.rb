@@ -69,6 +69,10 @@ class List < ApplicationRecord
     checked_items.count
   end
 
+  def category_name
+    category&.name || "未分類"
+  end
+
   private
 
   def set_default_category

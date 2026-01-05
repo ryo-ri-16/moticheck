@@ -1,0 +1,23 @@
+<div class="container py-4">
+  <h1 class="text-2xl font-bold mb-6">カテゴリー管理</h1>
+
+  <div class="bg-white rounded-lg shadow-sm">
+    <% visible_categories = @categories.reject { |c| c.name == "未分類" } %>
+
+    <% if visible_categories.any? %>
+      <ul class="divide-y">
+        <% visible_categories.each do |category| %>
+          <li class="p-4 flex justify-between items-center">
+            <span class="text-gray-800"><%= category.name %></span>
+            <%= button_to "削除", category_path(category),
+                method: :delete,
+                data: { turbo_confirm: "本当に削除しますか?" },
+                class: "text-red-600 hover:text-red-800" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="p-4 text-gray-500">管理できるカテゴリーがありません</p>
+    <% end %>
+  </div>
+</div>

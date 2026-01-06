@@ -1,13 +1,17 @@
 class ListTemplatesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :index
   before_action :set_list_template, only: [ :show, :to_lists ]
   before_action :set_user_template, only: [ :destroy ]
 
   def index
-    templates = current_user.list_templates.includes(:category, :list_template_items)
+    @global_templates = ListTemplate.global.includes(:category, :list_template_items)
 
-    @global_templates = ListTemplate.global
-    @user_templates    = templates.user_created.order(created_at: :desc)
+    if user_signed_in?
+      templates = current_user.list_templates.includes(:category, :list_template_items)
+      @user_templates = templates.user_created.order(created_at: :desc)
+    else
+      @user_templates = ListTemplate.none
+    end
   end
 
   def show
@@ -32,7 +36,9 @@ class ListTemplatesController < ApplicationController
       )
 
       @list_template.list_template_items.order(:position).each do |template_item|
-        list.items.create!(name: template_item.name)
+        item = Item.find_or_create_by!(name: template_item.name)
+
+        list.list_items.create!(item: item, position: template_item.position)
       end
 
       redirect_to list_path(list), notice: "テンプレートからリストを作成しました"

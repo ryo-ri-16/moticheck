@@ -117,8 +117,6 @@ class ListsController < ApplicationController
   end
 
   def to_templates
-    list_template = nil
-
     if current_user.list_templates.exists?(title: @list.title)
       redirect_to list_path(@list),
         alert: "同じタイトルのテンプレートが既にあります"
@@ -131,19 +129,17 @@ class ListsController < ApplicationController
         category: @list.category
       )
 
-      @list.list_items.order(:position).each do |item|
-        list_template.list_template_items.create!(name: item.item.name)
+      @list.list_items.order(:position).each do |list_item|
+        list_template.list_template_items.create!(name: list_item.item.name)
       end
     end
 
     redirect_to list_template_path(list_template),
                 notice: "リストからテンプレートを作成しました"
 
-  rescue ActiveRecord::RecordInvalid => e
-    error_messages = e.record.errors.full_messages.join(", ")
-
+  rescue ActiveRecord::RecordInvalid
     redirect_to list_path(@list),
-                alert: "テンプレート作成に失敗しました: #{error_messages}"
+                alert: "テンプレート作成に失敗しました"
   end
 
   private

@@ -4,7 +4,7 @@ class ListTemplatesController < ApplicationController
   before_action :set_user_template, only: [ :destroy ]
 
   def index
-    raise "INDEX UPDATED AT #{Time.current}"
+    Rails.logger.debug "INDEX CALLED"
 
     @global_templates = ListTemplate.global.includes(:category, :list_template_items)
 

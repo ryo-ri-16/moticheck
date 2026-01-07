@@ -1,11 +1,4 @@
 ApplicationRecord.transaction do
-  user = User.find_or_create_by!(email: "demo@example.com") do |u|
-    u.password = "password"
-  end
-
-  ListTemplate.where(is_initial: true).destroy_all
-
-
   templates_data = [
     {
       title: "外出の準備",
@@ -26,13 +19,14 @@ ApplicationRecord.transaction do
   ]
 
   templates_data.each do |data|
-    template = ListTemplate.create!(
+    template = ListTemplate.find_or_create_by!(
       title: data[:title],
+      user_id: nil,
       is_initial: true
     )
 
     data[:items].each.with_index(1) do |item_name, position|
-      template.list_template_items.create!(
+      template.list_template_items.find_or_create_by!(
         name: item_name,
         position: position
       )

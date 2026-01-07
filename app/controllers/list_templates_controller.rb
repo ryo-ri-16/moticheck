@@ -4,6 +4,8 @@ class ListTemplatesController < ApplicationController
   before_action :set_user_template, only: [ :destroy ]
 
   def index
+    raise "INDEX UPDATED AT #{Time.current}"
+
     @global_templates = ListTemplate.global.includes(:category, :list_template_items)
 
     if user_signed_in?

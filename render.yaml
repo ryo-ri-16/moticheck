@@ -3,6 +3,7 @@ services:
     name: moticheck
     env: docker
     dockerfilePath: ./Dockerfile
+
     envVars:
       - key: RAILS_ENV
         value: production
@@ -10,12 +11,18 @@ services:
         sync: false
       - key: DATABASE_URL
         fromDatabase:
-          name: your-db-name
+          name: moticheck-db
           property: connectionString
-    buildCommand: bundle install && bundle exec rails assets:precompile
-    startCommand: bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p $PORT
+
+    buildCommand: |
+      bundle install &&
+      bundle exec rails assets:precompile &&
+      bundle exec rails db:prepare
+
+    startCommand: bundle exec rails server -b 0.0.0.0 -p $PORT
 
 databases:
-  - name: your-db-name
-    databaseName: your_app_production
+  - name: moticheck-db
+    databaseName: moticheck_production
+    user: moticheckproduction
     user: your_app

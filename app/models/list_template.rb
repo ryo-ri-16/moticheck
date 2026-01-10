@@ -16,6 +16,6 @@ class ListTemplate < ApplicationRecord
   }
 
   def items_count
-    template_items_count
+    list_template_items_count
   end
 end

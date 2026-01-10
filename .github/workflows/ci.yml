@@ -8,25 +8,13 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
-        bundler-cache: true
-
-    - name: Run RSpec
-      run: bin/rspec
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432/moticheck_test
-
-    - name: Scan for common Rails security vulnerabilities using static analysis
-      run: bin/brakeman --no-pager
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - run: bin/brakeman --no-pager
 
   scan_js:
     runs-on: ubuntu-latest
@@ -93,6 +81,9 @@ jobs:
 
       - name: Prepare test DB
         run: bin/rails db:test:prepare
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/moticheck_test
 
       - name: Precompile assets
         run: bin/rails assets:precompile

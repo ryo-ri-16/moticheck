@@ -47,3 +47,11 @@ ja:
         waiting: 待機中
         checking: チェック中
         completed: 完了
+
+  time:
+    formats:
+      list:
+        "%m/%d(%a) %H:%M"
+      list_date:
+        "%m/%d(%a)"
+

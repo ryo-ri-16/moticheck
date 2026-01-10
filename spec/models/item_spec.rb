@@ -14,8 +14,8 @@ RSpec.describe Item, type: :model do
       end
 
       it '前後の空白を除去する' do
-        item = create(:item, name: '  りんご  ')
-        expect(item.name).to eq 'りんご'
+        item = Item.create!(name: '  牛肉  ')
+        expect(item.name).to eq '牛肉'
       end
     end
 
@@ -36,8 +36,8 @@ RSpec.describe Item, type: :model do
       end
 
       it '重複で失敗' do
-        create(:item, name: 'りんご')
-        same_name = build(:item, name: 'りんご')
+        Item.create!(name: 'チキン')
+        same_name = Item.new(name: 'チキン')
         expect(same_name).to be_invalid
       end
     end

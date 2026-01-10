@@ -4,9 +4,9 @@ class ListsController < ApplicationController
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
 
   def index
-    lists = current_user.lists.includes(:category, :list_items)
-    @checking_lists = lists.checking
-    @today_lists    = lists.scheduled_today
+    lists = current_user.lists.includes(:category)
+    @checking_lists = lists.checking.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
+    @today_lists    = lists.scheduled_today.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
     @all_lists      = lists.ordered_for_home
 
     if params[:status].present?
@@ -26,7 +26,12 @@ class ListsController < ApplicationController
 
   def show
     @list_items = @list.list_items.includes(:item).order(:position)
-    @checked_count = @list_items.where(checked: true).count
+
+    @unchecked_items = @list_items.reject(&:checked)
+    @checked_items   = @list_items.select(&:checked)
+
+    @total_count   = @list_items.size
+    @checked_count = @checked_items.size
   end
 
   def new
@@ -123,6 +128,8 @@ class ListsController < ApplicationController
       return
     end
 
+    list_template = nil
+
     ActiveRecord::Base.transaction do
       list_template = current_user.list_templates.create!(
         title: @list.title,
@@ -146,6 +153,9 @@ class ListsController < ApplicationController
 
   def set_list
     @list = current_user.lists.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to lists_path, alert: "このリストは既に削除されています"
+    return # rubocop:disable Style/RedundantReturn
   end
 
   def list_params

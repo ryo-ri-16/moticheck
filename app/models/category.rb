@@ -2,6 +2,7 @@ class Category < ApplicationRecord
   UNCATEGORIZED_NAME = "未分類"
   belongs_to :user, optional: true
   has_many :lists, dependent: :nullify
+  has_many :list_templates, dependent: :nullify
 
   validates :name, presence: true,
                     uniqueness: { case_sensitive: false, scope: :user_id  },

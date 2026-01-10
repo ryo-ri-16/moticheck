@@ -125,7 +125,7 @@ RSpec.describe 'Lists', type: :system do
 
       it 'アイテムを削除できる' do
         list = create(:list, user: user)
-        item = create(:item, name: 'りんご')
+        item = Item.find_or_create_by!(name: 'りんご')
         li = create(:list_item, list: list, item: item)
 
         visit list_path(list)

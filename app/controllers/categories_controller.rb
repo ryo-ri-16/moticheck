@@ -6,8 +6,8 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    if category.destroy
-      redirect_to categories_path, notice: "カテゴリーを削除しました"
+    if @category.destroy
+      redirect_to categories_path, notice: "カテゴリーを削除しました(関連リストは未分類となります)"
     else
       redirect_to categories_path, alert: "カテゴリーの削除に失敗しました"
     end

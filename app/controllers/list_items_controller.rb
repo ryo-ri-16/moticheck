@@ -67,6 +67,10 @@ class ListItemsController < ApplicationController
 
   def set_list_item
     @list_item = @list.list_items.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to list_path(@list),
+                alert: "このアイテムは既に削除されています"
+    return # rubocop:disable Style/RedundantReturn
   end
 
   def list_item_params

@@ -1,6 +1,5 @@
 current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/puma-7.1.0/ext/puma_http11
 /Users/141421356u/.rbenv/versions/3.2.8/bin/ruby extconf.rb
-/Users/141421356u/.rbenv/versions/3.2.8/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
 checking for BIO_read() in -llibcrypto... no
 checking for BIO_read() in -lcrypto... yes
 checking for SSL_CTX_new() in -lssl... yes
@@ -26,10 +25,10 @@ checking for SSL_get1_peer_certificate() in openssl/ssl.h... yes
 creating Makefile
 
 current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/puma-7.1.0/ext/puma_http11
-make DESTDIR\= sitearchdir\=./.gem.20251227-9902-etubme sitelibdir\=./.gem.20251227-9902-etubme clean
+make DESTDIR\= sitearchdir\=./.gem.20260110-34066-qxokin sitelibdir\=./.gem.20260110-34066-qxokin clean
 
 current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/puma-7.1.0/ext/puma_http11
-make DESTDIR\= sitearchdir\=./.gem.20251227-9902-etubme sitelibdir\=./.gem.20251227-9902-etubme
+make DESTDIR\= sitearchdir\=./.gem.20260110-34066-qxokin sitelibdir\=./.gem.20260110-34066-qxokin
 compiling http11_parser.c
 compiling mini_ssl.c
 compiling puma_http11.c
@@ -37,8 +36,8 @@ linking shared-object puma/puma_http11.bundle
 ld: warning: ignoring duplicate libraries: '-lruby.3.2'
 
 current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/puma-7.1.0/ext/puma_http11
-make DESTDIR\= sitearchdir\=./.gem.20251227-9902-etubme sitelibdir\=./.gem.20251227-9902-etubme install
-/usr/bin/install -c -m 0755 puma_http11.bundle ./.gem.20251227-9902-etubme/puma
+make DESTDIR\= sitearchdir\=./.gem.20260110-34066-qxokin sitelibdir\=./.gem.20260110-34066-qxokin install
+/usr/bin/install -c -m 0755 puma_http11.bundle ./.gem.20260110-34066-qxokin/puma
 
 current directory: /Users/141421356u/Data/moticheck/vendor/bundle/ruby/3.2.0/gems/puma-7.1.0/ext/puma_http11
-make DESTDIR\= sitearchdir\=./.gem.20251227-9902-etubme sitelibdir\=./.gem.20251227-9902-etubme clean
+make DESTDIR\= sitearchdir\=./.gem.20260110-34066-qxokin sitelibdir\=./.gem.20260110-34066-qxokin clean

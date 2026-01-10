@@ -4,3 +4,12 @@ ja:
       waiting: "待機中"
       checking: "チェック中"
       completed: "完了"
+  date:
+    formats:
+      list: "%m/%d(%a)"
+      list_long: "%Y年%-m月%-d日(%a)"
+
+  time:
+    formats:
+      list: "%m/%d(%a) %H:%M"
+      list_long: "%Y年%-m月%-d日(%a) %H:%M"

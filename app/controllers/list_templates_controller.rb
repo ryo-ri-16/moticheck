@@ -4,10 +4,10 @@ class ListTemplatesController < ApplicationController
   before_action :set_user_template, only: [ :destroy ]
 
   def index
-    @global_templates = ListTemplate.global.includes(:category, :list_template_items)
+    @global_templates = ListTemplate.global.includes(:category)
 
     if user_signed_in?
-      templates = current_user.list_templates.includes(:category, :list_template_items)
+      templates = current_user.list_templates.includes(:category)
       @user_templates = templates.user_created.order(created_at: :desc)
     else
       @user_templates = ListTemplate.none
@@ -51,11 +51,18 @@ class ListTemplatesController < ApplicationController
 
   def set_list_template
     @list_template = ListTemplate
-                    .for_user(current_user)
-                    .find(params[:id])
+                      .for_user(current_user)
+                      .find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to list_templates_path,
+                alert: "このテンプレートは既に削除されています"
+    return # rubocop:disable Style/RedundantReturn
   end
 
   def set_user_template
     @user_template = current_user.list_templates.user_created.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to list_templates_path, alert: "このテンプレートは既に削除されています"
+    return # rubocop:disable Style/RedundantReturn
   end
 end

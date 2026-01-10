@@ -1,0 +1,9 @@
+ja:
+  errors:
+    messages:
+      taken: "はすでに使用されています"
+
+  devise:
+    registrations:
+      user:
+        signed_up: "登録が完了しました"

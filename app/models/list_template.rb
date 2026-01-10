@@ -14,4 +14,8 @@ class ListTemplate < ApplicationRecord
   scope :for_user_custom, ->(user) {
     where(is_initial: false, user_id: user.id)
   }
+
+  def items_count
+    template_items_count
+  end
 end

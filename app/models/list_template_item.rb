@@ -1,5 +1,6 @@
 class ListTemplateItem < ApplicationRecord
-  belongs_to :list_template
+  belongs_to :list_template, counter_cache: :template_items_count
+
   acts_as_list scope: :list_template
 
   before_validation :normalize_name

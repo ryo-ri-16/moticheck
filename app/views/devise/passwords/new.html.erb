@@ -18,6 +18,8 @@
         再設定リンクを送信します
       </p>
 
+      <%= render "devise/shared/error_messages", resource: resource %>
+
       <%= form_with scope: :user, url: password_path(:user), class: "space-y-4" do |f| %>
         <div class="space-y-2 text-center">
           <%= f.label :email, "登録メールアドレス", class: "block font-medium" %>

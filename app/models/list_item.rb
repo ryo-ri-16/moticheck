@@ -1,7 +1,6 @@
 class ListItem < ApplicationRecord
   before_validation :set_position, on: :create
-
-  belongs_to :list
+  belongs_to :list, counter_cache: true
   belongs_to :item
 
   validates :item_id, uniqueness: { scope: :list_id }

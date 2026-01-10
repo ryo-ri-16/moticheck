@@ -21,6 +21,7 @@ class List < ApplicationRecord
     order(
       Arel.sql("CASE WHEN status = #{statuses[:completed]} THEN 1 ELSE 0 END"),
       Arel.sql("CASE WHEN scheduled_on < CURRENT_DATE THEN 1 ELSE 0 END"),
+      priority: :desc,
       scheduled_on: :asc,
       scheduled_time: :asc,
       updated_at: :desc
@@ -57,16 +58,12 @@ class List < ApplicationRecord
     end
   end
 
-  def items_count
-    list_items.count
-  end
-
   def checked_items
     list_items.checked
   end
 
-  def checked_count
-    checked_items.count
+  def items_count
+    list_items_count
   end
 
   def category_name

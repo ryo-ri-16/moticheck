@@ -16,8 +16,14 @@
       <%= translated_status(list) %>
     </div>
 
+    <% if list.priority? %>
+      <div class="text-xs px-2 py-1 rounded bg-red-100 text-red-700 border border-red-200">
+        優先
+      </div>
+    <% end %>
+
     <div class="text-gray-600">
-      <%= list.list_items.count %> 個のアイテム
+      <%= list.items_count %> 個のアイテム
     </div>
 
     <div class="text-gray-600">
@@ -35,10 +41,10 @@
         list.scheduled_on.day,
         list.scheduled_time.hour,
         list.scheduled_time.min
-      )%>
-      <%= l datetime, format: :short %> 利用
+      ) %>
+      <%= l datetime, format: :list %> 利用
     <% elsif list.scheduled_on.present? %>
-      <%= l list.scheduled_on, format: :long %> 利用
+      <%= l list.scheduled_on, format: :list %> 利用
     <% else %>
       利用日未定
     <% end %>

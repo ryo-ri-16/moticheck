@@ -22,7 +22,6 @@ export default class extends Controller {
 
   open() {
     this.menuTarget.classList.remove("hidden")
-    // 次のクリックでメニューを閉じるためのリスナーを追加
     setTimeout(() => {
       document.addEventListener("click", this.boundClose)
     }, 0)

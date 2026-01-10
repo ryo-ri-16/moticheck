@@ -26,9 +26,9 @@
         @list.scheduled_time.hour,
         @list.scheduled_time.min
       )%>
-      <%= l datetime, format: :short %> 利用
+      <%= l datetime, format: :list_long %> 利用
     <% elsif @list.scheduled_on.present? %>
-      <%= l @list.scheduled_on, format: :long %> 利用
+      <%= l @list.scheduled_on, format: :list_long %> 利用
     <% else %>
       利用日未定
     <% end %>
@@ -38,7 +38,7 @@
     <div class="flex items-center gap-2">
       <span class="text-sm font-medium text-gray-600 min-w-[60px]">優先度</span>
       <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-700">
-        高
+        優先
       </span>
     </div>
   <% end %>

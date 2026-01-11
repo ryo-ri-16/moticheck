@@ -115,6 +115,7 @@ class ListsController < ApplicationController
     end
 
     if @new_list.save
+      List.reset_counters(@new_list.id, :list_items)
       redirect_to @new_list, notice: "リストを再利用しました"
     else
       redirect_to @list, alert: "再利用に失敗しました"

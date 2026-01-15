@@ -4,7 +4,7 @@
 
     <div class="space-y-2">
       <%= f.label :title, class: "block text-sm font-medium text-gray-700" do %>
-        タイトル <span class="text-red-700">*</span>
+        タイトル(必須) <span class="text-red-700">*</span>
       <% end %>
       <%= f.text_field :title,
         class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
@@ -13,7 +13,7 @@
 
     <div class="space-y-2">
       <%= f.label :scheduled_on, class: "block text-sm font-medium text-gray-700" do %>
-        利用日 <span class="text-red-700">*</span>
+        利用日(必須) <span class="text-red-700">*</span>
       <% end %>
       <%= f.date_field :scheduled_on,
         class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>

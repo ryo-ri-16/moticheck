@@ -1,7 +1,32 @@
 <% content_for :title, "MotiCheck" %>
 
 <div class="container py-4 pb-24">
-  <% if @today_lists.empty? && @near_lists.empty? && @past_lists.empty? %>
+  <% if current_user.guest? %>
+    <%= render "home/index/guest_list" %>
+  <% end %>
+
+  <% if flash[:first_registration] %>
+    <%= render "home/index/first_registration" %>
+  <% end %>
+
+  <% if @checking_lists.any? %>
+    <section class="mb-6">
+      <h2 class="text-xl font-bold mb-1 flex items-center gap-2">
+        チェック中
+        <span class="text-sm text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
+          <%= @checking_lists.size %>
+        </span>
+      </h2>
+      <p class="text-sm text-gray-500 mb-4">
+        現在チェックしているリスト
+      </p>
+
+      <div class="space-y-4">
+        <%= render @checking_lists %>
+      </div>
+    </section>
+  <% end %>
+  <% if @checking_lists.empty? && @today_lists.empty? && @near_lists.empty? && @past_lists.empty? %>
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-center">
       <h3 class="text-lg font-bold text-gray-800 mb-2">
         MotiCheckへようこそ!

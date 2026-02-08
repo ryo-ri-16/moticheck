@@ -28,12 +28,16 @@
     <% end %>
   </div>
   <div class="mt-4 text-sm text-gray-500">
-    <% unless @list.checking? %>
+    <% if current_user.can_copy? %>
       <%= button_to "テンプレートとして保存",
             to_templates_list_path(@list),
             method: :post,
             class: "inline-flex items-center gap-1 hover:text-gray-700",
             data: { turbo_confirm: "このリストをテンプレートとして保存しますか？" } %>
+    <% else %>
+      <span class="text-gray-400 text-sm">
+        ※ テンプレート作成は登録後に利用できます
+      </span>
     <% end %>
   </div>
 </div>

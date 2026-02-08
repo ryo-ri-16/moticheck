@@ -4,6 +4,11 @@ Rails.application.routes.draw do
     sign_out: "logout",
     sign_up: "register"
   }
+  get  "guest/sign_up", to: "guest_registrations#new"
+  post "guest/sign_up", to: "guest_registrations#create"
+
+  resource :guest_registration, only: %i[new create]
+  post "guest_user", to: "guest_sessions#create"
   resources :lists do
     resources :list_items do
       member do

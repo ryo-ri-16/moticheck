@@ -42,6 +42,12 @@ class ListsController < ApplicationController
     @list = current_user.lists.build(list_params)
     assign_category
 
+    # ゲスト利用用
+    unless current_user.can_create_more_lists?
+      redirect_to root_path, alert: "ゲスト利用では8件まで作成できます"
+      return
+    end
+
     if @list.save
       redirect_to @list, notice: "リストを作成しました"
     else
@@ -126,6 +132,12 @@ class ListsController < ApplicationController
     if current_user.list_templates.exists?(title: @list.title)
       redirect_to list_path(@list),
         alert: "同じタイトルのテンプレートが既にあります"
+      return
+    end
+
+    unless current_user.can_copy?
+      redirect_to lists_path,
+                  alert: "テンプレートのコピーはユーザー登録後にご利用いただけます"
       return
     end
 

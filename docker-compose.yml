@@ -12,6 +12,7 @@ services:
       - db
     environment:
       RAILS_ENV: development
+      GA_MEASUREMENT_ID: "G-N51067QW7V"
     command: bundle exec rails s -b 0.0.0.0
 
   db:

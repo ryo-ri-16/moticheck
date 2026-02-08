@@ -1,0 +1,41 @@
+<% remaining = User::GUEST_LIST_LIMIT - current_user.lists.count %>
+
+    <% if remaining >= 6 %>
+      <p class="text-xs text-gray-400 mb-2">
+        ※ ゲスト利用は8件まで作成できます
+      </p>
+    <% elsif remaining >=3 %>
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+        <p class="text-sm text-gray-700">
+          <i class="fas fa-info-circle text-yellow-600"></i>
+          ゲストユーザーはあと <span class="font-bold text-yellow-700"><%= remaining %>件</span> リストを作成できます
+        </p>
+        <%= link_to "登録して無制限に", guest_sign_up_path, class: "text-blue-600 underline ml-1" %>
+      </div>
+    <% elsif remaining >= 1 %>
+      <button
+        class="w-full bg-gray-300 text-gray-600 py-3 rounded-lg cursor-not-allowed"
+        disabled
+      >
+        リスト作成（ゲストは8件まで）
+      </button>
+    <% else %>
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-3 mb-4">
+        <h3 class="font-bold text-gray-800 mb-2">
+          <i class="fas fa-crown text-yellow-500"></i>
+          リスト作成数の上限に達しました
+        </h3>
+        <p class="text-sm text-gray-600 mb-3">
+          ユーザー登録すると以下の機能が使えます:
+        </p>
+        <ul class="text-sm text-gray-600 space-y-1 mb-3">
+          <li>✓ リストを無制限に作成</li>
+          <li>✓ テンプレートのコピー機能</li>
+          <li>✓ 通知機能</li>
+          <li>✓ データの永続保存</li>
+        </ul>
+        <%= link_to "今すぐ登録する（無料）",
+              guest_sign_up_path,
+              class: "block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700" %>
+      </div>
+    <% end %>

@@ -4,10 +4,13 @@
 
 @layer components {
   .fab {
-    /* bottom-20 を bottom-24 や bottom-28 に変更 */
     @apply fixed bottom-24 right-5 bg-blue-500 text-white w-14 h-14 rounded-full;
     @apply flex items-center justify-center text-3xl cursor-pointer shadow-lg;
     @apply transition-all duration-300 hover:bg-blue-600 hover:scale-110;
     @apply z-50;
   }
+}
+
+.completed {
+  @apply bg-green-500 line-through opacity-70;
 }

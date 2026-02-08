@@ -20,10 +20,18 @@
     </div>
 
     <div class="space-y-4">
-      <%= link_to new_user_registration_path do %>
-        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
-          新規登録
-        </button>
+      <% if user_signed_in? && current_user.guest? %>
+        <%= link_to new_guest_registration_path do %>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
+            本登録する
+          </button>
+        <% end %>
+      <% else %>
+        <%= link_to new_user_registration_path do %>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
+            新規登録
+          </button>
+        <% end %>
       <% end %>
 
       <%= link_to new_user_session_path do %>
@@ -31,6 +39,12 @@
           ログイン
         </button>
       <% end %>
+    </div>
+    <div class="text-center mt-4">
+      <%= button_to "ログインせずに使ってみる",
+        guest_user_path,
+        method: :post,
+        class: "text-sm text-gray-500 hover:text-blue-600 bg-transparent border-none p-0" %>
     </div>
   </div>
 </div>

@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   def index
     base = current_user.lists.includes(:category)
 
+    @checking_lists = base.checking.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
+
     @today_lists = base.scheduled_today
                       .order(priority: :desc, scheduled_time: :asc)
 

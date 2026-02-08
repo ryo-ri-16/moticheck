@@ -1,0 +1,74 @@
+<% content_for :title, "アカウントの本登録" %>
+
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+    <div class="text-center mb-6">
+      <i class="fas fa-user-plus text-4xl text-blue-600 mb-3"></i>
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">アカウントの本登録</h1>
+      <p class="text-sm text-gray-600">
+        メールアドレスとパスワードを設定して、<br>
+        すべての機能を利用できるようにしましょう
+      </p>
+    </div>
+
+    <!-- 現在のデータ引き継ぎを強調 -->
+    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-3">
+        <i class="fas fa-check-circle text-green-600 text-xl mt-0.5"></i>
+        <div>
+          <h3 class="font-bold text-gray-800 mb-1">データはそのまま引き継がれます</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>✓ 作成済みのリスト: <span class="font-bold text-green-700"><%= current_user.lists.count %>件</span></li>
+            <li>✓ 登録済みのアイテム: <span class="font-bold text-green-700"><%= current_user.lists.joins(:items).count %>件</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <%= form_with model: current_user, url: guest_sign_up_path, method: :post, local: true do |f| %>
+      <%= render "shared/error_messages", object: f.object %>
+
+      <div class="space-y-4">
+        <div class="space-y-2 text-center">
+          <%= f.label :name, "名前", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <%= f.text_field :name, autofocus: true, required: true,
+            class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+        </div>
+
+        <div>
+          <%= f.label :email, "メールアドレス", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <%= f.email_field :email,
+                class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                placeholder: "your@email.com",
+                autocomplete: "email" %>
+        </div>
+
+        <div>
+          <%= f.label :password, "パスワード", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <%= f.password_field :password,
+                class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                placeholder: "8文字以上",
+                autocomplete: "new-password" %>
+          <p class="text-xs text-gray-500 mt-1">8文字以上で設定してください</p>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "パスワード（確認）", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <%= f.password_field :password_confirmation,
+                class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                placeholder: "パスワードを再入力",
+                autocomplete: "new-password" %>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <%= f.submit "登録する",
+              class: "w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <div class="mt-4 text-center">
+      <%= link_to "キャンセル", root_path, class: "text-sm text-gray-600 hover:text-gray-800" %>
+    </div>
+  </div>
+</div>

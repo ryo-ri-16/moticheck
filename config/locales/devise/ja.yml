@@ -7,3 +7,5 @@ ja:
     registrations:
       user:
         signed_up: "登録が完了しました"
+    omniauth_callbacks:
+      success: "%{kind}でログインしました"

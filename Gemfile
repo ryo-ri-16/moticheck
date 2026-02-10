@@ -19,6 +19,11 @@ gem "jbuilder"
 
 gem "devise"
 
+gem "omniauth"
+gem "omniauth-google-oauth2"
+
+gem "whenever", require: false
+
 gem "tailwindcss-rails", "~> 3.0"
 
 gem "rails-i18n"

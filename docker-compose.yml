@@ -13,6 +13,9 @@ services:
     environment:
       RAILS_ENV: development
       GA_MEASUREMENT_ID: "G-N51067QW7V"
+      environment:
+        GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+        GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
     command: bundle exec rails s -b 0.0.0.0
 
   db:

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     sign_in: "login",
     sign_out: "logout",
     sign_up: "register"
+  }, controllers: {
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
   get  "guest/sign_up", to: "guest_registrations#new"
   post "guest/sign_up", to: "guest_registrations#create"

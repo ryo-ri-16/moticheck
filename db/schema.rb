@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_07_074032) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_08_071450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,10 +98,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_07_074032) do
     t.string "name"
     t.boolean "guest", default: false, null: false
     t.datetime "guest_created_at"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["guest", "guest_created_at"], name: "index_users_on_guest_and_guest_created_at"
     t.index ["guest"], name: "index_users_on_guest"
     t.index ["guest_created_at"], name: "index_users_on_guest_created_at"
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

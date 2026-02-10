@@ -33,7 +33,7 @@ Devise.setup do |config|
     ENV["GOOGLE_CLIENT_ID"],
     ENV["GOOGLE_CLIENT_SECRET"],
     {
-      scope: "email, profile",
+      scope: "openid email, profile",
       prompt: "select_account",
       image_aspect_ratio: "square",
       image_size: 50

@@ -14,7 +14,7 @@ RSpec.describe 'Lists', type: :system do
         visit new_list_path
 
         fill_in 'タイトル', with: '旅行の持ち物'
-        fill_in '利用日', with: Date.today
+        fill_in '利用時間', with: Time.zone.now.strftime('%Y-%m-%dT%H:%M')
         click_button '作成する'
 
         expect(page).to have_content('旅行の持ち物')
@@ -33,7 +33,7 @@ RSpec.describe 'Lists', type: :system do
       it 'タイトルなし' do
         visit new_list_path
 
-        fill_in '利用日', with: Date.today
+        fill_in '利用時間', with: Time.zone.now.strftime('%Y-%m-%dT%H:%M')
         expect { click_button '作成する' }.not_to change { List.count }
       end
 
@@ -175,7 +175,7 @@ RSpec.describe 'Lists', type: :system do
         category1 = create(:category, user: user, name: '果物')
         category2 = create(:category, user: user, name: '野菜')
 
-        create(:list, user: user, category: category1, title: 'A', scheduled_on: Date.yesterday)
+        create(:list, user: user, category: category1, title: 'A', scheduled_at: Date.yesterday)
         create(:list, user: user, category: category2, title: 'B')
 
         visit lists_path

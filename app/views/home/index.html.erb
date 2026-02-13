@@ -1,6 +1,32 @@
-<% content_for :title, "MotiCheck" %>
+<%= content_for :title, "MotiCheck" %>
 
 <div class="container py-4 pb-24">
+  <section class="mb-6">
+    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
+      <h1 class="text-xl font-bold text-gray-800 mb-1">
+        <%= greeting_message %>
+      </h1>
+      <p class="text-sm text-gray-600 mb-3">
+        <%= summary_message(@checking_lists, @today_lists, @near_lists) %>
+      </p>
+
+      <div class="flex gap-3 text-xs">
+        <div class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+          <span class="text-gray-700">チェック中: <strong><%= @checking_lists.size %></strong></span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span class="text-gray-700">今日: <strong><%= @today_lists.size %></strong></span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+          <span class="text-gray-700">近日: <strong><%= @near_lists.size %></strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <% if current_user.guest? %>
     <%= render "home/index/guest_list" %>
   <% end %>
@@ -9,42 +35,60 @@
     <%= render "home/index/first_registration" %>
   <% end %>
 
-  <% if @checking_lists.any? %>
-    <section class="mb-6">
-      <h2 class="text-xl font-bold mb-1 flex items-center gap-2">
-        チェック中
-        <span class="text-sm text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
-          <%= @checking_lists.size %>
-        </span>
-      </h2>
-      <p class="text-sm text-gray-500 mb-4">
-        現在チェックしているリスト
-      </p>
-
-      <div class="space-y-4">
-        <%= render @checking_lists %>
-      </div>
-    </section>
-  <% end %>
   <% if @checking_lists.empty? && @today_lists.empty? && @near_lists.empty? && @past_lists.empty? %>
-    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-center">
+    <div class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+      <div class="mb-4">
+        <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      </div>
       <h3 class="text-lg font-bold text-gray-800 mb-2">
-        MotiCheckへようこそ!
+        最初のリストを作成しましょう！
       </h3>
       <p class="text-gray-600 text-sm mb-4">
-        まだリストがありません。<br>
+        持ち物リストを作成して、忘れ物を防ぎましょう
       </p>
       <div class="flex items-center justify-center gap-2 text-sm text-gray-500">
-        <span>右下の<span class="font-bold text-blue-600">＋ボタン</span>から作成できます</span>
+        <span>右下の <strong class="text-blue-600">＋ボタン</strong> から作成できます</span>
       </div>
     </div>
   <% end %>
 
+  <% if @checking_lists.any? %>
+    <section class="mb-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <span class="w-1 h-6 bg-blue-500 rounded"></span>
+            チェック中
+          </h2>
+          <p class="text-xs text-blue-600 mt-1">進行中のリストを完了させましょう</p>
+        </div>
+        <span class="text-sm text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full font-semibold">
+          <%= @checking_lists.size %>
+        </span>
+      </div>
+      <div class="space-y-3">
+        <%= render @checking_lists %>
+      </div>
+    </section>
+  <% end %>
+
   <section class="mb-6">
-    <h2 class="text-xl font-bold mb-1">今日のリスト(<%= @today_lists.size %>)</h2>
-    <p class="text-sm text-gray-500 mb-4">今日使う持ち物リストをチェックしましょう</p>
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="text-xl font-bold flex items-center gap-2">
+          <span class="w-1 h-6 bg-green-500 rounded"></span>
+          今日のリスト
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">今日使う持ち物リストをチェックしましょう</p>
+      </div>
+      <span class="text-sm text-green-600 bg-green-100 px-2 py-0.5 rounded-full font-semibold">
+        <%= @today_lists.size %>
+      </span>
+    </div>
     <% if @today_lists.any? %>
-      <div class="space-y-4">
+      <div class="space-y-3">
         <%= render @today_lists %>
       </div>
     <% else %>
@@ -53,10 +97,20 @@
   </section>
 
   <section class="mb-6">
-    <h2 class="text-xl font-bold mb-1">近日中のリスト(<%= @near_lists.size %>)</h2>
-    <p class="text-sm text-gray-500 mb-4">3日以内に予定されている持ち物リスト</p>
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="text-xl font-bold flex items-center gap-2">
+          <span class="w-1 h-6 bg-yellow-500 rounded"></span>
+          近日中のリスト
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">3日以内に予定されている持ち物リスト</p>
+      </div>
+      <span class="text-sm text-yellow-600 bg-yellow-100 px-2 py-0.5 rounded-full font-semibold">
+        <%= @near_lists.size %>
+      </span>
+    </div>
     <% if @near_lists.any? %>
-      <div class="space-y-4">
+      <div class="space-y-3">
         <%= render @near_lists %>
       </div>
     <% else %>
@@ -64,17 +118,25 @@
     <% end %>
   </section>
 
-  <section class="mb-6">
-    <h2 class="text-xl font-bold mb-1">過去の未完了リスト(<%= @past_lists.size %>)</h2>
-    <p class="text-sm text-gray-500 mb-4">利用日を過ぎたが完了していないリスト</p>
-    <% if @past_lists.any? %>
-      <div class="space-y-4">
+  <% if @past_lists.any? %>
+    <section class="mb-6">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <span class="w-1 h-6 bg-red-500 rounded"></span>
+            過去の未完了リスト
+          </h2>
+          <p class="text-xs text-gray-500 mt-1">利用日を過ぎたが完了していないリスト</p>
+        </div>
+        <span class="text-sm text-red-600 bg-red-100 px-2 py-0.5 rounded-full font-semibold">
+          <%= @past_lists.size %>
+        </span>
+      </div>
+      <div class="space-y-3">
         <%= render @past_lists %>
       </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "全てのリストをチェック済みです!" %>
-    <% end %>
-  </section>
+    </section>
+  <% end %>
 </div>
 
 <%= render "shared/fab" %>

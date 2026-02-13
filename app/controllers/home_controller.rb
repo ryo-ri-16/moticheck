@@ -4,16 +4,13 @@ class HomeController < ApplicationController
   def index
     base = current_user.lists.includes(:category)
 
-    @checking_lists = base.checking.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
+    @checking_lists = base.checking.scheduled_asc.prioritize
 
-    @today_lists = base.scheduled_today
-                      .order(priority: :desc, scheduled_time: :asc)
+    @today_lists = base.scheduled_today.scheduled_asc.prioritize
 
-    @near_lists  = base.near_future
-                      .order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
+    @near_lists  = base.near_future.scheduled_asc.prioritize
 
-    @past_lists  = base.past_not_complete
-                      .order(priority: :desc, scheduled_on: :desc, scheduled_time: :desc)
+    @past_lists  = base.past_not_complete.scheduled_asc.prioritize
   end
 
   def welcome

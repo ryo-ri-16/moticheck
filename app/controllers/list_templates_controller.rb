@@ -32,7 +32,7 @@ class ListTemplatesController < ApplicationController
 
     ActiveRecord::Base.transaction do
       list = current_user.lists.create!(
-        title: @list_template.title, category: @list_template.category, scheduled_on: Date.current
+        title: @list_template.title, category: @list_template.category, scheduled_at: Date.current
       )
 
       @list_template.list_template_items.order(:position).each do |template_item|

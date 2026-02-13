@@ -12,7 +12,7 @@ RSpec.describe List, type: :model do
       end
 
       it 'タイトルと利用日以外は任意' do
-        list = build(:list, user: user, scheduled_time: nil, note: nil)
+        list = build(:list, user: user, note: nil)
         expect(list).to be_valid
       end
 
@@ -31,9 +31,9 @@ RSpec.describe List, type: :model do
       end
 
       it '利用日が空だと失敗' do
-        list = build(:list, scheduled_on: nil, user: user)
+        list = build(:list, scheduled_at: nil, user: user)
         expect(list).to be_invalid
-        expect(list.errors[:scheduled_on]).to be_present
+        expect(list.errors[:scheduled_at]).to be_present
       end
     end
   end

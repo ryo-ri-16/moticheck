@@ -1,0 +1,24 @@
+<%= turbo_stream.replace @notification do %>
+  <%= render @notification %>
+<% end %>
+
+<%= turbo_stream.remove @notification %>
+
+<%= turbo_stream.prepend "read-notifications" do %>
+  <%= render @notification %>
+<% end %>
+
+<%= turbo_stream.replace "unread-section" do %>
+  <%= render "notifications/unread_section",
+        unread_notifications: current_user.notifications.unread.recent %>
+<% end %>
+
+<%= turbo_stream.replace "notification-count-wrapper" do %>
+  <span id="notification-count-wrapper">
+    <% if current_user.notifications.unread.count > 0 %>
+      <span class="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+        <%= current_user.notifications.unread.count %>
+      </span>
+    <% end %>
+  </span>
+<% end %>

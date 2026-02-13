@@ -5,8 +5,8 @@ class ListsController < ApplicationController
 
   def index
     lists = current_user.lists.includes(:category)
-    @checking_lists = lists.checking.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
-    @today_lists    = lists.scheduled_today.order(priority: :desc, scheduled_on: :asc, scheduled_time: :asc)
+    @checking_lists = lists.checking.scheduled_asc.prioritize
+    @today_lists    = lists.scheduled_today.scheduled_asc.prioritize
     @all_lists      = lists.ordered_for_home
 
     if params[:status].present?
@@ -173,7 +173,7 @@ class ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(
-      :title, :status, :priority, :note, :scheduled_on, :scheduled_time, :category_id
+      :title, :status, :priority, :note, :scheduled_at, :category_id
     )
   end
 

@@ -28,8 +28,11 @@
   <body class="bg-gray-50">
     <%= render "shared/header" if user_signed_in?%>
 
-    <div class="container mt-3">
+    <div id="flash_messages" class="container mt-3">
       <%= render 'shared/flash_messages' %>
+    </div>
+    <div id="toast-container"
+          class="fixed top-4 right-4 z-50 space-y-2">
     </div>
     <main class="pb-20 max-w-md mx-auto">
       <%= yield %>

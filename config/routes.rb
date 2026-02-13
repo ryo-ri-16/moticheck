@@ -27,6 +27,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [ :index, :update, :destroy ] do
+    collection do
+      patch :mark_all_as_read
+    end
+  end
+
   resources :list_templates do
     member do
       post :to_lists

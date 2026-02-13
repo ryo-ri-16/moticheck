@@ -34,17 +34,8 @@
   </div>
 
   <div class="text-gray-600">
-    <% if list.scheduled_on && list.scheduled_time %>
-      <% datetime = Time.zone.local(
-        list.scheduled_on.year,
-        list.scheduled_on.month,
-        list.scheduled_on.day,
-        list.scheduled_time.hour,
-        list.scheduled_time.min
-      ) %>
-      <%= l datetime, format: :list %> 利用
-    <% elsif list.scheduled_on.present? %>
-      <%= l list.scheduled_on, format: :list %> 利用
+    <% if list.scheduled_at.present? %>
+      <%= l list.scheduled_at, format: :list %> 利用
     <% else %>
       利用日未定
     <% end %>

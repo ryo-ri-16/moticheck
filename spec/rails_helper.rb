@@ -27,3 +27,7 @@ RSpec.configure do |config|
     driven_by(:rack_test)
   end
 end
+
+RSpec.configure do |config|
+  config.include ActiveSupport::Testing::TimeHelpers
+end

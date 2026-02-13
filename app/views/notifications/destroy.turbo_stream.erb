@@ -1,0 +1,27 @@
+<%# 1. 削除した通知を画面から削除 %>
+<%= turbo_stream.remove "notification-#{@notification.id}" %>
+
+<%# 2. 未読通知カウントを更新 %>
+<%= turbo_stream.replace "notification-count-wrapper" do %>
+  <span id="notification-count-wrapper">
+    <% if current_user.notifications.unread.count > 0 %>
+      <span class="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+        <%= current_user.notifications.unread.count %>
+      </span>
+    <% end %>
+  </span>
+<% end %>
+
+<%# 3. 未読通知セクションを更新 %>
+<%= turbo_stream.replace "unread-section" do %>
+  <%= render "notifications/unread_section",
+        unread_notifications: current_user.notifications.unread.recent %>
+<% end %>
+
+<%# 4. フラッシュメッセージを表示（トースト） %>
+<%= turbo_stream.update "flash_messages" do %>
+  <div class="bg-green-100 text-green-800 p-3 rounded mb-4" 
+        data-controller="toast">
+    通知を削除しました
+  </div>
+<% end %>

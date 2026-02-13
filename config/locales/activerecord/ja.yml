@@ -16,8 +16,7 @@ ja:
         priority: 優先度
         last_used_at: 最終利用日時
         note: メモ
-        scheduled_on: 利用日
-        scheduled_time: 利用時刻
+        scheduled_at: 利用時間
         user: ユーザー
 
       user:

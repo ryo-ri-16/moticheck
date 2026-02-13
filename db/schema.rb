@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_08_071450) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_12_003353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,15 +76,30 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_08_071450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "note"
-    t.date "scheduled_on"
-    t.time "scheduled_time"
     t.bigint "category_id"
     t.integer "list_items_count", default: 0, null: false
+    t.datetime "scheduled_at", null: false
+    t.datetime "reminded_at"
+    t.datetime "started_notification_at"
     t.index ["category_id"], name: "index_lists_on_category_id"
     t.index ["last_used_at"], name: "index_lists_on_last_used_at"
+    t.index ["scheduled_at"], name: "index_lists_on_scheduled_at"
     t.index ["status"], name: "index_lists_on_status"
     t.index ["user_id", "priority"], name: "index_lists_on_user_id_and_priority"
     t.index ["user_id"], name: "index_lists_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "list_id", null: false
+    t.integer "kind", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind"], name: "index_notifications_on_kind"
+    t.index ["list_id"], name: "index_notifications_on_list_id"
+    t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -116,4 +131,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_08_071450) do
   add_foreign_key "list_templates", "users"
   add_foreign_key "lists", "categories"
   add_foreign_key "lists", "users"
+  add_foreign_key "notifications", "lists"
+  add_foreign_key "notifications", "users"
 end

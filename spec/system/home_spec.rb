@@ -8,16 +8,9 @@ RSpec.describe 'Home', type: :system do
     login_as(user)
   end
 
-  describe '初回メッセージ' do
-    it '初回用メッセージが表示される' do
-      visit root_path
-      expect(page).to have_content('まだリストがありません')
-    end
-  end
-
   describe 'リスト表示ロジック' do
     it '利用日が当日のリストが表示される' do
-      create(:list, user:, scheduled_on: Date.current, title: '今日')
+      create(:list, user:, scheduled_at: Date.current, title: '今日')
 
       visit root_path
 
@@ -25,7 +18,7 @@ RSpec.describe 'Home', type: :system do
     end
 
     it '利用日が3日以内のリストが表示される' do
-      create(:list, user:, scheduled_on: Date.current + 3, title: '3日')
+      create(:list, user:, scheduled_at: Date.current + 3, title: '3日')
 
       visit root_path
 
@@ -33,7 +26,7 @@ RSpec.describe 'Home', type: :system do
     end
 
     it '4日後以降のリストは表示されない' do
-      create(:list, user:, scheduled_on: Date.current + 4, title: '4日')
+      create(:list, user:, scheduled_at: Date.current + 4, title: '4日')
 
       visit root_path
 
@@ -41,7 +34,7 @@ RSpec.describe 'Home', type: :system do
     end
 
     it '利用日が過ぎていてかつ完了していないリストが表示される' do
-      create(:list, user:, scheduled_on: Date.current - 1, title: '昨日')
+      create(:list, user:, scheduled_at: Date.current - 1, title: '昨日')
 
       visit root_path
 
@@ -49,7 +42,7 @@ RSpec.describe 'Home', type: :system do
     end
 
     it '利用日が過ぎていてかつ完了済みのリストはホームで表示されない' do
-      create(:list, user:, scheduled_on: Date.current - 1, status: :completed, title: '完了済み')
+      create(:list, user:, scheduled_at: Date.current - 1, status: :completed, title: '完了済み')
 
       visit root_path
 

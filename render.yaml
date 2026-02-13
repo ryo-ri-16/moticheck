@@ -24,6 +24,13 @@ services:
       bundle exec rails db:migrate &&
       bundle exec rails server -b 0.0.0.0 -p $PORT
 
+  - type: cron
+    name: notification-job
+    env: docker
+    dockerfilePath: ./Dockerfile
+    schedule: "*/5 * * * *"
+    startCommand: "bundle exec rails runner 'CreateNotificationsJob.perform_now'"
+
 databases:
   - name: moticheck-db
     databaseName: moticheck_production

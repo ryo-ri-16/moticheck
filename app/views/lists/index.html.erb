@@ -3,12 +3,10 @@
 <div class="container py-4 pb-24">
   <p class="text-sm font-medium text-gray-600 mb-2">フィルタ</p>
   <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
-    <%= form_with url: lists_path, method: :get, local: true do |f| %>
-      <div class="flex gap-3 items-center flex-wrap">
-        <div class="flex-1 min-w-[160px]">
-          <%= f.label :status, "ステータス",
-            class: "block text-sm font-medium text-gray-700 mb-1" %>
-
+    <%= form_with url: lists_path, method: :get, data: { turbo_frame: "lists" } do |f| %>
+      <div class="flex gap-3 items-end flex-wrap">
+        <div class="flex-1 min-w-[140px]">
+          <%= f.label :status, "ステータス", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.select :status,
             options_for_select([
               ["全て", ""], ["待機中", "waiting"], ["チェック中", "checking"], ["完了", "completed"]
@@ -16,75 +14,93 @@
             class: "w-full border border-gray-300 rounded-md px-3 py-2" %>
         </div>
 
-        <div class="flex-1 min-w-[160px]">
-          <%= f.label :category_id, "カテゴリー",
-            class: "block text-sm font-medium text-gray-700 mb-1" %>
-
+        <div class="flex-1 min-w-[140px]">
+          <%= f.label :category_id, "カテゴリー", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.select :category_id,
-            options_from_collection_for_select(
-              @categories, :id, :name, params[:category_id]),
+            options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
             { include_blank: "すべて" },
             class: "w-full border border-gray-300 rounded-md px-3 py-2" %>
         </div>
 
-        <div class="flex gap-2 self-end">
-          <%= f.submit "絞り込む", class: "h-[42px] px-4 bg-blue-600 text-white rounded-md" %>
-          <%= link_to "クリア", lists_path,
-            class: "h-[42px] px-4 border border-gray-300 rounded-md flex items-center" %>
+        <div class="flex-[2] min-w-[200px]">
+          <%= f.label :q, "検索", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_field :q,
+            value: params[:q],
+            placeholder: "タイトルで検索",
+            class: "w-full border border-gray-300 rounded-md px-3 py-2" %>
+        </div>
+
+        <div class="flex gap-3 items-center">
+          <div class="flex gap-2 items-center h-[42px]">
+            <%= f.check_box :priority, { checked: params[:priority] == "true", class: "rounded" }, "true", nil %>
+            <%= f.label :priority, "高優先度", class: "text-sm text-gray-700 whitespace-nowrap" %>
+          </div>
+
+          <%= f.submit "絞り込む", class: "h-[42px] px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 whitespace-nowrap" %>
+          <%= link_to "クリア", lists_path, class: "h-[42px] px-4 border border-gray-300 rounded-md flex items-center hover:bg-gray-50 whitespace-nowrap" %>
         </div>
       </div>
     <% end %>
   </div>
-  <% if params[:status].present? %>
-    <div class="flex items-center gap-2 mb-4">
-      <span class="text-sm text-gray-600">
-        ステータス「<%= t("enums.list.status.#{params[:status]}") %>」で絞り込み中
-      </span>
-      <%= link_to "✕", lists_path,
-        class: "text-gray-400 hover:text-gray-600" %>
-    </div>
-  <% end %>
-  <% if params[:category_id].present? && @current_category %>
-    <div class="flex items-center gap-2 mb-4">
-      <span class="text-sm text-gray-600">
-        カテゴリー「<%= @current_category.name %>」で絞り込み中
-      </span>
-      <%= link_to "✕", lists_path,
-        class: "text-gray-400 hover:text-gray-600" %>
-    </div>
-  <% end %>
-  <section class="mb-6">
-    <h2 class="text-xl font-bold mb-4">チェック中(<%= @checking_lists.size %>)</h2>
-    <% if @checking_lists.any? %>
-      <div class="space-y-4">
-        <%= render @checking_lists %>
-      </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "チェック中のリストはありません" %>
-    <% end %>
-  </section>
 
-  <section class="mb-6">
-    <h2 class="text-xl font-bold mb-4">今日のリスト(<%= @today_lists.size %>)</h2>
-    <% if @today_lists.any? %>
-      <div class="space-y-4">
-        <%= render @today_lists %>
-      </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "今日のリストはありません" %>
-    <% end %>
-  </section>
+  <turbo-frame id="lists">
+    <% if active_filters.any? %>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <%= safe_join(active_filters) %>
 
-  <section class="mb-6">
-    <h2 class="text-xl font-bold mb-4">全てのリスト</h2>
-    <% if @all_lists.any? %>
-      <div class="space-y-4">
-        <%= render @all_lists %>
+        <%= link_to "すべて解除",
+              lists_path,
+              data: { turbo_frame: "lists" },
+              class: "text-sm text-blue-600 hover:text-blue-800 ml-2" %>
       </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "リストはありません" %>
     <% end %>
-  </section>
+
+    <section>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">
+          リスト (<%= @lists.size %>)
+        </h2>
+
+        <%= form_with url: lists_path,
+              method: :get,
+              data: { turbo_frame: "lists" },
+              class: "flex items-center gap-2" do |f| %>
+
+          <%= hidden_field_tag :status, params[:status] %>
+          <%= hidden_field_tag :category_id, params[:category_id] %>
+          <%= hidden_field_tag :priority, params[:priority] %>
+          <%= hidden_field_tag :q, params[:q] %>
+
+          <%= f.select :sort,
+        options_for_select([
+          ["更新日（新しい順）", "updated_recent"],
+          ["更新日（古い順）", "updated_old"],
+          ["作成日（新しい順）", "created_recent"],
+          ["作成日（古い順）", "created_old"],
+          ["名前（昇順）", "name_asc"],
+          ["名前（降順）", "name_desc"]
+        ], params[:sort]),
+        {},
+        {
+          class: "border rounded-md px-3 py-2 text-sm",
+          onchange: "this.form.requestSubmit()"
+        } %>
+        <% end %>
+      </div>
+
+      <% if @lists.any? %>
+        <div class="space-y-4">
+          <%= render @lists %>
+        </div>
+
+        <div class="mt-6">
+          <%= paginate @lists, params: safe_filter_params %>
+        </div>
+      <% else %>
+        <%= render "shared/empty_state", message: "リストはありません" %>
+      <% end %>
+    </section>
+  </turbo_frame>
 </div>
 
 <%= render "shared/fab" %>

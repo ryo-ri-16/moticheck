@@ -13,9 +13,14 @@
     data-menu-target="menu"
     class="menu absolute right-2 top-8 bg-white shadow rounded p-2 text-sm hidden z-30 w-28"
   >
-    <a class="block px-2 py-1 hover:bg-gray-100 text-left" href="/lists/<%= list.id %>/edit">編集</a>
+    <a class="block px-2 py-1 hover:bg-gray-100 text-left" 
+        href="/lists/<%= list.id %>/edit"
+        data-turbo-frame="_top">編集
+    </a>
 
-    <form class="button_to" method="post" action="/lists/<%= list.id %>/reuse">
+    <form class="button_to" method="post"
+          action="/lists/<%= list.id %>/reuse"
+          data-turbo-frame="_top">
       <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" type="submit">コピー</button>
       <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
     </form>

@@ -8,8 +8,17 @@ ja:
     formats:
       list: "%m/%d(%a)"
       list_long: "%Y年%-m月%-d日(%a)"
-
+  defaults:
+    search_word: 検索ワード
+    delete_confirm: 削除しますか？
   time:
     formats:
       list: "%m/%d(%a) %H:%M"
       list_long: "%Y年%-m月%-d日(%a) %H:%M"
+  kaminari:
+    pagination:
+      first: "最初"
+      last: "最後"
+      previous: "前"
+      next: "次"
+      truncate: "..."

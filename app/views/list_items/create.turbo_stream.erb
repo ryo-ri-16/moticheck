@@ -1,0 +1,15 @@
+<%= turbo_stream.replace "item_form" do %>
+  <div id="item_form">
+    <%= render "lists/show/item_add",
+          list: @list,
+          list_item: ListItem.new %>
+  </div>
+<% end %>
+
+<%= turbo_stream.replace "list_items" do %>
+  <div id="list_items">
+    <%= render "lists/show/items_check",
+          list: @list,
+          list_items: @list_items %>
+  </div>
+<% end %>

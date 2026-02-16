@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "list_item_#{@list_item.id}",
+      partial: "lists/show/item",
+      locals: { list: @list, li: @list_item } %>
+
+<%= turbo_stream.replace "progress_count" do %>
+      <%= render "lists/show/progress_count",
+            checked_count: @list.list_items.where(checked: true).count,
+            total_count: @list.list_items.count %>
+<% end %>
+
+<%= turbo_stream.replace "complete_button" do %>
+      <%= render "lists/show/complete_button", list: @list %>
+<% end %>

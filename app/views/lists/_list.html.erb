@@ -2,7 +2,7 @@
   <div class="flex justify-between items-start">
     <div class="flex items-center space-x-2">
       <h4 class="font-semibold text-lg line-clamp-2 break-words">
-        <%= link_to list.title, list_path(list) %>
+        <%= link_to list.title, list_path(list), data: { turbo_frame: "_top" } %>
       </h4>
     </div>
 

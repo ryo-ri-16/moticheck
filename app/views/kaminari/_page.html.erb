@@ -1,0 +1,5 @@
+<% if page.current? %>
+  <span class="px-4 py-2 bg-blue-600 text-white rounded-md"><%= page %></span>
+<% else %>
+  <%= link_to page, url, data: { turbo_frame: "lists" }, rel: page.rel, class: 'px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100' %>
+<% end %>

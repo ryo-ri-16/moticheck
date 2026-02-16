@@ -14,4 +14,63 @@ module ListHelper
   def list_action_menu(list)
     render partial: "lists/action_menu", locals: { list: list }
   end
+
+  def active_filters
+    filters = []
+
+    if params[:status].present?
+      filters << filter_tag(
+        "ステータス: #{t("enums.list.status.#{params[:status]}")}",
+        "blue",
+        :status
+      )
+    end
+
+    if params[:category_id].present? && current_category
+      filters << filter_tag(
+        "カテゴリ: #{current_category.name}",
+        "green",
+        :category_id
+      )
+    end
+
+    if params[:priority] == "true"
+      filters << filter_tag("高優先度のみ", "red", :priority)
+    end
+
+    if params[:q].present?
+      filters << filter_tag("検索: #{params[:q]}", "orange", :q)
+    end
+
+    filters
+  end
+
+  def current_category
+    @current_category ||= Category.find_by(id: params[:category_id])
+  end
+
+  def safe_filter_params
+    params.permit(:status, :category_id, :priority, :q, :sort)
+          .to_h.reject { |_, v| v.blank? }
+  end
+
+  def filter_tag(label, color, *remove_params)
+    content_tag(:span,
+      class: "inline-flex items-center gap-1 px-3 py-1 bg-#{color}-100 text-#{color}-800 text-sm rounded-full") do
+      concat content_tag(:span, label)
+      concat link_to(
+        lists_path(safe_filter_params.except(*remove_params)),
+        data: { turbo_frame: "lists" },
+        class: "hover:text-#{color}-900"
+      ) { close_icon }
+    end
+  end
+
+  def close_icon
+    <<~SVG.html_safe
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+      </svg>
+    SVG
+  end
 end

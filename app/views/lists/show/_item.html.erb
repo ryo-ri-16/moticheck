@@ -1,0 +1,37 @@
+<div id="list_item_<%= li.id %>"
+      class="flex items-center p-3 rounded-lg border transition-all
+      <%= li.checked? ? 'bg-gray-50 opacity-60 border-gray-200' :
+                        'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm' %>">
+
+  <%= form_with model: li,
+        url: check_switching_list_list_item_path(list, li),
+        method: :patch,
+        data: { turbo_stream: true },
+        class: "mr-3" do |f| %>
+
+    <%= f.check_box :checked,
+          id: "check_list_item_#{li.id}",
+          disabled: !list.checking?,
+          onchange: "this.form.requestSubmit()" %>
+
+  <% end %>
+
+  <label for="check_list_item_<%= li.id %>"
+          class="flex-1 cursor-pointer select-none
+          <%= 'line-through text-gray-400' if li.checked? %>">
+    <%= li.item.name %>
+  </label>
+
+  <% if list.waiting? %>
+    <details class="relative ml-2">
+      <summary class="cursor-pointer px-2 py-1 hover:bg-gray-100 rounded transition-colors">⋮</summary>
+      <div class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[120px]">
+        <%= button_to "削除",
+            list_list_item_path(list, li),
+                    method: :delete,
+                    data: { turbo_confirm: "削除しますか?" },
+                    class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
+      </div>
+    </details>
+  <% end %>
+</div>

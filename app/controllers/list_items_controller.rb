@@ -11,7 +11,18 @@ class ListItemsController < ApplicationController
     item_name = list_item_params[:item_name]&.strip
 
     if item_name.blank?
-      redirect_to @list, alert: "アイテム名を入力してください"
+      @list_item = @list.list_items.build(list_item_params)
+      @list_item.errors.add(:item_name, "を入力してください")
+
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("item_form",
+            partial: "lists/show/item_add",
+            locals: { list: @list, list_item: @list_item }
+          )
+        end
+        format.html { redirect_to @list, alert: "アイテム名を入力してください" }
+      end
       return
     end
 
@@ -20,13 +31,27 @@ class ListItemsController < ApplicationController
     @list_item = @list.list_items.build(
       item: item,
       quantity: list_item_params[:quantity].presence || 1,
-      checked: false,
+      checked: false
     )
 
     if @list_item.save
-      redirect_to @list, notice: "アイテムを追加しました"
+      Rails.logger.debug "=== 保存後のアイテム数: #{@list.list_items.count}"
+      Rails.logger.debug "=== リロード後のアイテム数: #{@list.list_items.reload.count}"
+      @list_items = @list.list_items.includes(:item).reload
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @list }
+      end
     else
-      redirect_to @list, alert: "追加に失敗しました"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("item_form",
+            partial: "lists/show/item_add",
+            locals: { list: @list, list_item: @list_item }
+          )
+        end
+        format.html { redirect_to @list, alert: "追加に失敗しました" }
+      end
     end
   end
 
@@ -51,12 +76,22 @@ class ListItemsController < ApplicationController
 
   def destroy
     @list_item.destroy
-    redirect_to @list, notice: "アイテムを削除しました"
+    @list_items = @list.list_items.includes(:item)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @list, notice: "アイテムを削除しました" }
+    end
   end
 
   def check_switching
     @list_item.update(checked: !@list_item.checked)
-    redirect_to @list, notice: "チェック状態を更新しました"
+    @list_items = @list.list_items.includes(:item)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @list, notice: "チェック状態を更新しました" }
+    end
   end
 
   private

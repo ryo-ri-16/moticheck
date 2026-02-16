@@ -1,0 +1,1 @@
+<%= link_to_unless current_page.first?, raw(t 'views.pagination.previous'), url, rel: 'prev', data: { turbo_frame: "lists" }, class: 'px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100' %>

@@ -1,0 +1,11 @@
+<% if list.completed? %>
+  <div id="complete_button">
+    <%= button_to "チェック完了",
+          finish_checking_list_path(list),
+          method: :patch,
+          data: { turbo_method: :patch },
+          class: "flex-1 min-w-[140px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors" %>
+  </div>
+<% else %>
+  <div id="complete_button"></div>
+<% end %>

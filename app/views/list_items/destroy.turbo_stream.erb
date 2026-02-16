@@ -1,0 +1,8 @@
+<%= turbo_stream.remove "list_item_#{@list_item.id}" %>
+
+<%= turbo_stream.update "flash_messages" do %>
+  <div class="bg-green-100 text-green-800 p-3 rounded mb-4"
+        data-controller="toast">
+    アイテムを削除しました
+  </div>
+<% end %>

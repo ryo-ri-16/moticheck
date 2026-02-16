@@ -2,18 +2,22 @@
 
 <%= render "lists/show/list_info", list: @list %>
 
-<% if @list.waiting? %>
-  <%= render "lists/show/item_add", list: @list, list_item: @list_item %>
-<% end %>
+<div id="item_form">
+  <%= render "lists/show/item_add",
+        list: @list,
+        list_item: @list_item || ListItem.new %>
+</div>
 
-<%= render "lists/show/items_check",
-          list: @list,
-          list_items: @list_items %>
+<div id="list_items">
+  <%= render "lists/show/items_check",
+        list: @list,
+        list_items: @list.list_items %>
+</div>
 
 <% if @list.note.present? %>
   <%= render "lists/show/note", list: @list %>
 <% end %>
 
-<%= render "lists/show/action_buttons",
-          list: @list,
-          list_items: @list_items %>
+<div id="list_action_buttons">
+  <%= render "lists/show/action_buttons", list: @list %>
+</div>

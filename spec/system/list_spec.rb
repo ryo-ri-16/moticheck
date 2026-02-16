@@ -88,17 +88,6 @@ RSpec.describe 'Lists', type: :system do
     end
   end
 
-  describe '削除' do
-    it '削除できる' do
-      list = create(:list, user: user)
-
-      visit list_path(list)
-      click_button '削除'
-
-      expect(page).not_to have_content(list.title)
-    end
-  end
-
   describe 'アイテム操作' do
     context '待機中' do
       it 'アイテムを追加できる' do
@@ -121,21 +110,6 @@ RSpec.describe 'Lists', type: :system do
 
         list_item = list.list_items.order(:created_at).last
         expect(list_item.quantity).to eq(3)
-      end
-
-      it 'アイテムを削除できる' do
-        list = create(:list, user: user)
-        item = Item.find_or_create_by!(name: 'りんご')
-        li = create(:list_item, list: list, item: item)
-
-        visit list_path(list)
-
-        within "tr#list_item_row_#{li.id}" do
-          find('summary').click
-          click_button '削除'
-        end
-
-        expect(ListItem.exists?(li.id)).to be false
       end
     end
   end

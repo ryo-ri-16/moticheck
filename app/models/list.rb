@@ -57,6 +57,8 @@ class List < ApplicationRecord
   scope :name_desc, -> { order(title: :desc) }
   scope :updated_recent, -> { order(updated_at: :desc) }
   scope :updated_old, -> { order(updated_at: :asc) }
+  scope :created_recent, -> { order(created_at: :desc) }
+  scope :created_old, -> { order(created_at: :asc) }
   scope :used_recent, -> { order(last_used_at: :desc) }
   scope :used_old, -> { order(last_used_at: :asc) }
   scope :with_status, ->(status) {
@@ -84,8 +86,24 @@ class List < ApplicationRecord
     list_items.checked
   end
 
+  def unchecked_items
+    list_items.unchecked
+  end
+
+  def checked_count
+    checked_items.count
+  end
+
+  def total_count
+    list_items.count
+  end
+
   def items_count
     list_items_count
+  end
+
+  def completed?
+    list_items.where(checked: true).count == list_items.count
   end
 
   def category_name

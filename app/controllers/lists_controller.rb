@@ -4,24 +4,15 @@ class ListsController < ApplicationController
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
 
   def index
-    lists = current_user.lists.includes(:category)
-    @checking_lists = lists.checking.scheduled_asc.prioritize
-    @today_lists    = lists.scheduled_today.scheduled_asc.prioritize
-    @all_lists      = lists.ordered_for_home
-
-    if params[:status].present?
-      @all_lists = @all_lists.with_status(params[:status])
-    end
-
-    if params[:category_id].present?
-      @current_category = current_user.categories.find_by(id: params[:category_id])
-      @all_lists = @all_lists.where(category_id: params[:category_id])
-    end
+    @lists = ListQuery.new(
+      user: current_user,
+      params: params
+    ).call
 
     @categories = Category
-                .for_user(current_user)
-                .select("DISTINCT ON (LOWER(name)) *")
-                .order("LOWER(name), user_id NULLS FIRST")
+      .for_user(current_user)
+      .select("DISTINCT ON (LOWER(name)) *")
+      .order("LOWER(name), user_id NULLS FIRST")
   end
 
   def show
@@ -32,6 +23,8 @@ class ListsController < ApplicationController
 
     @total_count   = @list_items.size
     @checked_count = @checked_items.size
+
+    @back_path = request.referer || lists_path
   end
 
   def new
@@ -56,6 +49,7 @@ class ListsController < ApplicationController
   end
 
   def edit
+    @back_path = request.referer || lists_path
   end
 
   def update
@@ -70,7 +64,8 @@ class ListsController < ApplicationController
 
   def destroy
     @list.destroy
-    redirect_to lists_path, notice: "リストを削除しました"
+    redirect_back fallback_location: lists_path,
+                  notice: "リストを削除しました"
   end
 
   def complete

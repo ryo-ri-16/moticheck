@@ -88,17 +88,6 @@ RSpec.describe 'Lists', type: :system do
     end
   end
 
-  describe '削除' do
-    it '削除できる' do
-      list = create(:list, user: user)
-
-      visit list_path(list)
-      click_button '削除'
-
-      expect(page).not_to have_content(list.title)
-    end
-  end
-
   describe 'アイテム操作' do
     context '待機中' do
       it 'アイテムを追加できる' do

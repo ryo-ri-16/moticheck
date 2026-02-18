@@ -3,6 +3,8 @@ class ListItem < ApplicationRecord
   belongs_to :list, counter_cache: true
   belongs_to :item
 
+  attr_accessor :item_name
+
   validates :item_id, uniqueness: { scope: :list_id }
   validates :quantity, numericality: { greater_than: 0 }, allow_nil: true
   validates :position, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

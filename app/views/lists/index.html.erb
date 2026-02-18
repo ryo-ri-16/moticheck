@@ -57,9 +57,7 @@
 
     <section>
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold">
-          リスト (<%= @lists.size %>)
-        </h2>
+        <%= render "list_header", lists: @lists %>
 
         <%= form_with url: lists_path,
               method: :get,
@@ -88,17 +86,19 @@
         <% end %>
       </div>
 
-      <% if @lists.any? %>
-        <div class="space-y-4">
-          <%= render @lists %>
-        </div>
+      <div id="lists-section">
+        <% if @lists.any? %>
+          <div class="space-y-4">
+            <%= render @lists %>
+          </div>
 
-        <div class="mt-6">
-          <%= paginate @lists, params: safe_filter_params %>
-        </div>
-      <% else %>
-        <%= render "shared/empty_state", message: "リストはありません" %>
-      <% end %>
+          <div class="mt-6">
+            <%= paginate @lists, params: safe_filter_params %>
+          </div>
+        <% else %>
+          <%= render "shared/empty_state", message: "リストはありません" %>
+        <% end %>
+      </div>
     </section>
   </turbo_frame>
 </div>

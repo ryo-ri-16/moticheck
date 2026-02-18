@@ -1,7 +1,14 @@
 class ListItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list
-  before_action :set_list_item, only: [ :update, :destroy, :check_switching ]
+  before_action :set_list_item, only: [ :edit, :update, :destroy, :check_switching ]
+
+  def show
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @list }
+    end
+  end
 
   def new
     @list_item = @list.list_items.build
@@ -55,6 +62,10 @@ class ListItemsController < ApplicationController
     end
   end
 
+  def edit
+    @list_item.item_name = @list_item.item.name
+  end
+
   def update
     if list_item_update_params[:item_name].present?
       item = Item.find_or_create_by(
@@ -63,12 +74,13 @@ class ListItemsController < ApplicationController
       @list_item.item = item
     end
 
-    if list_item_update_params[:quantity].present?
-      @list_item.quantity = list_item_update_params[:quantity]
-    end
+    @list_item.quantity = list_item_update_params[:quantity]
 
     if @list_item.save
-      redirect_to @list, notice: "アイテムを更新しました"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @list, notice: "アイテムを更新しました" }
+      end
     else
       redirect_to @list, alert: "更新に失敗しました"
     end

@@ -1,0 +1,61 @@
+<%= turbo_frame_tag dom_id(list_item) do %>
+  <div class="flex items-center p-3 rounded-lg border transition-all
+    <%= list_item.checked? ? 'bg-gray-50 opacity-60 border-gray-200' :
+      'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm' %>">
+
+    <% if list_item.persisted? %>
+      <%= form_with model: list_item,
+            url: check_switching_list_list_item_path(list_item.list, list_item),
+            method: :patch,
+            data: { turbo_stream: true },
+            class: "mr-3" do |f| %>
+
+        <%= f.check_box :checked,
+              id: "check_list_item_#{list_item.id}",
+              class: "h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500",
+              disabled: !list_item.list.checking?,
+              onchange: "this.form.requestSubmit()" %>
+      <% end %>
+    <% end %>
+
+    <label for="check_list_item_<%= list_item.id %>"
+            class="flex-1 cursor-pointer select-none
+            <%= 'line-through text-gray-400' if list_item.checked? %>">
+      <%= list_item.item&.name %>
+      <% if list_item.quantity.present? && list_item.quantity > 1 %>
+        <span class="ml-2 text-sm <%= 'text-gray-400' if list_item.checked? %>">
+          ×<%= list_item.quantity %>
+        </span>
+      <% end %>
+    </label>
+
+    <% if list_item.list.waiting? && list_item.persisted? %>  <%# ← persisted? を追加 %>
+      <details class="relative ml-2">
+        <summary class="cursor-pointer px-2 py-1 hover:bg-gray-100 rounded transition-colors">⋮</summary>
+        <div class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[120px]">
+          <%= link_to "編集",
+                edit_list_list_item_path(list_item.list, list_item),
+                data: { turbo_frame: dom_id(list_item) },
+                class: "block w-full px-4 py-2 text-left text-sm hover:bg-gray-50" %>
+
+          <%= button_to "削除",
+                list_list_item_path(list_item.list, list_item),
+                method: :delete,
+                data: {
+                  turbo_confirm: "削除しますか?",
+                  turbo_frame: "_top"
+                },
+                class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
+        </div>
+      </details>
+    <% end %>
+
+    <% if list_item.checked? %>
+      <svg class="w-5 h-5 text-green-500 ml-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd"/>
+      </svg>
+    <% end %>
+  </div>
+<% end %>

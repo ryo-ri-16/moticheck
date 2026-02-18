@@ -64,8 +64,13 @@ class ListsController < ApplicationController
 
   def destroy
     @list.destroy
-    redirect_back fallback_location: lists_path,
-                  notice: "リストを削除しました"
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = "リストを削除しました"
+      end
+      format.html { redirect_to lists_path, notice: "リストを削除しました" }
+    end
   end
 
   def complete

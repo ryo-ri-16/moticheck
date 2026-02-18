@@ -13,10 +13,10 @@
 </div>
 <% if list_items.any? %>
   <div class="space-y-2">
-    <% list_items.each do |li| %>
-      <%= render "lists/show/item",
+    <% list_items.each do |list_item| %>
+      <%= render "list_items/list_item",
             list: list,
-            li: li %>
+            list_item: list_item %>
     <% end %>
   </div>
 <% else %>

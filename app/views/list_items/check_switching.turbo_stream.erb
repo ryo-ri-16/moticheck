@@ -1,6 +1,6 @@
 <%= turbo_stream.replace "list_item_#{@list_item.id}",
-      partial: "lists/show/item",
-      locals: { list: @list, li: @list_item } %>
+      partial: "list_items/list_item",
+      locals: { list: @list, list_item: @list_item } %>
 
 <%= turbo_stream.replace "progress_count" do %>
       <%= render "lists/show/progress_count",

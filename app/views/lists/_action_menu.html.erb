@@ -13,37 +13,33 @@
     data-menu-target="menu"
     class="menu absolute right-2 top-8 bg-white shadow rounded p-2 text-sm hidden z-30 w-28"
   >
-    <a class="block px-2 py-1 hover:bg-gray-100 text-left" 
-        href="/lists/<%= list.id %>/edit"
+    <a class="block px-2 py-1 hover:bg-gray-100 text-left"
+        href="<%= edit_list_path(list) %>"
         data-turbo-frame="_top">編集
     </a>
 
-    <form class="button_to" method="post"
-          action="/lists/<%= list.id %>/reuse"
-          data-turbo-frame="_top">
-      <button class="block w-full text-left px-2 py-1 hover:bg-gray-100" type="submit">コピー</button>
-      <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
-    </form>
+    <%= button_to "コピー",
+          reuse_list_path(list),
+          method: :post,
+          data: { turbo_frame: "_top" },
+          class: "block w-full text-left px-2 py-1 hover:bg-gray-100" %>
+
     <% if current_user.can_copy? %>
       <%= button_to "テンプレ化",
             to_templates_list_path(list),
             method: :post,
-            data: { turbo: false },
+            data: { turbo_frame: "_top" },
             class: "block w-full text-left px-2 py-1 hover:bg-gray-100" %>
     <% end %>
 
     <div class="border-t border-gray-200 my-1"></div>
 
-    <form class="button_to" method="post" action="/lists/<%= list.id %>">
-      <input type="hidden" name="_method" value="delete" autocomplete="off">
-      <button
-        class="block w-full text-left px-2 py-1 hover:bg-gray-100 text-red-600"
-        type="submit"
-        data-turbo-confirm="本当に削除しますか?"
-      >
-        削除
-      </button>
-      <input type="hidden" name="authenticity_token" value="..." autocomplete="off">
-    </form>
+    <%= button_to "削除",
+        list_path(list),
+        method: :delete,
+        data: {
+          turbo_confirm: "本当に削除しますか?"
+        },
+        class: "block w-full text-left px-2 py-1 hover:bg-gray-100 text-red-600" %>
   </div>
 </div>

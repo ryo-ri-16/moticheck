@@ -5,9 +5,12 @@ module ListHelper
 
   def status_color(status)
     case status.to_sym
-    when :waiting   then "bg-gray-300"
-    when :checking  then "bg-blue-500"
-    when :completed then "bg-green-500"
+    when :waiting
+      "bg-gray-200 text-gray-700 border border-gray-300 text-sm"
+    when :checking
+      "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border border-blue-300 text-base font-medium"  # グラデーション
+    when :completed
+      "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md text-base font-bold"  # グラデーション
     end
   end
 

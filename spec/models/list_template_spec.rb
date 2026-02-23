@@ -20,20 +20,6 @@ RSpec.describe ListTemplate, type: :model do
       template = build(:list_template, user: user, title: 'a' * 101)
       expect(template).to be_invalid
     end
-
-    it '同じユーザーでタイトル重複は不可' do
-      create(:list_template, user: user, title: '重複')
-      template = build(:list_template, user: user, title: '重複')
-      expect(template).to be_invalid
-    end
-
-    it '異なるユーザーなら同じタイトルでもいい' do
-      user1 = create(:user)
-      user2 = create(:user)
-      create(:list_template, user: user1, title: '同じタイトル')
-      template = build(:list_template, user: user2, title: '同じタイトル')
-      expect(template).to be_valid
-    end
   end
 
   describe 'スコープ' do

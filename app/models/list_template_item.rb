@@ -3,6 +3,8 @@ class ListTemplateItem < ApplicationRecord
 
   acts_as_list scope: :list_template
 
+  before_validation :set_position, on: :create
+
   before_validation :normalize_name
 
   validates :name, presence: true
@@ -10,10 +12,19 @@ class ListTemplateItem < ApplicationRecord
   validates :name, uniqueness: {
     scope: :list_template_id, case_sensitive: false
   }
+  scope :ordered, -> { order(:position) }
 
   private
 
   def normalize_name
     self.name = name.strip if name.present?
+  end
+
+  def set_position
+    return if position.present?
+    return unless list_template
+
+    max_position = list_template.list_template_items.maximum(:position) || 0
+    self.position = max_position + 1
   end
 end

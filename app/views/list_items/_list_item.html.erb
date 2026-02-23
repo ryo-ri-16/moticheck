@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(list_item) do %>
-  <div class="flex items-center p-3 rounded-lg border transition-all
-    <%= list_item.checked? ? 'bg-gray-50 opacity-60 border-gray-200' :
+  <div class="flex items-center p-3 rounded-lg border transition-all duration-300 ease-in-out
+    <%= list_item.checked? ? 'bg-green-50 opacity-70 border-green-100' :
       'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm' %>">
 
     <% if list_item.persisted? %>
@@ -12,7 +12,8 @@
 
         <%= f.check_box :checked,
               id: "check_list_item_#{list_item.id}",
-              class: "h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500",
+              class: "h-5 w-5 text-green-500 rounded focus:ring-2 focus:ring-green-500
+              transition-all duration-300 ease-in-out",
               disabled: !list_item.list.checking?,
               onchange: "this.form.requestSubmit()" %>
       <% end %>
@@ -43,7 +44,6 @@
                 method: :delete,
                 data: {
                   turbo_confirm: "削除しますか?",
-                  turbo_frame: "_top"
                 },
                 class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
         </div>
@@ -51,7 +51,7 @@
     <% end %>
 
     <% if list_item.checked? %>
-      <svg class="w-5 h-5 text-green-500 ml-2" fill="currentColor" viewBox="0 0 20 20">
+      <svg class="w-5 h-5 text-green-500 ml-2 animate-scale-in" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd"
           d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
           clip-rule="evenodd"/>

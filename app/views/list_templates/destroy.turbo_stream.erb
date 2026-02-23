@@ -1,0 +1,15 @@
+<%= turbo_stream.remove dom_id(@list_template) %>
+
+<% if current_user.list_templates.empty? %>
+  <%= turbo_stream.replace "list_templates_section" do %>
+    <%= render "shared/empty_state", message: "テンプレートはありません" %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.append "flash_messages" do %>
+  <div
+    data-controller="flash"
+    class="bg-green-100 text-green-800 p-3 rounded shadow-lg">
+    テンプレートを削除しました
+  </div>
+<% end %>

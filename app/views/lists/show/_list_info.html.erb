@@ -1,10 +1,14 @@
-<div class="bg-white rounded-lg shadow-sm p-4 space-y-3">
+<div class="bg-white mt-2 rounded-lg shadow-sm p-4 space-y-3">
   <div class="flex items-center gap-2 flex-wrap">
-    <div class="flex items-center gap-2">
-      <span class="text-sm font-medium text-gray-600">状態</span>
-      <span class="px-2 py-1 rounded text-sm text-white <%= status_color(@list.status) %>">
-        <%= translated_status(@list) %>
-      </span>
+    <div class="flex items-center gap-2 <%= status_color(list.status) %> px-3 py-1.5 rounded-full transition-all duration-300">
+      <% if list.waiting? %>
+        <span class="text-base">⏳</span>
+      <% elsif list.checking? %>
+        <span class="text-lg">🔄</span>  <%# 回転アニメーション %>
+      <% elsif list.completed? %>
+        <span class="text-xl">✔</span>
+      <% end %>
+      <%= translated_status(list) %>
     </div>
 
     <% if @list.category.present? %>
@@ -18,10 +22,48 @@
   </div>
 
   <div class="text-gray-600">
-    <% if @list.scheduled_at.present? %>
+    <% if @list.completed? %>
+      <div class="bg-green-50 border border-green-200 rounded-xl p-5 shadow-sm">
+        <div class="flex items-start gap-3">
+          <span class="text-3xl">🎉</span>
+          <div class="flex-1">
+            <p class="text-green-700 font-bold text-lg">
+              チェック完了！
+            </p>
+            <p class="text-sm text-gray-500">
+              <%= @total_count %> 項目を完了
+            </p>
+
+            <p class="text-sm text-gray-500 mt-1">
+              <%= l @list.last_used_at, format: :list %> に完了しました
+            </p>
+
+            <div class="text-sm text-gray-600 mt-3">
+              <p>このチェックリストは無事完了しました。</p>
+              <p>また必要になったら、クリックで再利用できます。</p>
+            </div>
+
+            <div class="mt-4">
+              <%= button_to "もう一度使う",
+                          reuse_list_path(@list),
+                          method: :post,
+                          class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% elsif @list.checking? %>
       <%= l @list.scheduled_at, format: :list_long %> 利用
+      <div class="text-sm text-gray-600 mt-3">
+        <p>チェック中です。</p>
+        <p>項目を確認しながら進めてください。</p>
+      </div>
     <% else %>
-      利用日未定
+      <% if @list.scheduled_at.present? %>
+        <%= l @list.scheduled_at, format: :list_long %> 利用
+      <% else %>
+        利用日未定
+      <% end %>
     <% end %>
   </div>
 

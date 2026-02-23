@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     member do
       post :to_lists
     end
+    resources :list_template_items, except: [ :show ]
   end
 
   get "home", to: "home#index"

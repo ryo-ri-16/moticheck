@@ -1,0 +1,9 @@
+<% content_for(:back_path) { @back_path } %>
+<% content_for(:title, "テンプレートを編集") %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <%= render 'form', list_template: @list_template %>
+    </div>
+  </div>
+</div>

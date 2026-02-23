@@ -42,8 +42,6 @@ class ListItemsController < ApplicationController
     )
 
     if @list_item.save
-      Rails.logger.debug "=== 保存後のアイテム数: #{@list.list_items.count}"
-      Rails.logger.debug "=== リロード後のアイテム数: #{@list.list_items.reload.count}"
       @list_items = @list.list_items.includes(:item).reload
       respond_to do |format|
         format.turbo_stream
@@ -89,6 +87,7 @@ class ListItemsController < ApplicationController
   def destroy
     @list_item.destroy
     @list_items = @list.list_items.includes(:item)
+    @list.reload
 
     respond_to do |format|
       format.turbo_stream

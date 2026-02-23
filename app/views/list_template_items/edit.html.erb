@@ -1,0 +1,5 @@
+<%= turbo_frame_tag dom_id(@list_template_item) do %>
+  <%= render "list_template_items/form",
+        list_template: @list_template,
+        list_template_item: @list_template_item %>
+<% end %>

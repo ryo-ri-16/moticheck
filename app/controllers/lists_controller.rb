@@ -2,6 +2,7 @@ class ListsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list, only: [ :show, :edit, :update, :destroy, :complete, :start_checking, :finish_checking, :back_waiting, :reuse, :to_templates ]
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
+  before_action :prevent_edit_while_checking, only: [ :edit, :update, :reuse, :destroy, :to_templates ]
 
   def index
     @lists = ListQuery.new(
@@ -113,15 +114,9 @@ class ListsController < ApplicationController
   end
 
   def reuse
-    @new_list = @list.deep_clone include: :list_items
-    @new_list.status = :waiting
-
-    @new_list.list_items.each do |li|
-      li.checked = false
-    end
+    @new_list = @list.build_reuse
 
     if @new_list.save
-      List.reset_counters(@new_list.id, :list_items)
       redirect_to @new_list, notice: "リストを再利用しました"
     else
       redirect_to @list, alert: "再利用に失敗しました"
@@ -129,12 +124,6 @@ class ListsController < ApplicationController
   end
 
   def to_templates
-    if current_user.list_templates.exists?(title: @list.title)
-      redirect_to list_path(@list),
-        alert: "同じタイトルのテンプレートが既にあります"
-      return
-    end
-
     unless current_user.can_copy?
       redirect_to lists_path,
                   alert: "テンプレートのコピーはユーザー登録後にご利用いただけます"
@@ -160,6 +149,12 @@ class ListsController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     redirect_to list_path(@list),
                 alert: "テンプレート作成に失敗しました"
+  end
+
+  def prevent_edit_while_checking
+    return unless @list.checking?
+
+    redirect_to @list, alert: "チェック中は操作できません"
   end
 
   private

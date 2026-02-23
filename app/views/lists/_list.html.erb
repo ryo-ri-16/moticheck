@@ -13,6 +13,13 @@
 
   <div class="flex items-center gap-4 text-sm text-white flex-wrap">
     <div class="text-xs px-2 py-1 rounded <%= status_color(list.status) %>">
+      <% if list.waiting? %>
+        ⏳
+      <% elsif list.checking? %>
+        🔄
+      <% elsif list.completed? %>
+        ✔
+      <% end %>
       <%= translated_status(list) %>
     </div>
 

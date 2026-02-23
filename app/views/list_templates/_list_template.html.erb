@@ -1,4 +1,4 @@
-<div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative">
+<div id="<%= dom_id(list_template) %>" class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative">
   <div class="flex items-start justify-between">
     <div class="flex-1">
       <%= link_to list_template_path(list_template), class: "block" do %>
@@ -12,6 +12,12 @@
 
         <p class="text-sm text-gray-600">
           <%= list_template.list_template_items_count %>個のアイテム
+        </p>
+      <% end %>
+
+      <% if list_template.description.present? %>
+        <p class="text-sm text-gray-500 line-clamp-1 mb-1">
+          <%= list_template.description %>
         </p>
       <% end %>
     </div>

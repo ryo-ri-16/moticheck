@@ -68,14 +68,22 @@ class List < ApplicationRecord
   enum :status, { waiting: 0, checking: 1, completed: 2 }
 
   def start_checking!
+    return false unless waiting?
     update(status: :checking)
   end
 
   def finish_checking!
-    update(status: :completed)
+    return false unless checking?
+    return false unless can_completed?
+
+    update(
+      status: :completed,
+      last_used_at: Time.current
+    )
   end
 
   def back_to_waiting!
+    return false unless checking?
     transaction do
       update!(status: :waiting)
       list_items.update_all(checked: false)
@@ -102,12 +110,39 @@ class List < ApplicationRecord
     list_items_count
   end
 
-  def completed?
+  def progress_percentage
+    return 0 if list_items.count.zero?
+
+    checked = list_items.where(checked: true).count
+    total   = list_items.count
+
+    (checked.to_f / total * 100).round
+  end
+
+  def can_completed?
     list_items.where(checked: true).count == list_items.count
   end
 
   def category_name
     category&.name || "未分類"
+  end
+
+  def locked?
+    checking? || completed?
+  end
+
+  def build_reuse
+    new_list = deep_clone include: :list_items
+
+    new_list.status = :waiting
+    new_list.last_used_at = nil
+    new_list.scheduled_at = Time.current
+
+    new_list.list_items.each do |li|
+      li.checked = false
+    end
+
+    new_list
   end
 
   private

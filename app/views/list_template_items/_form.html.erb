@@ -1,0 +1,17 @@
+<%= form_with model: [list_template, list_template_item] do |f| %>
+  <div class="mb-3">
+    <%= f.text_field :name,
+          placeholder: "アイテム名",
+          class: "w-full px-3 py-2 border rounded-md" %>
+  </div>
+
+  <%= f.submit list_template_item.persisted? ? "更新" : "追加",
+          class: "px-4 py-2 bg-blue-600 text-white rounded-md"%>
+
+  <% if list_template_item.persisted? %>
+    <%= link_to "キャンセル",
+          list_template_path(list_template),
+          data: { turbo_frame: "_top" },
+          class: "px-4 py-2 bg-gray-400 text-white rounded-md" %>
+  <% end %>
+<% end %>

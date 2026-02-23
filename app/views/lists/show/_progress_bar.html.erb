@@ -1,0 +1,10 @@
+<div id="progress_bar" class="w-full bg-gray-200 rounded-full h-3">
+  <%
+    percentage = total_count.zero? ? 0 : (checked_count.to_f / total_count * 100).round
+    color = percentage == 100 ? "bg-blue-500" : "bg-green-500"
+  %>
+
+  <div class="<%= color %> h-3 rounded-full transition-all duration-500"
+      style="width: <%= percentage %>%">
+  </div>
+</div>

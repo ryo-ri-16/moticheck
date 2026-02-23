@@ -16,24 +16,32 @@
   </div>
 
   <div class="flex gap-2 mt-4 opacity-90">
-    <% unless list.checking? %>
-      <%= link_to "編集", edit_list_path(list),
-        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md text-center font-medium transition-colors" %>
-      <%= button_to "複製", reuse_list_path(list),
-        method: :post,
-        class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md font-medium transition-colors" %>
-      <%= button_to "削除", list_path(list),
-        method: :delete,
-        data: { turbo_confirm: "本当に削除しますか?" },
-        class: "flex-1 min-w-[140px] px-4 py-2 text-red-600 border border-red-300 hover:bg-red-50 rounded-md font-medium transition-colors" %>
-    <% end %>
+    <%= link_to "編集", edit_list_path(list),
+      class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md text-center font-medium transition-colors
+              #{'opacity-50 cursor-not-allowed' if list.checking?}",
+      title: list.checking? ? "チェック中は編集できません" : "リストを編集" %>
+
+    <%= button_to "複製", reuse_list_path(list),
+      method: :post,
+      class: "flex-1 min-w-[140px] px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-md font-medium transition-colors
+              #{'opacity-50 cursor-not-allowed' if list.checking?}",
+      title: list.checking? ? "チェック中は複製できません" : "リストを複製" %>
+
+    <%= button_to "削除", list_path(list),
+      method: :delete,
+      disabled: list.checking?,
+      data: { turbo:false, turbo_confirm: "本当に削除しますか?" },
+      class: "flex-1 min-w-[140px] px-4 py-2 text-red-600 border border-red-300 hover:bg-red-50 rounded-md font-medium transition-colors
+              #{'opacity-50 cursor-not-allowed' if list.checking?}",
+      title: list.checking? ? "チェック中は削除できません" : "リストを削除" %>
   </div>
   <div class="mt-4 text-sm text-gray-500">
     <% if current_user.can_copy? %>
       <%= button_to "テンプレートとして保存",
             to_templates_list_path(list),
             method: :post,
-            class: "inline-flex items-center gap-1 hover:text-gray-700",
+            class: "inline-flex items-center gap-1 hover:text-gray-700
+                    #{'opacity-50 cursor-not-allowed' if list.checking?}",
             data: { turbo_confirm: "このリストをテンプレートとして保存しますか？" } %>
     <% else %>
       <span class="text-gray-400 text-sm">

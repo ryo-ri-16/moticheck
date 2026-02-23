@@ -8,6 +8,21 @@
             total_count: @list.list_items.count %>
 <% end %>
 
+<%= turbo_stream.replace "progress_bar" do %>
+      <%= render "lists/show/progress_bar",
+            checked_count: @list.list_items.where(checked: true).count,
+            total_count: @list.list_items.count %>
+<% end %>
+
+<% if @list.progress_percentage == 100 %>
+      <%= turbo_stream.append "flash_messages" do %>
+            <div data-controller="flash"
+                  class="bg-blue-100 text-blue-800 p-3 rounded shadow-lg">
+                  🎉 すべての項目をチェックしました！
+            </div>
+      <% end %>
+<% end %>
+
 <%= turbo_stream.replace "complete_button" do %>
       <%= render "lists/show/complete_button", list: @list %>
 <% end %>

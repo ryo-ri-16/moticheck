@@ -21,7 +21,7 @@
 <%# 4. フラッシュメッセージを表示（トースト） %>
 <%= turbo_stream.update "flash_messages" do %>
   <div class="bg-green-100 text-green-800 p-3 rounded mb-4"
-        data-controller="toast">
+        data-controller="flash">
     通知を削除しました
   </div>
 <% end %>

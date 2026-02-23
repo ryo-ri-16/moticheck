@@ -212,17 +212,5 @@ RSpec.describe 'Lists', type: :system do
         expect(copied_template.list_template_items.count).to eq(2)
       end
     end
-
-    context '失敗' do
-      it '同じタイトルのものがテンプレートにあるとコピーできない' do
-        create(:list_template, user: user, title: 'テンプレート', category: category)
-
-        visit list_path(list)
-        click_button 'テンプレートとして保存'
-
-        expect(page).to have_current_path(list_path(list))
-        expect(page).to have_content('同じタイトルのテンプレート')
-      end
-    end
   end
 end

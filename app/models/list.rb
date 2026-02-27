@@ -1,6 +1,7 @@
 class List < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
+  belongs_to :list_template, optional: true
   has_many :list_items, dependent: :destroy
   has_many :items, through: :list_items
   has_many :notifications, dependent: :destroy
@@ -10,6 +11,7 @@ class List < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   validates :status, presence: true
   validates :scheduled_at, presence: true
+  validates :target_date, presence: true, if: -> { list_template_id.present? }
 
   # 優先度
   scope :normal_priority, -> { where(priority: false) }

@@ -1,4 +1,11 @@
-<%= turbo_stream.remove @list_template_item %>
+<%= turbo_stream.replace dom_id(@list_template_item) do %>
+  <div id="<%= dom_id(@list_template_item) %>"
+        data-controller="fade-remove"
+        data-action="animationend->fade-remove#remove"
+        class="fade-out-wrapper">
+    <%= render @list_template_item %>
+  </div>
+<% end %>
 
 <%= turbo_stream.update "flash_messages" do %>
   <div class="bg-green-100 text-green-800 p-3 rounded mb-4"
@@ -7,8 +14,14 @@
   </div>
 <% end %>
 
-<%= turbo_stream.replace "list_template_items" do %>
-  <%= render "list_templates/items",
-        list_template: @list_template,
-        template_items: @list_template.list_template_items %>
+<%= turbo_stream.update "items_count" do %>
+  <%= @list_template.list_template_items_count %>
+<% end %>
+
+<% if @list_template.list_template_items_count.zero? %>
+  <%= turbo_stream.update "items_container" do %>
+    <div id="empty_state">
+      <%= render "shared/empty_state", message: "アイテムがありません" %>
+    </div>
+  <% end %>
 <% end %>

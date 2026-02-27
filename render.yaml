@@ -31,6 +31,13 @@ services:
     schedule: "*/5 * * * *"
     startCommand: "bundle exec rails runner 'CreateNotificationsJob.perform_now'"
 
+  - type: cron
+    name: generate-lists-job
+    env: docker
+    dockerfilePath: ./Dockerfile
+    schedule: "0 15 * * *"
+    startCommand: "bundle exec rails runner 'GenerateListsJob.perform_now'"
+
 databases:
   - name: moticheck-db
     databaseName: moticheck_production

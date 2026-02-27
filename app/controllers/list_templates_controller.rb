@@ -100,10 +100,8 @@ class ListTemplatesController < ApplicationController
   end
 
   def list_template_params
-    params.require(:list_template).permit(
-      :title, :category_id, :description,
-      list_template_items_attributes: [ :id, :name, :position, :_destroy ]
-    )
+    params.require(:list_template)
+      .permit(:title, :description, :category_id, :repeat_type, weekdays: [])
   end
 
   def assign_category

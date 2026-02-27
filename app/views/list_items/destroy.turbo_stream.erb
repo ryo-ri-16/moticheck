@@ -1,9 +1,17 @@
-<%= turbo_stream.remove "list_item_#{@list_item.id}" %>
+<%= turbo_stream.replace dom_id(@list_item) do %>
+  <div id="<%= dom_id(@list_item) %>"
+        data-controller="fade-remove"
+        data-action="animationend->fade-remove#remove"
+        class="fade-out-wrapper">
+    <%= render @list_item %>
+  </div>
+<% end %>
 
-<%= turbo_stream.replace "list_items" do %>
-  <%= render "lists/show/items_check",
+<%= turbo_stream.replace "items_count" do %>
+  <%= render "lists/show/items_count",
         list: @list,
-        list_items: @list.list_items %>
+        checked_count: @list.checked_count,
+        total_count: @list.total_count %>
 <% end %>
 
 <%= turbo_stream.update "flash_messages" do %>
@@ -12,3 +20,14 @@
     アイテムを削除しました
   </div>
 <% end %>
+
+<% if @list.list_items.count.zero? %>
+  <%= turbo_stream.replace "items_container" do %>
+    <div id="items_container">
+      <div id="empty_state">
+        <%= render "shared/empty_state", message: "アイテムがありません" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+

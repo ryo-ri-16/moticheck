@@ -6,10 +6,19 @@
   </div>
 <% end %>
 
-<%= turbo_stream.replace "list_items" do %>
-  <div id="list_items">
-    <%= render "lists/show/items_check",
-          list: @list,
-          list_items: @list_items %>
+<% if @list.total_count == 1 %>
+  <%= turbo_stream.remove "empty_state" %>
+<% end %>
+
+<%= turbo_stream.append "items_container" do %>
+  <div id="<%= dom_id(@list_item) %>"
+        class="fade-in-item">
+    <%= render @list_item %>
   </div>
+<% end %>
+
+<%= turbo_stream.replace "items_count" do %>
+  <%= render "lists/show/items_count",
+        checked_count: @list.list_items.checked.count,
+        total_count: @list.list_items.count %>
 <% end %>

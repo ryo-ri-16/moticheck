@@ -1,0 +1,12 @@
+<div id="items_count" class="mt-4 mb-4">
+  <div class="flex items-center justify-between mb-2">
+    <h2 class="text-lg font-bold text-gray-800">チェック項目</h2>
+    <%= render "lists/show/progress_count",
+          checked_count: checked_count,
+          total_count: total_count %>
+  </div>
+
+  <%= render "lists/show/progress_bar",
+        checked_count: checked_count,
+        total_count: total_count %>
+</div>

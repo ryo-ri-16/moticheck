@@ -1,8 +1,11 @@
-<%= turbo_frame_tag dom_id(list_item) do %>
-  <div class="flex items-center p-3 rounded-lg border transition-all duration-300 ease-in-out
-    <%= list_item.checked? ? 'bg-green-50 opacity-70 border-green-100' :
-      'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm' %>">
+<%= turbo_frame_tag dom_id(list_item), class: "relative" do %>
+  <div data-card
+        class="flex relative items-center p-3 rounded-lg border
+              transition-all duration-300 ease-in-out
+              <%= list_item.checked? ? 'bg-green-50 opacity-70 border-green-100' :
+                'bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm' %>">
 
+    <%# チェックボックス部分 %>
     <% if list_item.persisted? %>
       <%= form_with model: list_item,
             url: check_switching_list_list_item_path(list_item.list, list_item),
@@ -19,9 +22,10 @@
       <% end %>
     <% end %>
 
+    <%# ラベル部分 %>
     <label for="check_list_item_<%= list_item.id %>"
-            class="flex-1 cursor-pointer select-none
-            <%= 'line-through text-gray-400' if list_item.checked? %>">
+           class="flex-1 cursor-pointer select-none
+           <%= 'line-through text-gray-400' if list_item.checked? %>">
       <%= list_item.item&.name %>
       <% if list_item.quantity.present? && list_item.quantity > 1 %>
         <span class="ml-2 text-sm <%= 'text-gray-400' if list_item.checked? %>">
@@ -30,26 +34,34 @@
       <% end %>
     </label>
 
-    <% if list_item.list.waiting? && list_item.persisted? %>  <%# ← persisted? を追加 %>
-      <details class="relative ml-2">
-        <summary class="cursor-pointer px-2 py-1 hover:bg-gray-100 rounded transition-colors">⋮</summary>
-        <div class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[120px]">
-          <%= link_to "編集",
-                edit_list_list_item_path(list_item.list, list_item),
-                data: { turbo_frame: dom_id(list_item) },
-                class: "block w-full px-4 py-2 text-left text-sm hover:bg-gray-50" %>
+    <%# アクションメニュー（修正版） %>
+    <% if list_item.list.waiting? && list_item.persisted? %>
+      <div data-controller="dropdown" class="relative ml-2">
+        <button type="button"
+                data-action="click->dropdown#toggle">
+          ⋮
+        </button>
 
-          <%= button_to "削除",
-                list_list_item_path(list_item.list, list_item),
-                method: :delete,
-                data: {
-                  turbo_confirm: "削除しますか?",
-                },
-                class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
+        <div data-dropdown-target="menu"
+              class="hidden absolute right-0 top-full mt-1
+                      bg-white border border-gray-200
+                      rounded-md shadow-lg min-w-[120px]
+                      z-50">
+            <%= link_to "編集",
+                  edit_list_list_item_path(list_item.list, list_item),
+                  data: { turbo_frame: dom_id(list_item) },
+                  class: "block w-full px-4 py-2 text-left text-sm hover:bg-gray-50" %>
+
+            <%= button_to "削除",
+                  list_list_item_path(list_item.list, list_item),
+                  method: :delete,
+                  data: { turbo_confirm: "削除しますか?" },
+                  class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors rounded-md" %>
         </div>
-      </details>
+      </div>
     <% end %>
 
+    <%# チェック済みアイコン %>
     <% if list_item.checked? %>
       <svg class="w-5 h-5 text-green-500 ml-2 animate-scale-in" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd"

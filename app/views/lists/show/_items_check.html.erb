@@ -5,32 +5,26 @@
 <div class="bg-white rounded-lg shadow p-4
       transition-all duration-500 ease-in-out
       <%= 'animate-complete-flash' if @list.completed? %>">
-  <div class="mt-4 mb-4">
-    <div class="flex items-center justify-between mb-2">
-      <h2 class="text-lg font-bold text-gray-800">チェック項目</h2>
-      <%= render "lists/show/progress_count",
+  <%= render "lists/show/items_count",
             checked_count: checked_count,
             total_count: total_count %>
-    </div>
-      <%= render "lists/show/progress_bar",
-            checked_count: checked_count,
-            total_count: total_count %>
+  <div id="items_container">
+    <% if list_items.any? %>
+      <div class="space-y-2">
+        <% list_items.each do |list_item| %>
+          <%= render "list_items/list_item",
+                list: list,
+                list_item: list_item %>
+        <% end %>
+      </div>
+    <% else %>
+      <div id="empty_state"
+          class="text-center py-12 bg-gray-50 rounded-lg transition-opacity duration-300">
+        <svg class="mx-auto h-12 w-12 text-gray-400"></svg>
+        <p class="mt-2 text-sm text-gray-500">
+          チェック項目がありません
+        </p>
+      </div>
+    <% end %>
   </div>
-  <% if list_items.any? %>
-    <div class="space-y-2">
-      <% list_items.each do |list_item| %>
-        <%= render "list_items/list_item",
-              list: list,
-              list_item: list_item %>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="text-center py-12 bg-gray-50 rounded-lg">
-      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-      </svg>
-      <p class="mt-2 text-sm text-gray-500">チェック項目がありません</p>
-    </div>
-  <% end %>
 </div>

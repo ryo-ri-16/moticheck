@@ -1,14 +1,20 @@
 <div id="list_template_items">
   <div class="mt-6">
     <h2 class="text-lg font-semibold mb-4">
-      アイテム (<%= list_template.list_template_items_count %>)
+      アイテム (
+      <span id="items_count">
+        <%= list_template.list_template_items_count %>
+      </span>
+      )
     </h2>
 
-    <% if template_items.any? %>
-      <div id="items_container" class="space-y-2">
+    <div id="items_container" class="space-y-2">
+      <% if template_items.any? %>
         <%= render template_items %>
-      </div>
-    <% else %>
+      <% end %>
+    </div>
+
+    <% unless template_items.any? %>
       <div id="empty_state">
         <%= render "shared/empty_state", message: "アイテムがありません" %>
       </div>

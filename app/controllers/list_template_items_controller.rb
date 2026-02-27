@@ -8,10 +8,7 @@ class ListTemplateItemsController < ApplicationController
       @list_template.list_template_items.build(list_template_item_params)
 
     if @list_template_item.save
-      @template_items =
-        ListTemplateItem.ordered
-
-      @list_template_item = ListTemplateItem.new
+      @template_items = @list_template.list_template_items.ordered
 
       respond_to do |format|
         format.turbo_stream

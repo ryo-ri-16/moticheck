@@ -13,6 +13,7 @@ export default class extends Controller {
 
   toggle(event) {
     event.stopPropagation()
+
     if (this.menuTarget.classList.contains("hidden")) {
       this.open()
     } else {
@@ -32,19 +33,3 @@ export default class extends Controller {
     document.removeEventListener("click", this.boundClose)
   }
 }
-
-document.addEventListener("turbo:load", () => {
-  console.log("MENU JS LOADED")
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".menu-btn")
-    if (!btn) return
-
-    const wrapper = btn.closest(".menu-wrapper")
-    if (!wrapper) return
-
-    const menu = wrapper.querySelector(".menu")
-    if (menu) {
-      menu.classList.toggle("hidden")
-    }
-  })
-})

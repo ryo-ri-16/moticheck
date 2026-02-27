@@ -10,6 +10,16 @@
           </span>
         <% end %>
 
+        <% if list_template.schedule_labels.present? %>
+          <div class="flex gap-1 flex-wrap mt-2 mb-2">
+            <% list_template.schedule_labels.each do |label| %>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700">
+                <%= label %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+
         <p class="text-sm text-gray-600">
           <%= list_template.list_template_items_count %>個のアイテム
         </p>

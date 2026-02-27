@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_12_003353) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_26_121739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,6 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_003353) do
     t.text "description"
     t.boolean "is_initial", default: false, null: false
     t.integer "list_template_items_count", default: 0, null: false
+    t.integer "repeat_type", default: 0, null: false
+    t.integer "repeat_days", default: 0, null: false
     t.index ["category_id"], name: "index_list_templates_on_category_id"
     t.index ["is_initial"], name: "index_list_templates_on_is_initial"
     t.index ["user_id", "title"], name: "index_list_templates_on_user_id_and_title"
@@ -81,8 +83,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_003353) do
     t.datetime "scheduled_at", null: false
     t.datetime "reminded_at"
     t.datetime "started_notification_at"
+    t.bigint "list_template_id"
+    t.date "target_date"
     t.index ["category_id"], name: "index_lists_on_category_id"
     t.index ["last_used_at"], name: "index_lists_on_last_used_at"
+    t.index ["list_template_id", "target_date"], name: "index_lists_on_template_and_date_unique", unique: true, where: "(list_template_id IS NOT NULL)"
+    t.index ["list_template_id"], name: "index_lists_on_list_template_id"
     t.index ["scheduled_at"], name: "index_lists_on_scheduled_at"
     t.index ["status"], name: "index_lists_on_status"
     t.index ["user_id", "priority"], name: "index_lists_on_user_id_and_priority"
@@ -130,6 +136,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_003353) do
   add_foreign_key "list_templates", "categories"
   add_foreign_key "list_templates", "users"
   add_foreign_key "lists", "categories"
+  add_foreign_key "lists", "list_templates"
   add_foreign_key "lists", "users"
   add_foreign_key "notifications", "lists"
   add_foreign_key "notifications", "users"

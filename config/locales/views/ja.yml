@@ -22,3 +22,17 @@ ja:
       previous: "前"
       next: "次"
       truncate: "..."
+  enums:
+    list_template:
+      repeat_type:
+        no_repeat: 繰り返さない
+        weekly: 毎週
+
+  weekdays:
+    sunday: 日
+    monday: 月
+    tuesday: 火
+    wednesday: 水
+    thursday: 木
+    friday: 金
+    saturday: 土

@@ -1,11 +1,26 @@
-<%= turbo_stream.replace "list_template_items" do %>
-  <%= render "list_templates/items",
-        list_template: @list_template,
-        template_items: @list_template.list_template_items.reload %>
+<% if @list_template.list_template_items_count == 1 %>
+  <%= turbo_stream.update "items_container" do %>
+    <%= render @list_template_item %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append "items_container" do %>
+    <%= render partial: "list_template_items/list_template_item",
+              locals: { list_template_item: @list_template_item, animated: true } %>
+  <% end %>
+<% end %>
+
+<% if @list_template.list_template_items.count == 1 %>
+  <%= turbo_stream.remove "empty_state" %>
+<% end %>
+
+<%= turbo_stream.update "items_count" do %>
+  <%= @list_template.list_template_items_count %>
 <% end %>
 
 <%= turbo_stream.replace "item_form" do %>
-  <%= render "list_templates/items_add",
-        list_template: @list_template,
-        list_template_item: ListTemplateItem.new %>
+  <div id="item_form">
+    <%= render "list_templates/items_add",
+          list_template: @list_template,
+          list_template_item: ListTemplateItem.new %>
+  </div>
 <% end %>

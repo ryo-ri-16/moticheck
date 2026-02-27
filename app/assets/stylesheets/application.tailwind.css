@@ -34,3 +34,89 @@
 .animate-complete-flash {
   animation: completeFlash 0.6s ease-out;
 }
+
+@keyframes fadeCollapse {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    max-height: 200px; /* アイテムの最大高さ */
+  }
+  40% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+    max-height: 200px;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30px) scale(0.9);
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+  }
+}
+
+.fade-out-wrapper {
+  overflow: hidden;
+  transition: border-width 0.1s ease;
+  animation: fadeCollapse 0.4s ease-in-out forwards;
+}
+
+.fade-in-item {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes highlight {
+  0%   { background-color: #d1fae5; }
+  60%  { background-color: #d1fae5; }
+  100% { background-color: transparent; }
+}
+
+.weekday-checkbox-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.weekday-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 9999px;
+  background-color: white;
+  color: #6b7280;
+  font-weight: 500;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.weekday-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.weekday-checkbox:checked + .weekday-button {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* アコーディオンの矢印アニメーション */
+[data-accordion-target="arrow"] {
+  transition: transform 0.2s;
+}
+
+[data-accordion-target="arrow"].rotate-180 {
+  transform: rotate(180deg);
+}
+

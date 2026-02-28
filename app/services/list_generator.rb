@@ -32,8 +32,12 @@ class ListGenerator
       scheduled_at: date.to_time.change(hour: 8)
     )
 
-    template.list_template_items.each do |item|
-      list.list_items.create!(name: item.name)
+    template.list_template_items.each do |template_item|
+      item = Item.find_or_create_by!(name: template_item.name)
+
+      list.list_items.create!(
+        item: item
+      )
     end
   end
 end

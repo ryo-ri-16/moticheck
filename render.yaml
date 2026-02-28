@@ -46,7 +46,11 @@ services:
     dockerfilePath: ./Dockerfile
     schedule: "0 15 * * *"
     startCommand: >
-      bundle exec rails runner "ListGenerator.run"
+      bash -c "
+        echo START;
+        bundle exec rails runner 'puts \"HELLO\"';
+        sleep 15;
+      "
     envVars:
       - key: RAILS_ENV
         value: production

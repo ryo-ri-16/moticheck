@@ -54,6 +54,9 @@ class CreateNotificationsJob < ApplicationJob
   end
 
   def reminder_time?
-    Time.current.hour == 20
+    Time.current.between?(
+      Time.current.change(hour: 20, min: 0),
+      Time.current.change(hour: 20, min: 59)
+    )
   end
 end

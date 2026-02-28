@@ -45,7 +45,11 @@ services:
     env: docker
     dockerfilePath: ./Dockerfile
     schedule: "0 15 * * *"
-    startCommand: "bundle exec rails runner 'puts "CRON START"; GenerateListsJob.perform_now; puts "CRON END"'"
+    startCommand: |
+      echo "CRON START"
+      bundle exec rails runner 'GenerateListsJob.perform_now'
+      echo "CRON END"
+      sleep 10
     envVars:
       - key: RAILS_ENV
         value: production

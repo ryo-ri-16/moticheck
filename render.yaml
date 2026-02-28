@@ -26,10 +26,10 @@ services:
 
   - type: cron
     name: notification-job
-    env: docker
-    dockerfilePath: ./Dockerfile
-    schedule: "*/5 * * * *"
+    env: ruby
+    buildCommand: "bundle install"
     startCommand: "bundle exec rails runner 'CreateNotificationsJob.perform_now'"
+    schedule: "*/5 * * * *"
     envVars:
       - key: RAILS_ENV
         value: production
@@ -42,11 +42,10 @@ services:
 
   - type: cron
     name: generate-lists-job
-    env: docker
-    dockerfilePath: ./Dockerfile
+    env: ruby
     schedule: "0 15 * * *"
-    startCommand: >
-      bash -lc "bundle exec rails runner 'ListGenerator.run'"
+    buildCommand: "bundle install"
+    startCommand: "bundle exec rails runner 'ListGenerator.run'"
     envVars:
       - key: RAILS_ENV
         value: production

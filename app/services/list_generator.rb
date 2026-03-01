@@ -30,7 +30,7 @@ class ListGenerator
       category: template.category,
       list_template: template,
       target_date: date,
-      scheduled_at: today.in_time_zone.change(hour: 8)
+      scheduled_at: date.in_time_zone.change(hour: 5)
     )
 
     template.list_template_items.each do |template_item|

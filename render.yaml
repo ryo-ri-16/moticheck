@@ -25,11 +25,27 @@ services:
       bundle exec rails server -b 0.0.0.0 -p $PORT
 
   - type: cron
-    name: notification-job
+    name: start-notification-job
     env: ruby
-    buildCommand: "bundle install"
-    startCommand: "bundle exec rails runner 'CreateNotificationsJob.perform_now'"
+    buildCommand: bundle install
+    startCommand: bundle exec rails runner "CreateStartNotificationsJob.perform_later"
     schedule: "*/5 * * * *"
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: moticheck-db
+          property: connectionString
+
+  - type: cron
+    name: reminder-notification-job
+    env: ruby
+    buildCommand: bundle install
+    startCommand: bundle exec rails runner "ReminderNotificationsJob.perform_later"
+    schedule: "0 * * * *"
     envVars:
       - key: RAILS_ENV
         value: production

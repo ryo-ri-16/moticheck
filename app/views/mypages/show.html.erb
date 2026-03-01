@@ -90,6 +90,24 @@
           <span class="text-gray-500 text-sm">メールアドレス:</span>
           <span class="font-medium"><%= @user.email %></span>
         </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-500 text-sm">登録日:</span>
+          <span class="font-medium text-sm">
+            <%= @user.created_at.strftime("%Y年%m月%d日") %>
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-500 text-sm">作成リスト数:</span>
+          <% if current_user.guest? %>
+            <span class="font-medium text-sm">
+              8件中 <%= @lists_count %> 件使用中
+            </span>
+          <% else %>
+            <span class="font-medium text-sm">
+              <%= @lists_count %>件
+            </span>
+          <% end %>
+        </div>
       </div>
     </div>
   </section>
@@ -105,6 +123,26 @@
           <span>カテゴリー管理</span>
         </div>
         <span class="text-gray-400">›</span>
+      <% end %>
+
+      <%= link_to edit_notification_setting_path,
+                  class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
+        <div class="flex items-center gap-3">
+          <span class="text-xl">🏷️</span>
+          <span>通知設定</span>
+        </div>
+        <span class="text-gray-400">›</span>
+      <% end %>
+
+      <% unless current_user.guest? %>
+        <%= link_to edit_user_registration_path,
+                    class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
+          <div class="flex items-center gap-3">
+            <span class="text-xl">🔑</span>
+            <span>パスワード変更</span>
+          </div>
+          <span class="text-gray-400">›</span>
+        <% end %>
       <% end %>
 
       <%= link_to term_mypage_path,

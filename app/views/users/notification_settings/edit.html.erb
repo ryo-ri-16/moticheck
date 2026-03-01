@@ -1,0 +1,121 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md space-y-8">
+
+    <div class="text-center space-y-2">
+      <h1 class="text-3xl font-bold">通知設定</h1>
+      <p class="text-gray-500 text-sm">通知の受け取り方を設定できます</p>
+    </div>
+
+    <div data-controller="notification-settings" class="bg-white rounded-xl shadow p-6">
+      <%= form_with model: @user,
+                    url: notification_setting_path,
+                    method: :patch,
+                    local: true do |f| %>
+
+        <div class="space-y-6">
+          <div class="pb-6 border-b border-gray-200">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1">
+                <p class="font-semibold text-gray-900">通知を受け取る</p>
+                <p class="text-sm text-gray-500 mt-1">
+                  すべての通知機能を有効にします
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <%= f.check_box :notifications_enabled,
+                      data: {
+                        notification_settings_target: "notificationsEnabled",
+                        action: "change->notification-settings#toggleAll"
+                      },
+                      class: "sr-only peer",
+                      id: "notifications_enabled" %>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+
+          <div id="reminder-settings"
+                data-notification-settings-target="reminderSettings"
+                class="space-y-4">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1">
+                <p class="font-semibold text-gray-900">リマインダー通知</p>
+                <p class="text-sm text-gray-500 mt-1">
+                  期限前に通知をします
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <%= f.check_box :reminder_enabled,
+                      data: {
+                        notification_settings_target: "reminderEnabled",
+                        action: "change->notification-settings#toggleAll"
+                      },
+                      class: "sr-only peer",
+                      id: "reminder_enabled" %>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+
+            <div id="reminder-details"
+                  data-notification-settings-target="reminderDetails"
+                  class="pl-4 space-y-4 border-l-2 border-gray-200">
+              <div>
+                <%= f.label :reminder_days_before, "通知タイミング", class: "block font-medium text-gray-700 mb-2" %>
+                <div class="relative">
+                  <%= f.select :reminder_days_before,
+                        options_for_select([
+                          ["当日", 0],
+                          ["1日前", 1],
+                          ["2日前", 2],
+                          ["3日前", 3],
+                          ["1週間前", 7]
+                        ], @user.reminder_days_before),
+                        {},
+                        class: "w-full border border-gray-300 rounded-lg p-3 pr-10 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <%= f.label :notification_hour, "通知時刻", class: "block font-medium text-gray-700 mb-2" %>
+                <div class="relative">
+                  <%= f.select :notification_hour,
+                        options_for_select((0..23).map { |h|
+                          ["#{h}:00", h]
+                        }, @user.notification_hour),
+                        {},
+                        class: "w-full border border-gray-300 rounded-lg p-3 pr-10 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  この時刻にリマインダー通知が送信されます
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 保存ボタン -->
+          <div class="pt-4">
+            <%= f.submit "保存する",
+                  class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200 shadow-md hover:shadow-lg" %>
+          </div>
+
+        </div>
+      <% end %>
+
+      <!-- 戻るリンク -->
+      <div class="mt-6 text-center">
+        <%= link_to "戻る", mypage_path, class: "text-blue-600 hover:underline text-sm" %>
+      </div>
+    </div>
+
+  </div>
+</div>

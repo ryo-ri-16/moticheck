@@ -3,6 +3,7 @@ class MypagesController < ApplicationController
 
   def show
     @user = current_user
+    @lists_count = current_user.lists.count
   end
 
   def term

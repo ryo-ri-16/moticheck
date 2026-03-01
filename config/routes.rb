@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resource :guest_registration, only: %i[new create]
   post "guest_user", to: "guest_sessions#create"
+  resource :notification_setting, only: [ :edit, :update ], module: :users
   resources :lists do
     resources :list_items do
       member do

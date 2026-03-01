@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_26_121739) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_01_112616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -104,6 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_26_121739) do
     t.datetime "updated_at", null: false
     t.index ["kind"], name: "index_notifications_on_kind"
     t.index ["list_id"], name: "index_notifications_on_list_id"
+    t.index ["user_id", "list_id", "kind"], name: "index_notifications_on_user_list_kind_unique", unique: true
     t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
@@ -121,6 +122,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_26_121739) do
     t.datetime "guest_created_at"
     t.string "provider"
     t.string "uid"
+    t.boolean "notifications_enabled", default: true, null: false
+    t.boolean "reminder_enabled", default: true, null: false
+    t.integer "reminder_days_before", default: 1
+    t.integer "notification_hour", default: 20
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["guest", "guest_created_at"], name: "index_users_on_guest_and_guest_created_at"
     t.index ["guest"], name: "index_users_on_guest"

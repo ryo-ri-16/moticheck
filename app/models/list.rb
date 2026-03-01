@@ -37,7 +37,7 @@ class List < ApplicationRecord
     .where(reminded_at: nil)
   }
   scope :starting_now, -> {
-    where(scheduled_at: 7.days.ago..Time.current)
+    where(scheduled_at: 7.minutes.ago..Time.current)
     .where(started_notification_at: nil)
     .order(scheduled_at: :asc)
   }

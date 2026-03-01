@@ -2,6 +2,8 @@ class CreateNotificationsJob < ApplicationJob
   queue_as :default
 
   def perform
+    return unless user.notifications_enabled?
+
     create_start_notifications
     create_reminder_notifications if reminder_time?
   end
@@ -54,9 +56,6 @@ class CreateNotificationsJob < ApplicationJob
   end
 
   def reminder_time?
-    Time.current.between?(
-      Time.current.change(hour: 20, min: 0),
-      Time.current.change(hour: 20, min: 59)
-    )
+    now.hour == user.notification_hour
   end
 end

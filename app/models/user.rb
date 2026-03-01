@@ -12,6 +12,15 @@ class User < ApplicationRecord
 
   after_create :create_default_category
 
+  validates :reminder_days_before,
+    numericality: { greater_than_or_equal_to: 0 }
+  validates :notification_hour,
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 0,
+      less_than_or_equal_to: 23
+    }
+
   scope :guests, -> { where(guest: true) }
   scope :expired_guests, -> {
     guests.where("guest_created_at < ?", 14.days.ago)

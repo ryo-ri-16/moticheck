@@ -14,48 +14,65 @@
           url: registration_path(resource_name),
           html: { method: :put }) do |f| %>
 
-        <div class="space-y-1">
-          <%= f.label :email, "メールアドレス", class: "font-medium" %>
-          <%= f.email_field :email, class: "w-full border p-2 rounded", required: true %>
+        <div class="pb-6 border-b border-gray-200">
+          <h2 class="text-lg font-semibold mb-4">メールアドレス変更</h2>
+          <div class="space-y-1">
+            <%= f.label :email, "メールアドレス", class: "font-medium" %>
+            <%= f.email_field :email, class: "w-full border p-2 rounded", required: true %>
+          </div>
         </div>
 
-        <div class="space-y-1">
-          <%= f.label :password, "新しいパスワード（変更する場合のみ）", class: "font-medium" %>
-          <%= f.password_field :password, autocomplete: "new-password",
-                class: "w-full border p-2 rounded" %>
+        <div class="mt-4 pb-6 border-b border-gray-200">
+          <h2 class="text-lg font-semibold mb-4">パスワード変更</h2>
+          <p class="text-sm text-gray-500 mb-4">※ 変更する場合のみ入力してください</p>
+          <div class="space-y-4">
+            <div class="space-y-1">
+              <%= f.label :password, "新しいパスワード", class: "font-medium" %>
+              <%= f.password_field :password, autocomplete: "new-password",
+                    class: "w-full border p-2 rounded" %>
+            </div>
+
+            <div class="space-y-1">
+              <%= f.label :password_confirmation, "パスワード確認", class: "font-medium" %>
+              <%= f.password_field :password_confirmation,
+                    class: "w-full border p-2 rounded" %>
+            </div>
+          </div>
         </div>
 
-        <div class="space-y-1">
-          <%= f.label :password_confirmation, "パスワード確認", class: "font-medium" %>
-          <%= f.password_field :password_confirmation,
-                class: "w-full border p-2 rounded" %>
-        </div>
-
-        <div class="space-y-1">
-          <%= f.label :current_password, "現在のパスワード（必須）", class: "font-medium" %>
-          <%= f.password_field :current_password, autocomplete: "current-password",
-                class: "w-full border p-2 rounded", required: true %>
-          <p class="text-xs text-gray-500">※ パスワード変更やメール変更には現在のパスワードが必要です</p>
+        <div>
+          <div class="mt-4 space-y-1">
+            <%= f.label :current_password, "現在のパスワード", class: "font-medium" %>
+            <%= f.password_field :current_password, autocomplete: "current-password",
+                  class: "w-full border p-2 rounded", required: true %>
+            <p class="text-xs text-gray-500">※ 変更を保存するには現在のパスワードが必要です</p>
+          </div>
         </div>
 
         <div>
           <%= f.submit "変更を保存する",
-                class: "w-full bg-blue-600 text-white py-3 rounded-lg font-semibold" %>
+                class: "mt-3 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition" %>
         </div>
       <% end %>
 
-      <div class="text-center pt-4 border-t">
-        <%= button_to "アカウントを削除する",
-              registration_path(resource_name),
-              method: :delete,
-              data: { confirm: "本当に削除しますか？" },
-              class: "mt-2 w-full py-3 border rounded-lg text-red-600 font-medium hover:bg-red-50" %>
-      </div>
-
       <div class="text-center">
-        <%= link_to "戻る", root_path, class: "text-blue-600 hover:underline text-sm" %>
+        <%= link_to "戻る", mypage_path, class: "text-blue-600 hover:underline text-sm" %>
       </div>
     </div>
 
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-lg font-semibold mb-2 text-red-600">危険な操作</h2>
+      <p class="text-sm text-gray-600 mb-4">
+        アカウントを削除すると、すべてのデータが失われます。この操作は取り消せません。
+      </p>
+      <%= button_to "アカウントを削除する",
+            registration_path(resource_name),
+            method: :delete,
+            data: {
+              confirm: "本当にアカウントを削除しますか？\n\nこの操作は取り消せません。\nすべてのリスト、タスク、カテゴリーが削除されます。",
+              turbo_confirm: "本当にアカウントを削除しますか？"
+            },
+            class: "w-full py-3 border rounded-lg text-red-600 font-medium border-red-200 bg-red-50 hover:bg-red-100 transition" %>
+    </div>
   </div>
 </div>

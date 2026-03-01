@@ -28,7 +28,7 @@ services:
     name: start-notification-job
     env: ruby
     buildCommand: bundle install
-    startCommand: bundle exec rails runner "CreateStartNotificationJob.perform_later"
+    startCommand: bundle exec rails runner "CreateStartNotificationJob.perform_now"
     schedule: "*/5 * * * *"
     envVars:
       - key: RAILS_ENV
@@ -44,7 +44,7 @@ services:
     name: reminder-notification-job
     env: ruby
     buildCommand: bundle install
-    startCommand: bundle exec rails runner "ReminderNotificationJob.perform_later"
+    startCommand: bundle exec rails runner "ReminderNotificationJob.perform_now"
     schedule: "0 * * * *"
     envVars:
       - key: RAILS_ENV

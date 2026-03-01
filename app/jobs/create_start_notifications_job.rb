@@ -1,4 +1,4 @@
-class CreateStartNotificationsJob < ApplicationJob
+class CreateStartNotificationJob < ApplicationJob
   def perform
     List.incomplete.starting_now.find_each do |list|
       next unless list.user.notifications_enabled?

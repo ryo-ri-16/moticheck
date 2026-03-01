@@ -1,4 +1,4 @@
-class ReminderNotificationsJob < ApplicationJob
+class ReminderNotificationJob < ApplicationJob
   def perform
     User.where(
       notifications_enabled: true,

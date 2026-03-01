@@ -14,7 +14,8 @@ class ListGenerator
     when "daily"
       true
     when "weekly"
-      template.weekdays.include?(date.wday)
+      weekday_symbol = Date::DAYNAMES[date.wday].downcase.to_sym
+      template.weekdays.include?(weekday_symbol)
     else
       false
     end

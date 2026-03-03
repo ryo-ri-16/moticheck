@@ -179,4 +179,12 @@
       <% end %>
     </div>
   </section>
+
+  <section class="mb-6">
+    <%= button_to "アカウントを削除する",
+              account_path,
+              method: :delete,
+              data: { turbo_confirm: "本当に削除しますか？この操作は元に戻せません。" },
+              class: "bg-red-600 w-full text-white px-4 py-2 rounded" %>
+  </section>
 </div>

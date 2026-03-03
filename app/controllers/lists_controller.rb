@@ -36,7 +36,6 @@ class ListsController < ApplicationController
     @list = current_user.lists.build(list_params)
     assign_category
 
-    # ゲスト利用用
     unless current_user.can_create_more_lists?
       redirect_to root_path, alert: "ゲスト利用では8件まで作成できます"
       return
@@ -65,6 +64,11 @@ class ListsController < ApplicationController
 
   def destroy
     @list.destroy
+
+    @lists = ListQuery.new(
+      user: current_user,
+      params: params
+    ).call
 
     respond_to do |format|
       format.turbo_stream do

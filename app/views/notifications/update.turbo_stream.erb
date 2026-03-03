@@ -1,7 +1,3 @@
-<%= turbo_stream.replace @notification do %>
-  <%= render @notification %>
-<% end %>
-
 <%= turbo_stream.remove @notification %>
 
 <%= turbo_stream.prepend "read-notifications" do %>

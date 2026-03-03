@@ -1,12 +1,12 @@
-<%= turbo_stream.remove dom_id(@list) %>
-
 <%= turbo_stream.replace "lists-section" do %>
-  <% lists = current_user.lists %>
-
-  <% if lists.any? %>
+  <% if @lists.any? %>
     <div id="lists-section">
       <div class="space-y-4">
-        <%= render lists %>
+        <%= render @lists %>
+      </div>
+
+      <div class="mt-6">
+        <%= paginate @lists, params: safe_filter_params %>
       </div>
     </div>
   <% else %>
@@ -17,12 +17,12 @@
 <% end %>
 
 <%= turbo_stream.replace "list_header" do %>
-  <%= render "list_header", lists: current_user.lists %>
+  <%= render "list_header", lists: @lists %>
 <% end %>
 
 <%= turbo_stream.append "flash_messages" do %>
   <div class="bg-green-100 text-green-800 p-3 rounded mb-4 shadow-lg"
-        data-controller="flash>
+        data-controller="toast">
     リストを削除しました
   </div>
 <% end %>

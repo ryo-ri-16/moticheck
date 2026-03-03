@@ -34,9 +34,11 @@
               <%= @total_count %> 項目を完了
             </p>
 
-            <p class="text-sm text-gray-500 mt-1">
-              <%= l @list.last_used_at, format: :list %> に完了しました
-            </p>
+            <% if @list.last_used_at.present? %>
+              <p class="text-sm text-gray-500 mt-1">
+                <%= l @list.last_used_at, format: :list %> に完了しました
+              </p>
+            <% end %>
 
             <div class="text-sm text-gray-600 mt-3">
               <p>このチェックリストは無事完了しました。</p>

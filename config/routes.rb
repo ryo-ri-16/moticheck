@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resource :guest_registration, only: %i[new create]
   post "guest_user", to: "guest_sessions#create"
   resource :notification_setting, only: [ :edit, :update ], module: :users
+  resource :account, only: [] do
+    delete :destroy
+  end
+
   resources :lists do
     resources :list_items do
       member do
@@ -47,6 +51,6 @@ Rails.application.routes.draw do
     get :privacy
   end
 
-  resources :categories, only: [ :index, :destroy ]
+  resources :categories, only: [ :index, :create, :edit, :update, :destroy ]
   root "home#welcome"
 end

@@ -1,0 +1,14 @@
+<%= form_with model: category do |f| %>
+  <div class="flex gap-2 p-4">
+    <%= f.text_field :name,
+        class: "flex-1 px-3 py-2 border border-gray-300 rounded-md" %>
+
+    <%= f.submit "保存",
+        class: "bg-blue-600 text-white px-3 py-1 rounded" %>
+
+    <%= link_to "キャンセル",
+        categories_path,
+        data: { turbo_frame: dom_id(category) },
+        class: "px-3 py-1 text-gray-600" %>
+  </div>
+<% end %>

@@ -133,16 +133,34 @@ class List < ApplicationRecord
     checking? || completed?
   end
 
+  def reset_items!
+    if persisted?
+      list_items.update_all(checked: false)
+    else
+      list_items.each { |li| li.checked = false }
+    end
+  end
+
+  def reopen!
+    transaction do
+      update!(status: :waiting)
+      reset_items!
+    end
+  end
+
   def build_reuse
     new_list = deep_clone include: :list_items
-
+    # リストの状態をリセットしている
     new_list.status = :waiting
     new_list.last_used_at = nil
+    new_list.list_items_count = 0
+    new_list.list_template_id = nil
+    new_list.target_date = nil
+
+    new_list.target_date = Date.current
     new_list.scheduled_at = Time.current
 
-    new_list.list_items.each do |li|
-      li.checked = false
-    end
+    new_list.reset_items!
 
     new_list
   end

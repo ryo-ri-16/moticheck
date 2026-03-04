@@ -1,0 +1,38 @@
+<details class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+  <summary class="cursor-pointer p-4 hover:bg-gray-50 transition-all flex items-center justify-between">
+    <span class="text-sm text-gray-500 flex items-center gap-2">
+      <i class="fas fa-exclamation-triangle text-gray-400"></i>
+      アカウント削除
+    </span>
+    <i class="fas fa-chevron-down text-gray-400"></i>
+  </summary>
+
+  <div class="p-4 bg-red-50 border-t">
+    <div class="flex items-start gap-3 mb-4">
+      <i class="fas fa-exclamation-circle text-red-600 text-xl flex-shrink-0 mt-0.5"></i>
+      <div>
+        <h4 class="font-bold text-red-800 mb-2">アカウント削除について</h4>
+        <p class="text-sm text-gray-700 mb-2">
+          アカウントを削除すると、以下のデータがすべて削除されます:
+        </p>
+        <ul class="text-sm text-gray-600 space-y-1 mb-3">
+          <li>• すべてのリストとタスク</li>
+          <li>• カテゴリー設定</li>
+          <li>• 通知設定</li>
+          <li>• ユーザー情報</li>
+        </ul>
+        <p class="text-sm text-red-700 font-semibold">
+          この操作は取り消せません。
+        </p>
+      </div>
+    </div>
+
+    <%= button_to account_path,
+                  method: :delete,
+                  data: { turbo_confirm: "本当に削除しますか？この操作は元に戻せません。" },
+                  class: "w-full bg-red-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-red-700 transition shadow-sm flex items-center justify-center gap-2" do %>
+      <i class="fas fa-trash-alt"></i>
+      <span>アカウントを削除する</span>
+    <% end %>
+  </div>
+</details>

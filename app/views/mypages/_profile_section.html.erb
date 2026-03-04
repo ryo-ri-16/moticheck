@@ -1,0 +1,13 @@
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+  <div class="flex items-center gap-4 mb-5">
+    <div class="flex-1">
+      <h2 class="font-bold text-xl text-gray-800 mb-1"><%= @user.name %></h2>
+      <p class="text-sm text-gray-500"><%= @user.email %></p>
+      <% if current_user.guest? %>
+        <span class="inline-block text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full mt-2">
+          <i class="fas fa-clock mr-1"></i>ゲストユーザー
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

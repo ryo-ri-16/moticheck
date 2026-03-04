@@ -1,0 +1,56 @@
+<div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+  <!-- グループヘッダー -->
+  <div class="px-4 py-3 bg-gray-50 border-b">
+    <h3 class="text-sm font-semibold text-gray-600 flex items-center gap-2">
+      <i class="fas fa-cog text-gray-400"></i>
+      アカウント設定
+    </h3>
+  </div>
+  
+  <!-- メニュー項目 -->
+  <div class="divide-y">
+    <%= link_to categories_path,
+                class: "group flex items-center justify-between p-4 hover:bg-gray-50 transition-all" do %>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition">
+          <i class="fas fa-tags text-blue-600"></i>
+        </div>
+        <div>
+          <p class="font-medium text-gray-800">カテゴリー管理</p>
+          <p class="text-xs text-gray-500">カテゴリーの作成・編集</p> <!-- ← ここを修正 -->
+        </div> <!-- ← この閉じタグが抜けていました -->
+      </div>
+      <i class="fas fa-chevron-right text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+    <% end %>
+
+    <%= link_to edit_notification_setting_path,
+                class: "group flex items-center justify-between p-4 hover:bg-gray-50 transition-all" do %>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center group-hover:bg-purple-100 transition">
+          <i class="fas fa-bell text-purple-600"></i>
+        </div>
+        <div>
+          <p class="font-medium text-gray-800">通知設定</p>
+          <p class="text-xs text-gray-500">通知の受信設定</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+    <% end %>
+
+    <% unless current_user.guest? %>
+      <%= link_to edit_user_registration_path,
+                  class: "group flex items-center justify-between p-4 hover:bg-gray-50 transition-all" do %>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center group-hover:bg-green-100 transition">
+            <i class="fas fa-key text-green-600"></i>
+          </div>
+          <div>
+            <p class="font-medium text-gray-800">パスワード変更</p>
+            <p class="text-xs text-gray-500">パスワードの変更</p>
+          </div>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

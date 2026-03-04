@@ -1,0 +1,14 @@
+<div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+  <%= button_to destroy_user_session_path,
+                method: :delete,
+                class: "group w-full flex items-center justify-between p-4 hover:bg-red-50 transition-all text-left",
+                data: { turbo_confirm: "ログアウトしますか?" } do %>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition">
+        <i class="fas fa-right-from-bracket text-red-600"></i>
+      </div>
+      <span class="font-semibold text-red-600">ログアウト</span>
+    </div>
+    <i class="fas fa-chevron-right text-red-400 group-hover:translate-x-1 transition-transform"></i>
+  <% end %>
+</div>

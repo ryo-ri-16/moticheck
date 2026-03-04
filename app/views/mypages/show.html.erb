@@ -1,190 +1,28 @@
-<% content_for :title, "マイページ" %>
-<% if current_user.guest? %>
-  <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-6">
-    <div class="flex items-start gap-4">
-      <div class="flex-shrink-0">
-        <i class="fas fa-user-clock text-3xl text-blue-600"></i>
-      </div>
-      <div class="flex-1">
-        <h3 class="text-xl font-bold text-gray-800 mb-2">
-          現在ゲストユーザーとして利用中です
-        </h3>
-
-        <div class="bg-white rounded-lg p-4 mb-4">
-          <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <i class="fas fa-lock text-gray-400"></i>
-            現在の制限事項
-          </h4>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-start gap-2">
-              <i class="fas fa-times-circle text-red-500 mt-0.5"></i>
-              <span>リスト作成は <strong>8件まで</strong></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-times-circle text-red-500 mt-0.5"></i>
-              <span>リストのテンプレート化機能が使えません</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-times-circle text-red-500 mt-0.5"></i>
-              <span>通知機能が使えません</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-times-circle text-red-500 mt-0.5"></i>
-              <span>データは14日後に自動削除されます</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="bg-white rounded-lg p-4 mb-4">
-          <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <i class="fas fa-crown text-yellow-500"></i>
-            ユーザー登録すると使える機能
-          </h4>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-start gap-2">
-              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
-              <span>リストを <strong>無制限</strong> に作成</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
-              <span>テンプレート作成で効率的にリスト作成</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
-              <span>通知機能でリストの確認漏れを防止</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
-              <span>データの <strong>永続保存</strong></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
-              <span>今作成したリストは <strong>そのまま引き継がれます</strong></span>
-            </li>
-          </ul>
-        </div>
-
-        <%= link_to guest_sign_up_path, class: "block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-bold hover:bg-blue-700 transition" do %>
-          <i class="fas fa-user-plus mr-2"></i>
-          今すぐ無料登録する
-        <% end %>
-
-        <p class="text-xs text-gray-500 text-center mt-3">
-          登録はすぐ完了します。作成済みのデータはそのまま引き継がれます。
-        </p>
-      </div>
-    </div>
+<div class="min-h-screen bg-gray-50 pb-24">
+  <div class="container mx-auto max-w-2xl px-4 py-6">
+    
+    <!-- ゲストユーザー向け案内バナー -->
+    <% if current_user.guest? %>
+      <%= render 'guest_upgrade_banner' %>
+    <% end %>
+    
+    <!-- プロフィールセクション -->
+    <%= render 'profile_section', user: @user %>
+    
+    <!-- 統計情報カード -->
+    <%= render 'stats_cards', user: @user, lists_count: @lists_count %>
+    
+    <!-- アカウント設定グループ -->
+    <%= render 'account_settings' %>
+    
+    <!-- 規約・ポリシーグループ -->
+    <%= render 'legal_links' %>
+    
+    <!-- ログアウトボタン -->
+    <%= render 'logout_section' %>
+    
+    <!-- アカウント削除 -->
+    <%= render 'account_deletion' %>
+    
   </div>
-<% end %>
-
-<div class="container py-4 pb-24">
-  <section class="mb-6">
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <h2 class="font-semibold text-gray-700 mb-3">ユーザー情報</h2>
-      <div class="space-y-2">
-        <div class="flex items-center gap-2">
-          <span class="text-gray-500 text-sm">ニックネーム:</span>
-          <span class="font-medium text-sm"><%= @user.name %></span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-gray-500 text-sm">メールアドレス:</span>
-          <span class="font-medium"><%= @user.email %></span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-gray-500 text-sm">登録日:</span>
-          <span class="font-medium text-sm">
-            <%= @user.created_at.strftime("%Y年%m月%d日") %>
-          </span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-gray-500 text-sm">作成リスト数:</span>
-          <% if current_user.guest? %>
-            <span class="font-medium text-sm">
-              8件中 <%= @lists_count %> 件使用中
-            </span>
-          <% else %>
-            <span class="font-medium text-sm">
-              <%= @lists_count %>件
-            </span>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="mb-6">
-    <div class="bg-white rounded-lg shadow-sm">
-      <h2 class="font-semibold text-gray-700 px-4 py-3 border-b">設定</h2>
-      <div class="divide-y">
-      <%= link_to categories_path,
-                  class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🏷️</span>
-          <span>カテゴリー管理</span>
-        </div>
-        <span class="text-gray-400">›</span>
-      <% end %>
-
-      <%= link_to edit_notification_setting_path,
-                  class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🏷️</span>
-          <span>通知設定</span>
-        </div>
-        <span class="text-gray-400">›</span>
-      <% end %>
-
-      <% unless current_user.guest? %>
-        <%= link_to edit_user_registration_path,
-                    class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
-          <div class="flex items-center gap-3">
-            <span class="text-xl">🔑</span>
-            <span>パスワード変更</span>
-          </div>
-          <span class="text-gray-400">›</span>
-        <% end %>
-      <% end %>
-
-      <%= link_to term_mypage_path,
-                  class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
-        <div class="flex items-center gap-3">
-          <span class="text-xl">📄</span>
-          <span>利用規約</span>
-        </div>
-        <span class="text-gray-400">›</span>
-      <% end %>
-
-      <%= link_to privacy_mypage_path,
-                  class: "flex items-center justify-between p-4 hover:bg-gray-50 transition-colors" do %>
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🔒</span>
-          <span>プライバシーポリシー</span>
-        </div>
-        <span class="text-gray-400">›</span>
-      <% end %>
-    </div>
-  </section>
-
-  <section class="mb-6">
-    <div class="bg-white rounded-lg shadow-sm">
-      <%= button_to destroy_user_session_path,
-                    method: :delete,
-                    class: "w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors text-left",
-                    data: { turbo_confirm: "ログアウトしますか?" } do %>
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🚪</span>
-          <span class="text-red-600 font-semibold">ログアウト</span>
-        </div>
-        <span class="text-gray-400">›</span>
-      <% end %>
-    </div>
-  </section>
-
-  <section class="mb-6">
-    <%= button_to "アカウントを削除する",
-              account_path,
-              method: :delete,
-              data: { turbo_confirm: "本当に削除しますか？この操作は元に戻せません。" },
-              class: "bg-red-600 w-full text-white px-4 py-2 rounded" %>
-  </section>
 </div>

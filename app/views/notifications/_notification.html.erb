@@ -1,50 +1,45 @@
 <div id="notification-<%= notification.id %>"
       class="<%= notification.unread? ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-white opacity-70' %> rounded-lg shadow p-4">
-  <%= link_to list_path(notification.list), class: "block", data: { turbo_frame: "_top" } do %>
     <div class="flex items-start justify-between">
       <div class="flex-1">
-        <div class="flex items-center gap-2 mb-2">
-          <span class="text-2xl">
-            <%= notification.reminder? ? '🔔' : '▶️' %>
-          </span>
-          <span class="text-sm text-gray-500">
-            <%= l(notification.created_at, format: :long) %>
-          </span>
-          <% if notification.unread? %>
-            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">NEW</span>
-          <% end %>
-        </div>
-
-        <div class="mb-2">
-          <% if notification.reminder? %>
-            <p class="text-gray-800">
-              <strong>明日のリマインダー</strong>
-            </p>
-            <p class="text-gray-600 mt-1">
-              「<%= notification.list.title %>」の予定があります
-            </p>
-          <% elsif notification.start? %>
-            <p class="text-gray-800">
-              <strong>開始時刻になりました</strong>
-            </p>
-            <p class="text-gray-600 mt-1">
-              「<%= notification.list.title %>」を始めましょう
-            </p>
-          <% end %>
-        </div>
+        <%= link_to list_path(notification.list), class: "block", data: { turbo_frame: "_top" } do %>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-2xl">
+              <%= notification.reminder? ? '🔔' : '▶️' %>
+            </span>
+            <span class="text-sm text-gray-500">
+              <%= l(notification.created_at, format: :long) %>
+            </span>
+            <% if notification.unread? %>
+              <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+            <% end %>
+          </div>
+          <div class="mb-2">
+            <% if notification.reminder? %>
+              <p class="text-gray-800">
+                <strong>明日のリマインダー</strong>
+              </p>
+              <p class="text-gray-600 mt-1">
+                「<%= notification.list.title %>」の予定があります
+              </p>
+            <% elsif notification.start? %>
+              <p class="text-gray-800">
+                <strong>開始時刻になりました</strong>
+              </p>
+              <p class="text-gray-600 mt-1">
+                「<%= notification.list.title %>」を始めましょう
+              </p>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
-      <div class="flex flex-col gap-2 ml-4" data-turbo="false">
+      <div class="flex flex-col gap-2 ml-4">
         <% if notification.unread? %>
           <%= button_to "確認する",
-                  notification_path(notification),
-                  method: :patch,
-                  data: {
-                    turbo_stream: true,
-                    turbo: true
-                  },
-                  form: { data: { turbo: true } },
-                  class: "bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600" %>
+            notification_path(notification),
+            method: :patch,
+            class: "bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600" %>
         <% else %>
           <span class="text-sm text-gray-400 px-3 py-2">
             確認済み
@@ -62,5 +57,5 @@
                       class: "bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600" %>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>

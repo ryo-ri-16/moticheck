@@ -1,21 +1,26 @@
-<% if unread_notifications.any? %>
-  <section class="mb-8">
-    <div class="mb-4">
-      <%= button_to "全て既読にする",
-            mark_all_as_read_notifications_path,
-            method: :patch,
-            data: { turbo_stream: true },
-            class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+<div id="unread-section">
+  <% if unread_notifications.any? %>
+
+    <section class="mb-8">
+      <div class="mb-4">
+        <%= button_to "全て既読にする",
+              mark_all_as_read_notifications_path,
+              method: :patch,
+              class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+      </div>
+
+      <div class="space-y-3">
+        <% unread_notifications.each do |notification| %>
+          <%= render notification %>
+        <% end %>
+      </div>
+    </section>
+
+  <% else %>
+
+    <div class="bg-gray-50 rounded-lg p-8 text-center text-gray-500 mb-8">
+      未読の通知はありません
     </div>
 
-    <div class="space-y-3">
-      <% unread_notifications.each do |notification| %>
-        <%= render notification %>
-      <% end %>
-    </div>
-  </section>
-<% else %>
-  <div class="bg-gray-50 rounded-lg p-8 text-center text-gray-500 mb-8">
-    未読の通知はありません
-  </div>
-<% end %>
+  <% end %>
+</div>

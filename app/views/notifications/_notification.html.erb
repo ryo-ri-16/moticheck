@@ -34,12 +34,16 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-2 ml-4" onclick="event.stopPropagation()">
+      <div class="flex flex-col gap-2 ml-4" data-turbo="false">
         <% if notification.unread? %>
           <%= button_to "確認する",
                   notification_path(notification),
                   method: :patch,
-                  data: { turbo_stream: true },
+                  data: {
+                    turbo_stream: true,
+                    turbo: true
+                  },
+                  form: { data: { turbo: true } },
                   class: "bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600" %>
         <% else %>
           <span class="text-sm text-gray-400 px-3 py-2">
@@ -50,7 +54,11 @@
         <%= button_to "削除",
                       notification_path(notification),
                       method: :delete,
-                      data: { turbo_stream: true },
+                      data: {
+                        turbo_stream: true,
+                        turbo_confirm: "本当に削除しますか?"
+                      },
+                      form: { data: { turbo: true } },
                       class: "bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600" %>
       </div>
     </div>

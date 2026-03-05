@@ -1,10 +1,13 @@
-<%= turbo_stream.prepend "read-notifications" do %>
-  <%= render "notifications/notification", notification: @notification %>
-<% end %>
+<%= turbo_stream.remove "notification-#{@notification.id}" %>
 
 <%= turbo_stream.replace "unread-section" do %>
   <%= render "notifications/unread_section",
         unread_notifications: current_user.notifications.unread.recent %>
+<% end %>
+
+
+<%= turbo_stream.prepend "read-notifications" do %>
+  <%= render @notification %>
 <% end %>
 
 <%= turbo_stream.replace "notification-count-wrapper" do %>

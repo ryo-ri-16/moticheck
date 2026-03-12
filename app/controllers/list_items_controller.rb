@@ -95,6 +95,7 @@ class ListItemsController < ApplicationController
     end
   end
 
+  # アイテムをチェック
   def check_switching
     @list_item.update(checked: !@list_item.checked)
     @list_items = @list.list_items.includes(:item)
@@ -119,6 +120,7 @@ class ListItemsController < ApplicationController
     return # rubocop:disable Style/RedundantReturn
   end
 
+  # 作成時と更新時でパラメーターを分けている
   def list_item_params
     params.require(:list_item).permit(:item_name, :quantity)
   end

@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_list, only: [ :show, :edit, :update, :destroy, :complete, :start_checking, :finish_checking, :back_waiting, :reuse, :to_templates ]
+  before_action :set_list, only: [ :show, :edit, :update, :destroy, :start_checking, :finish_checking, :back_waiting, :reuse, :to_templates ]
   before_action :set_categories, only: [ :new, :edit, :create, :update ]
   before_action :prevent_edit_while_checking, only: [ :edit, :update, :reuse, :destroy, :to_templates ]
 
@@ -78,45 +78,32 @@ class ListsController < ApplicationController
     end
   end
 
-  def complete
-    @list.completed!
-    redirect_to @list, notice: "リストを完了しました"
-  end
-
-  def incomplete
-    @list.waiting!
-    redirect_to @list, notice: "リストを未完了に戻しました"
-  end
-
   def scheduled_today
     @lists = current_user.lists.scheduled_today
     render :index
   end
 
-  def start_checking
-    if @list.start_checking!
-      redirect_to @list, notice: "チェックを開始しました"
+  def update_status(action, success_message)
+    if @list.send(action)
+      redirect_to @list, notice: success_message
     else
       redirect_to @list, alert: "ステータスの更新に失敗しました"
     end
+  end
+
+  def start_checking
+    update_status(:start_checking!, "チェックを開始しました")
   end
 
   def finish_checking
-    if @list.finish_checking!
-      redirect_to @list, notice: "チェックが完了しました"
-    else
-      redirect_to @list, alert: "ステータスの更新に失敗しました"
-    end
+    update_status(:finish_checking!, "チェックが完了しました")
   end
 
   def back_waiting
-    if @list.back_to_waiting!
-      redirect_to @list, notice: "待機中に戻しました"
-    else
-      redirect_to @list, alert: "ステータスの更新に失敗しました"
-    end
+    update_status(:back_to_waiting!, "待機中に戻しました")
   end
 
+  # リスト複製
   def reuse
     @new_list = @list.build_reuse
 
@@ -127,6 +114,7 @@ class ListsController < ApplicationController
     end
   end
 
+  # リストをテンプレートに保存
   def to_templates
     unless current_user.can_copy?
       redirect_to lists_path,
@@ -155,6 +143,7 @@ class ListsController < ApplicationController
                 alert: "テンプレート作成に失敗しました"
   end
 
+  # チェック状態ではアクションボタンは利用不可
   def prevent_edit_while_checking
     return unless @list.checking?
 

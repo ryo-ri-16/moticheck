@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # 未読リスト数をヘッダーに表示
   def set_unread_notifications_count
     @unread_notifications_count = current_user.notifications.unread.count
   end

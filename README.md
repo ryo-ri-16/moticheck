@@ -13,7 +13,7 @@ moticheckは、外出前の持ち物確認を習慣化し、
 **URL:** https://moticheck.onrender.com/
 
 **テストアカウント:**
-- Email: `test@example.com`
+- Email: `sample@example.com`
 - Password: `password`
 
 > ⚠️ テストアカウントは他のユーザーと共有されています。
@@ -182,15 +182,7 @@ rails runner "ListGenerator.run"
 ```
 
 ## ER図（簡易）
-
-User
- ├ Categories
- ├ Lists
- │  └ ListItems
- │      └ Items
- ├ ListTemplates
- │  └ ListTemplateItems
- └ Notifications
+![ER図](https://gyazo.com/24b089377e5f301e12606c8b344f3709)
 
  ### テーブル解説
 

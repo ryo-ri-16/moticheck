@@ -1,6 +1,7 @@
 class GuestSessionsController < ApplicationController
   skip_before_action :authenticate_user!
 
+  # ゲストユーザー作成
   def create
     if session[:guest_user_id]
       user = User.find_by(id: session[:guest_user_id], guest: true)

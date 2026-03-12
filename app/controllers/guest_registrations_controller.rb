@@ -5,6 +5,7 @@ class GuestRegistrationsController < ApplicationController
   def new
   end
 
+  # ゲストから本登録へ
   def create
     if current_user.convert_to_registration!(
           name: params[:user][:name],

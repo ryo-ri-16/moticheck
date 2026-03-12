@@ -58,6 +58,7 @@ class ListTemplatesController < ApplicationController
     end
   end
 
+  # リストへコピー
   def to_lists
     ActiveRecord::Base.transaction do
       list = current_user.lists.create!(

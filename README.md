@@ -182,7 +182,7 @@ rails runner "ListGenerator.run"
 ```
 
 ## ER図（簡易）
-![ER図](https://gyazo.com/24b089377e5f301e12606c8b344f3709)
+![ER図](https://i.gyazo.com/24b089377e5f301e12606c8b344f3709.png)
 
  ### テーブル解説
 

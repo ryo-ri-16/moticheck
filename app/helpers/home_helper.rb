@@ -1,4 +1,5 @@
 module HomeHelper
+  # 時間に応じたホーム画面での挨拶
   def greeting_message
     hour = Time.current.hour
     case hour

@@ -44,9 +44,10 @@
   </div>
 
   <turbo-frame id="lists">
-    <% if active_filters.any? %>
+    <% filters = active_filters(@filter_params, @current_category) %>
+    <% if filters.any? %>
       <div class="flex flex-wrap gap-2 mb-4">
-        <%= safe_join(active_filters) %>
+        <%= safe_join(filters) %>
 
         <%= link_to "すべて解除",
               lists_path,

@@ -4,52 +4,50 @@ module ListHelper
   end
 
   def status_color(status)
-    case status.to_sym
-    when :waiting
-      "bg-gray-200 text-gray-700 border border-gray-300 text-sm"
-    when :checking
-      "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border border-blue-300 text-base font-medium"  # グラデーション
-    when :completed
-      "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md text-base font-bold"  # グラデーション
-    end
+    {
+      waiting: "bg-gray-200 text-gray-700 border border-gray-300 text-sm",
+      checking: "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border border-blue-300 text-base font-medium",
+      completed: "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md text-base font-bold"
+    }[status.to_sym]
   end
 
   def list_action_menu(list)
     render partial: "lists/action_menu", locals: { list: list }
   end
 
-  def active_filters
+  # フィルターの各項目のスタイル
+  def active_filters(filter_params, current_category)
     filters = []
 
-    if params[:status].present?
+    if filter_params[:status].present?
       filters << filter_tag(
-        "ステータス: #{t("enums.list.status.#{params[:status]}")}",
-        "blue",
+        "ステータス: #{t("enums.list.status.#{filter_params[:status]}")}",
+        :blue,
         :status
       )
     end
 
-    if params[:category_id].present? && current_category
+    if filter_params[:category_id].present? && current_category
       filters << filter_tag(
         "カテゴリ: #{current_category.name}",
-        "green",
+        :green,
         :category_id
       )
     end
 
-    if params[:priority] == "true"
-      filters << filter_tag("高優先度のみ", "red", :priority)
+    if filter_params[:priority] == "true"
+      filters << filter_tag("高優先度のみ", :red, :priority)
     end
 
-    if params[:q].present?
-      filters << filter_tag("検索: #{params[:q]}", "orange", :q)
+    if filter_params[:q].present?
+      filters << filter_tag("検索: #{filter_params[:q]}", :amber, :q)
     end
 
     filters
   end
 
-  def current_category
-    @current_category ||= Category.find_by(id: params[:category_id])
+  def render_active_filters
+    safe_join(active_filters, " ")
   end
 
   def safe_filter_params
@@ -57,14 +55,21 @@ module ListHelper
           .to_h.reject { |_, v| v.blank? }
   end
 
+  FILTER_COLORS = {
+    blue:  "bg-blue-100 text-blue-800 hover:text-blue-900",
+    green: "bg-green-100 text-green-800 hover:text-green-900",
+    red:   "bg-red-100 text-red-800 hover:text-red-900",
+    amber: "bg-amber-100 text-amber-800 hover:text-amber-900"
+  }.freeze
+
   def filter_tag(label, color, *remove_params)
     content_tag(:span,
-      class: "inline-flex items-center gap-1 px-3 py-1 bg-#{color}-100 text-#{color}-800 text-sm rounded-full") do
+      class: "inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full #{FILTER_COLORS[color.to_sym]}") do
       concat content_tag(:span, label)
       concat link_to(
         lists_path(safe_filter_params.except(*remove_params)),
         data: { turbo_frame: "lists" },
-        class: "hover:text-#{color}-900"
+        class: "hover:opacity-80"
       ) { close_icon }
     end
   end

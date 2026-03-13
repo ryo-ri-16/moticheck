@@ -14,6 +14,11 @@ class ListsController < ApplicationController
       .for_user(current_user)
       .select("DISTINCT ON (LOWER(name)) *")
       .order("LOWER(name), user_id NULLS FIRST")
+
+    # フィルター用
+    @current_category = Category.find_by(id: params[:category_id])
+
+    @filter_params = params.permit(:status, :category_id, :priority, :q)
   end
 
   def show
@@ -122,24 +127,16 @@ class ListsController < ApplicationController
       return
     end
 
-    list_template = nil
+    template = ListTemplateCreator.call(
+      user: current_user,
+      list: @list
+    )
 
-    ActiveRecord::Base.transaction do
-      list_template = current_user.list_templates.create!(
-        title: @list.title,
-        category: @list.category
-      )
-
-      @list.list_items.order(:position).each do |list_item|
-        list_template.list_template_items.create!(name: list_item.item.name)
-      end
-    end
-
-    redirect_to list_template_path(list_template),
+    redirect_to list_template_path(template),
                 notice: "リストからテンプレートを作成しました"
 
   rescue ActiveRecord::RecordInvalid
-    redirect_to list_path(@list),
+    redirect_to @list,
                 alert: "テンプレート作成に失敗しました"
   end
 
@@ -170,22 +167,10 @@ class ListsController < ApplicationController
   end
 
   def assign_category
-    return unless params[:new_category_name].present?
-
-    category_name = params[:new_category_name].strip
-
-    if category_name.blank?
-      @list.errors.add(:base, "カテゴリー名を入力してください")
-      return
-    end
-
-    category = Category.find_or_create_by(
-      user: current_user, name: category_name)
-
-    if category.persisted?
-      @list.category = category
-    else
-      @list.errors.add(:base, "カテゴリーの作成に失敗しました: #{category.errors.full_messages.join(', ')}")
-    end
+    CategoryAssigner.call(
+      list: @list,
+      user: current_user,
+      category_name: params[:new_category_name]
+    )
   end
 end

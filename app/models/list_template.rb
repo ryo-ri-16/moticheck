@@ -9,6 +9,7 @@ class ListTemplate < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 500 }, allow_blank: true
 
+  # 初期テンプレートとカスタムテンプレートの区別
   scope :initial, -> { where(is_initial: true) }
   scope :user_created, -> { where(is_initial: false) }
   scope :global, -> { where(user_id: nil, is_initial: true) }
@@ -18,8 +19,10 @@ class ListTemplate < ApplicationRecord
   scope :for_user_custom, ->(user) {
     where(is_initial: false, user_id: user.id)
   }
+
   scope :ordered, -> { order(created_at: :desc) }
 
+  # 繰り返し設定
   enum :repeat_type, {
     no_repeat: 0, daily: 1, weekly: 2
   }
@@ -58,6 +61,7 @@ class ListTemplate < ApplicationRecord
     end
   end
 
+  # 何曜日に利用するのか決定
   def weekdays=(days)
     days = Array(days).reject(&:blank?)
     self.repeat_days = days.sum { |day| WEEKDAY_BITS[day.to_sym] }
@@ -82,6 +86,7 @@ class ListTemplate < ApplicationRecord
     end
   end
 
+  # counter_cache
   def items_count
     list_template_items_count
   end

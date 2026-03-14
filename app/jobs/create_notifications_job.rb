@@ -10,6 +10,7 @@ class CreateNotificationsJob < ApplicationJob
 
   private
 
+  # 通知の作成(重複なし)
   def create_start_notifications
     List
       .incomplete.starting_now
@@ -32,6 +33,7 @@ class CreateNotificationsJob < ApplicationJob
     end
   end
 
+  # リマインダーの作成
   def create_reminder_notifications
     List
       .incomplete

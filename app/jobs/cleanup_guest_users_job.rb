@@ -1,6 +1,7 @@
 class CleanupGuestUsersJob < ApplicationJob
   queue_as :default
 
+  # ゲストユーザーを削除している
   def perform
     deleted_count = 0
     error_count = 0

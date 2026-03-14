@@ -17,7 +17,7 @@ class List < ApplicationRecord
   scope :normal_priority, -> { where(priority: false) }
   scope :high_priority, -> { where(priority: true) }
   scope :prioritize, -> { order(priority: :desc) }
-  # 一覧表示用
+  # 一覧ページの表示セクション
   scope :scheduled_today, -> {
     where(scheduled_at: Time.zone.today.all_day)
   }
@@ -32,6 +32,7 @@ class List < ApplicationRecord
     where("scheduled_at < ?", Time.zone.now)
       .where.not(status: :completed)
   }
+  # 通知対象か
   scope :remind_target, -> {
     where(scheduled_at: 1.day.from_now.all_day)
     .where(reminded_at: nil)
@@ -41,6 +42,7 @@ class List < ApplicationRecord
     .where(started_notification_at: nil)
     .order(scheduled_at: :asc)
   }
+  # ホーム画面のセクション
   scope :ordered_for_home, -> {
     order(
       Arel.sql("CASE WHEN status = #{statuses[:completed]} THEN 1 ELSE 0 END"),
@@ -74,6 +76,7 @@ class List < ApplicationRecord
     update(status: :checking)
   end
 
+  # waitingから完了できないようにしている
   def finish_checking!
     return false unless checking?
     return false unless can_completed?
@@ -84,6 +87,7 @@ class List < ApplicationRecord
     )
   end
 
+  # アイテムのチェック状態を解除しながらチェック状態をキャンセルしている
   def back_to_waiting!
     return false unless checking?
     transaction do
@@ -112,6 +116,7 @@ class List < ApplicationRecord
     list_items_count
   end
 
+  # プログレスバー
   def progress_percentage
     return 0 if list_items.count.zero?
 
@@ -121,30 +126,27 @@ class List < ApplicationRecord
     (checked.to_f / total * 100).round
   end
 
+  # 全てのアイテムをチェックすると完了状態にできる
   def can_completed?
     list_items.where(checked: true).count == list_items.count
   end
 
+  # カテゴリーがない場合は未分類として扱う
   def category_name
     category&.name || "未分類"
   end
 
+  # アクションボタンを利用できるのはwaiting状態
   def locked?
     checking? || completed?
   end
 
+  # 完了後のリストをコピーした際にアイテムはチェック解除
   def reset_items!
     if persisted?
       list_items.update_all(checked: false)
     else
       list_items.each { |li| li.checked = false }
-    end
-  end
-
-  def reopen!
-    transaction do
-      update!(status: :waiting)
-      reset_items!
     end
   end
 

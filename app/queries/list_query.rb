@@ -1,4 +1,3 @@
-# app/queries/list_query.rb
 class ListQuery
   def initialize(user:, params:)
     @user   = user

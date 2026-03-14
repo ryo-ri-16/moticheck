@@ -13,6 +13,7 @@ class ListItem < ApplicationRecord
   scope :checked, -> { where(checked: true) }
   scope :unchecked, -> { where(checked: false) }
 
+  # 順番の制御
   def set_position
     return if position.present?
     return unless list

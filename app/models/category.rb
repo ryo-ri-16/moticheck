@@ -10,6 +10,7 @@ class Category < ApplicationRecord
 
   scope :ordered, -> { order(:name) }
   scope :created, -> { order(:created_at) }
+  # カスタムテンプレート
   scope :for_user, ->(user) {
     where(user_id: user.id)
       .or(where(user_id: nil).where.not(name: "未分類"))

@@ -53,7 +53,7 @@ class List < ApplicationRecord
     )
   }
   scope :scheduled_asc, -> { order(scheduled_at: :asc) }
-  scope :incomplete, -> { where.not(status: :completed) }
+  scope :incomplete, -> { where(status: [ :waiting, :checking ]) }
   scope :checking, -> { where(status: :checking) }
   scope :complete, -> { where(status: :completed) }
   # フィルタ用

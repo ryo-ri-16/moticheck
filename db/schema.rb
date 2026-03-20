@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_01_112616) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_085533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -90,6 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_01_112616) do
     t.index ["list_template_id", "target_date"], name: "index_lists_on_template_and_date_unique", unique: true, where: "(list_template_id IS NOT NULL)"
     t.index ["list_template_id"], name: "index_lists_on_list_template_id"
     t.index ["scheduled_at"], name: "index_lists_on_scheduled_at"
+    t.index ["status", "started_notification_at", "scheduled_at"], name: "index_lists_for_start_notifications", where: "(started_notification_at IS NULL)"
     t.index ["status"], name: "index_lists_on_status"
     t.index ["user_id", "priority"], name: "index_lists_on_user_id_and_priority"
     t.index ["user_id"], name: "index_lists_on_user_id"

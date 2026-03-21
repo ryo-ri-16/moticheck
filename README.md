@@ -150,6 +150,7 @@ ActiveJobとcronを組み合わせた非同期処理を実装しました。
 
 リスト作成からチェック完了までの一連の流れを示しています。
 アイテムを追加して実際にチェックを行います。
+
 ![デモ](app/assets/images/main_demo.gif)
 
 **URL:** https://moticheck.onrender.com/

@@ -11,8 +11,8 @@ module ListHelper
     }[status.to_sym]
   end
 
-  def list_action_menu(list)
-    render partial: "lists/action_menu", locals: { list: list }
+  def list_action_menu(list, from: nil)
+    render partial: "lists/action_menu", locals: { list: list, from: from }
   end
 
   # フィルターの各項目のスタイル

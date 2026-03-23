@@ -54,89 +54,13 @@
     </div>
   <% end %>
 
-  <% if @checking_lists.any? %>
-    <section class="mb-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
-      <div class="flex items-center justify-between mb-3">
-        <div>
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <span class="w-1 h-6 bg-blue-500 rounded"></span>
-            チェック中
-          </h2>
-          <p class="text-xs text-blue-600 mt-1">進行中のリストを完了させましょう</p>
-        </div>
-        <span class="text-sm text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full font-semibold">
-          <%= @checking_lists.size %>
-        </span>
-      </div>
-      <div class="space-y-3">
-        <%= render @checking_lists %>
-      </div>
-    </section>
-  <% end %>
-
-  <section class="mb-6">
-    <div class="flex items-center justify-between mb-3">
-      <div>
-        <h2 class="text-xl font-bold flex items-center gap-2">
-          <span class="w-1 h-6 bg-green-500 rounded"></span>
-          今日のリスト
-        </h2>
-        <p class="text-xs text-gray-500 mt-1">今日使う持ち物リストをチェックしましょう</p>
-      </div>
-      <span class="text-sm text-green-600 bg-green-100 px-2 py-0.5 rounded-full font-semibold">
-        <%= @today_lists.size %>
-      </span>
-    </div>
-    <% if @today_lists.any? %>
-      <div class="space-y-3">
-        <%= render @today_lists %>
-      </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "今日のリストはありません" %>
-    <% end %>
-  </section>
-
-  <section class="mb-6">
-    <div class="flex items-center justify-between mb-3">
-      <div>
-        <h2 class="text-xl font-bold flex items-center gap-2">
-          <span class="w-1 h-6 bg-yellow-500 rounded"></span>
-          近日中のリスト
-        </h2>
-        <p class="text-xs text-gray-500 mt-1">3日以内に予定されている持ち物リスト</p>
-      </div>
-      <span class="text-sm text-yellow-600 bg-yellow-100 px-2 py-0.5 rounded-full font-semibold">
-        <%= @near_lists.size %>
-      </span>
-    </div>
-    <% if @near_lists.any? %>
-      <div class="space-y-3">
-        <%= render @near_lists %>
-      </div>
-    <% else %>
-      <%= render "shared/empty_state", message: "近日中のリストはありません" %>
-    <% end %>
-  </section>
-
-  <% if @past_lists.any? %>
-    <section class="mb-6">
-      <div class="flex items-center justify-between mb-3">
-        <div>
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <span class="w-1 h-6 bg-red-500 rounded"></span>
-            過去の未完了リスト
-          </h2>
-          <p class="text-xs text-gray-500 mt-1">利用日を過ぎたが完了していないリスト</p>
-        </div>
-        <span class="text-sm text-red-600 bg-red-100 px-2 py-0.5 rounded-full font-semibold">
-          <%= @past_lists.size %>
-        </span>
-      </div>
-      <div class="space-y-3">
-        <%= render @past_lists %>
-      </div>
-    </section>
-  <% end %>
+  <div id="home_lists">
+    <%= render "home/index/lists_sections",
+        checking_lists: @checking_lists,
+        today_lists: @today_lists,
+        near_lists: @near_lists,
+        past_lists: @past_lists %>
+  </div>
 </div>
 
 <%= render "shared/fab" %>

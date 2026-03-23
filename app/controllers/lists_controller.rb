@@ -78,6 +78,12 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         flash.now[:notice] = "リストを削除しました"
+        if params[:from] == "home"
+          load_home_lists
+          render "home/destroy"
+        else
+          render :destroy
+        end
       end
       format.html { redirect_to lists_path, notice: "リストを削除しました" }
     end
@@ -172,5 +178,14 @@ class ListsController < ApplicationController
       user: current_user,
       category_name: params[:new_category_name]
     )
+  end
+
+  def load_home_lists
+    base = current_user.lists.includes(:category)
+
+    @checking_lists = base.checking.scheduled_asc.prioritize
+    @today_lists    = base.scheduled_today.scheduled_asc.prioritize
+    @near_lists     = base.near_future.scheduled_asc.prioritize
+    @past_lists     = base.past_not_complete.scheduled_asc.prioritize
   end
 end

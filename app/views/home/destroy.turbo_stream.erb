@@ -1,0 +1,14 @@
+<%= turbo_stream.replace "home_lists" do %>
+  <%= render "home/index/lists_sections",
+        checking_lists: @checking_lists,
+        today_lists: @today_lists,
+        near_lists: @near_lists,
+        past_lists: @past_lists %>
+<% end %>
+
+<%= turbo_stream.append "flash_messages" do %>
+  <div class="bg-green-100 text-green-800 p-3 rounded mb-4 shadow-lg"
+        data-controller="toast">
+    リストを削除しました
+  </div>
+<% end %>

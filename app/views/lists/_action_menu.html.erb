@@ -33,9 +33,9 @@
     <% end %>
 
     <div class="border-t border-gray-200 my-1"></div>
-
+    <% from ||= nil %>
     <%= button_to "削除",
-        list_path(list),
+        list_path(list, from: from),
         method: :delete,
         data: {
           turbo_confirm: "本当に削除しますか?"

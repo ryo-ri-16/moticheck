@@ -29,7 +29,7 @@ services:
     env: ruby
     buildCommand: bundle install
     startCommand: bundle exec rails runner "CreateStartNotificationJob.perform_now"
-    schedule: "*/5 * * * *"
+    schedule: "*/15 * * * *"
     envVars:
       - key: RAILS_ENV
         value: production
